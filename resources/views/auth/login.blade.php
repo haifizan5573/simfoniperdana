@@ -11,7 +11,7 @@
 
 @section('body')
 
-    <body class="auth-body-bg" style="background-image: url('skote_theme/images/prefchem2.jpg'); background-size: contain; background-repeat: no-repeat; background-position: center; ">>
+    <body class="auth-body-bg" style="background-image: url('{{ URL::asset('/assets/images/mrcbg.jpg') }}'); background-size: cover; background-repeat: no-repeat; background-position: center; ">
     @endsection
 
    
@@ -131,22 +131,24 @@
                                     </form>
                                 </div>
 
+                                <div class="text-center">
+
+                                    <div>
+
+                                    <p>Forgot Password ? <a href="{{ url('password/reset') }}" class="fw-medium text-primary">
+                                                Reset My Password </a> </p>
+
+                                        <p>© <script>
+                                                document.write(new Date().getFullYear())
+
+                                            </script> MRC Putrajaya
+                                        </p>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-                        <div class="mt-5 text-center">
-
-                            <div>
-
-                            <p>Forgot Password ? <a href="{{ url('password/reset') }}" class="fw-medium text-primary">
-                                        Reset My Password </a> </p>
-            
-                                <p>© <script>
-                                        document.write(new Date().getFullYear())
-
-                                    </script> MRC Putrajaya
-                                </p>
-                            </div>
-                        </div>
+                    
 
                     </div>
                 </div>
