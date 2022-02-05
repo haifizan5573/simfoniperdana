@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Menu;
 
-class menugroup extends Model
+class MenuGroup extends Model
 {
     use HasFactory;
     protected $table="menu_groups";
