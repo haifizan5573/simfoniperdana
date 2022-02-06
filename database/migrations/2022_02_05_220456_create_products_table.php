@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('minloan')->nullable();
             $table->string('maxloan')->nullable();
             $table->string('maxtenure')->nullable();
-            $table->BigInteger('groupid')->unassigned();
+            $table->BigInteger('groupid')->unsigned();
             $table->timestamps();
 
             $table->foreign('groupid')
