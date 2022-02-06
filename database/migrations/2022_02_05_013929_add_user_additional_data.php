@@ -32,6 +32,7 @@ class AddUserAdditionalData extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['parent']);
             $table->dropColumn('parent');
             $table->dropColumn('avatar');
         });
