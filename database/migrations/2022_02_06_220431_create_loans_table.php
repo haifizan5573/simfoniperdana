@@ -16,17 +16,38 @@ class CreateLoansTable extends Migration
         Schema::create('loans', function (Blueprint $table) {
             $table->id();
             $table->BigInteger('customerid')->unsigned();
-            $table->string('productid')->nullable();
+            $table->BigInteger('productid')->unsigned();
             $table->string('amountapplied')->nullable();
             $table->string('cashinhand')->nullable();
             $table->string('amountapproved')->nullable();
             $table->date('approvaldate')->nullable();
             $table->date('disburseddate')->nullable();
             $table->date('rejecteddate')->nullable();
-            $table->string('agentid')->nullable();
-            $table->string('assignedto')->nullable();
-            $table->string('status')->nullable();
+            $table->BigInteger('agentid')->unsigned();
+            $table->BigInteger('assignedto')->unsigned();
+            $table->BigInteger('status')->unsigned();
             $table->timestamps();
+
+            $table->foreign('productid')
+            ->references('id')
+            ->on('products')
+            ->onDelete('cascade');
+
+            $table->foreign('agentid')
+            ->references('id')
+            ->on('users')
+            ->onDelete('cascade');
+
+            $table->foreign('assignedto')
+            ->references('id')
+            ->on('users')
+            ->onDelete('cascade');
+
+            $table->foreign('status')
+            ->references('id')
+            ->on('statuses')
+            ->onDelete('cascade');
+
         });
     }
 
