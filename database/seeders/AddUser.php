@@ -17,16 +17,16 @@ class AddUser extends Seeder
     public function run()
     {
         $user = User::create([
-            'name' => 'Mushana Resources Sdn Bhd', 
-            'email' => 'mushana@gmail.com',
+            'name' => 'Staff One', 
+            'email' => 'staff@gmail.com',
             'password' => bcrypt('zyxwvut780')
         ]);
     
-        $role = Role::where('name','Admin')->first();
+        $role = Role::where('name','Staff')->first();
      
-        $permissions = Permission::pluck('id','id')->all();
+        //$permissions = Permission::pluck('id','id')->all();
    
-        $role->syncPermissions($permissions);
+        //$role->syncPermissions($permissions);
      
         $user->assignRole([$role->id]);
     }

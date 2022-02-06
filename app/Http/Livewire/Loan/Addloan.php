@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Loan;
 
 use Livewire\Component;
 
-class Addloan extends Component
+class AddLoan extends Component
 {
     public function render()
     {

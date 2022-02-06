@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
       
         View::composer('*', function ($view) {
             $view->with('menugroup', MenuGroup::orderby('order','asc')->get());
-            $view->with('menus', Menu::all());
+            $view->with('menus', Menu::orderby('order','asc')->get());
             $view->with('curMonth', date('F'));
             $view->with('curYear', date('Y'));
         });

@@ -19,28 +19,48 @@
                     </li>
 
                     @foreach($menugroup as $group)
-
-                    <li class="menu-title" key="t-pages">
-                      
-                        {{ $group->name }}
-                        
-                    </li>
-                        @foreach($group->menu()->get() as $menu)
-                            @if($menu->parent==0)
-                            <li>
-                                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                        <i class="{{ $menu->icon }}"></i>
-                                        <span>{{$menu->name}}</span>
-                                    </a>
-                                    <ul class="sub-menu" aria-expanded="false">
-                                        @foreach($menu->submenu()->get() as $submenu)
-                                        <li><a href="index" >{{ $submenu->name }}</a></li>
-                                        @endforeach
-                                    </ul>
+                       
+                        @can($group->permission)
+                            <li class="menu-title" key="t-pages">
+                            
+                                {{ $group->name }}
+                                
                             </li>
-                            @endif
+                                @foreach($group->menu()->orderby('order','asc')->get() as $menu)
+                              
+                                    @can($menu->permission)
+                                            @if($menu->parent==0)
+                                            <li>
+                                                @if($menu->submenu()->count()==0)
 
-                        @endforeach
+                                                    <a href="@if(!empty($menu->routename)&&route::has($enu->routename)){{ route($menu->routename) }}@if(!empty($menu->urlid))/{{$menu->urlid}}@endif
+                                                                @else#@endif" class="waves-effect">
+                                                        <i class="{{ $menu->icon }}"></i>
+                                                        <span>{{$menu->name}}</span>
+                                                    </a>
+
+                                                @else
+                                                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                                        <i class="{{ $menu->icon }}"></i>
+                                                        <span>{{$menu->name}}</span>
+                                                    </a>
+                                                    <ul class="sub-menu" aria-expanded="false">
+                                                        @foreach($menu->submenu()->get() as $submenu)
+                                                            @can($submenu->permission)
+                                                                <li><a href="@if(!empty($submenu->routename)&&route::has($submenu->routename)){{ route($submenu->routename) }}@if(!empty($submenu->urlid))/{{$submenu->urlid}}@endif
+                                                                @else#@endif" >
+                                                                        {{ $submenu->name }}
+                                                                    </a>
+                                                                </li>
+                                                            @endcan
+                                                        @endforeach
+                                                    </ul>
+                                                @endif
+                                            </li>
+                                            @endif
+                                    @endcan
+                                @endforeach
+                        @endcan
 
                     @endforeach
             </ul>

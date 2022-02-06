@@ -1,0 +1,16 @@
+<?php
+
+Route::group(['middleware' => ['auth']], function() {
+
+
+    Route::group(['middleware' => ['can:app-list']], function () {
+        Route::get('/applist/{id?}', App\Http\Livewire\Loan\AddLoan::class)->name('applist');
+    });
+   
+    Route::group(['middleware' => ['can:app-create']], function () {
+        Route::get('/addapp/{id?}', App\Http\Livewire\Loan\AddLoan::class)->name('addapp');
+    });
+       
+    
+
+});

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMenusTable extends Migration
+class CreateProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,18 @@ class CreateMenusTable extends Migration
      */
     public function up()
     {
-        Schema::create('menus', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('parent')->nullable();;
-            $table->BigInteger('group_id')->unsigned();
-            $table->string('order')->default(0);
-            $table->string('icon')->nullable();
-            $table->string('url')->nullable();
-            $table->string('permission')->nullable();
+            $table->string('minloan')->nullable();
+            $table->string('maxloan')->nullable();
+            $table->string('maxtenure')->nullable();
+            $table->BigInteger('groupid')->unassiged();
             $table->timestamps();
 
-            $table->foreign('group_id')
+            $table->foreign('groupid')
             ->references('id')
-            ->on('menu_groups')
+            ->on('product_groups')
             ->onDelete('cascade');
         });
     }
@@ -38,6 +36,6 @@ class CreateMenusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menus');
+        Schema::dropIfExists('products');
     }
 }
