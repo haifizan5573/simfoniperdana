@@ -19,7 +19,7 @@
                     </li>
 
                     @foreach($menugroup as $group)
-                       
+            
                         @can($group->permission)
                             <li class="menu-title" key="t-pages">
                             
@@ -33,7 +33,7 @@
                                             <li>
                                                 @if($menu->submenu()->count()==0)
 
-                                                    <a href="@if(!empty($menu->routename)&&route::has($enu->routename)){{ route($menu->routename) }}@if(!empty($menu->urlid))/{{$menu->urlid}}@endif
+                                                    <a href="@if(!empty($menu->routename)&&route::has($menu->routename)){{ route($menu->routename) }}@if(!empty($menu->urlid))/{{$menu->urlid}}@endif
                                                                 @else#@endif" class="waves-effect">
                                                         <i class="{{ $menu->icon }}"></i>
                                                         <span>{{$menu->name}}</span>

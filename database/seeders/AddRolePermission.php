@@ -18,11 +18,12 @@ class AddRolePermission extends Seeder
         //add new permission
         $permissions = [
             'app-list',
-            'app-create',
-            'app-edit',
-            'app-delete',
-            'app-assign',
+           // 'app-create',
+           // 'app-edit',
+           // 'app-delete',
+           // 'app-assign',
            // 'admin',
+              'public',
          ];
          foreach ($permissions as $permission) {
         
@@ -31,7 +32,7 @@ class AddRolePermission extends Seeder
          }
 
          //sync to role
-        $role = Role::where('name','Staff')->first();
+        $role = Role::where('name','Agent')->first();
      
         $perms= Permission::whereIn('name',$permissions)->pluck('id','id')->ToArray();
         //dd($perms);

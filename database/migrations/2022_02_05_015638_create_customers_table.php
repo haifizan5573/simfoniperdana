@@ -18,7 +18,7 @@ class CreateCustomersTable extends Migration
             $table->string('name');
             $table->string('icnumber');
             $table->string('policeic');
-            $table->BigInteger('employerid')->unsigned();
+            $table->BigInteger('employerid')->unsigned()->nullable();
             $table->timestamps();
 
             $table->foreign('employerid')
