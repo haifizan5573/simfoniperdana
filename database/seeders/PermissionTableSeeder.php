@@ -15,12 +15,13 @@ class PermissionTableSeeder extends Seeder
     public function run()
     {
         $permissions = [
-            // 'app-list',
-            // 'app-create',
-            // 'app-edit',
-            // 'app-delete',
-            // 'app-assign',
-            'public'
+            'app-list',
+            'app-create',
+            'app-edit',
+            'app-delete',
+            'app-assign',
+            'public',
+            'admin'
          ];
       
          foreach ($permissions as $permission) {
