@@ -112,7 +112,7 @@ class AddLoan extends Component
     }
 
     public function updatedProduct(){
-        $this->emit('load');
+       // $this->emit('load');
     }
 
     public function formatIC(){

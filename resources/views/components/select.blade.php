@@ -1,5 +1,5 @@
 <label class="form-label">{{ $label }}</label>
-<select wire:model.debounce.2000s="{{$name}}" class="form-select" id="@if(isset($selectid)){{$selectid}}@endif">
+<select wire:model.debounce.2000s="{{$name}}" class="form-control" id="@if(isset($selectid)){{$selectid}}@endif">
         <option value="">{{$placeholder}}</option>
     @if(isset($datas))
         @foreach($datas as $data)
@@ -10,7 +10,7 @@
                     @endif
                 @endif
              @else
-             <option value="{{ $data->$id }}">{{$data->$fieldname}}</option>
+                    <option value="{{ $data->$id }}">{{$data->$fieldname}}</option>
              @endif
         @endforeach
     @endif                                                             

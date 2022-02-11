@@ -1,6 +1,9 @@
+@section('title')
+Add New Loan Application
+@endsection
 @section('css')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
+<link href="{{ URL::asset('/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 
 @endsection
 <div class="row">
@@ -100,8 +103,12 @@
                                                 'id'=>'',
                                                 'label'=>'Phone',
                                                 'placeholder'=>'',
-                                            
+                                                'datas'=>App\Models\ProductGroup::all(),
+                                                'fieldname'=>'name',
+                                                'group'=>"product",
                                                 ])   
+
+                                         
                                         
                                                     
                                             </div>
@@ -123,7 +130,7 @@
                                     </div>
 
                                     <div class="col-md-3">
-                                            <div class="mb-3">
+                                            <div class="mb-3" wire:ignore >
                                         
                                             @include('components.select',[
                                             'name'=>'product',
@@ -171,7 +178,7 @@
 </div>
 @push('scripts')
 
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{{ URL::asset('/assets/libs/select2/select2.min.js') }}"></script>
 <script>
 window.livewire.on('disabled', $data => {
     document.getElementById('icnumber').readOnly= true;
@@ -180,37 +187,11 @@ window.livewire.on('disabled', $data => {
 
 window.livewire.on('load', $data => {
  
-    
-getproduct();
-
-   $('#product').on('change', function(e) {
-    //getproduct();
-    let data = $(this).val();
-        @this.set('product', data);
-
-        $('#product').select2("val",data);
-        
-    });
-
-    
-
-
-});    
-
-
-window.livewire.on('datachange', $data => {
-
-    let data = $(this).val();
-        @this.set('product', data);
-    
-
-});   
-
-function getproduct(){
+    $('.select2').select2();
 
     $('#product').select2({
     placeholder: 'Select Product',
-    tags: true, selectOnBlur: true,
+    tags: false, selectOnBlur: true,
     ajax: {
         url: "{{route('productlist')}}",
         dataType: 'json',
@@ -226,17 +207,27 @@ function getproduct(){
         };
         },
         //Allow manually entered text in drop down.
-        createSearchChoice:function(term, results) {
-            if ($(results).filter( function() {
-                return term.localeCompare(this.text)===0; 
-            }).length===0) {
-                return {id:term, text:term + ' [New]'};
-            }
-        },
-        cache: true
+        // createSearchChoice:function(term, results) {
+        //     if ($(results).filter( function() {
+        //         return term.localeCompare(this.text)===0; 
+        //     }).length===0) {
+        //         return {id:term, text:term + ' [New]'};
+        //     }
+        // },
+        // cache: true
     }
     });
 
-}
+   $('#product').on('change', function(e) {
+    //getproduct();
+    let data = $(this).val();
+        @this.set('product', data);        
+    });
+
+});    
+
+ 
+
+
 </script>
 @endpush
