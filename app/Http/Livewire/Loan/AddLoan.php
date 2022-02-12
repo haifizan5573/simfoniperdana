@@ -31,6 +31,7 @@ class AddLoan extends Component
     
     public function render()
     {
+        dd(1);
       return view('livewire.loan.addloan');
     }
 
