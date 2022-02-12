@@ -42,7 +42,7 @@ Add New Loan Application
                                              
                                     </div>
                                 </div>
-                            <div>122
+                            <div>
                                 @if(!$showcustform)
                                     @include('components.button',[
                                         'type'=>'submit',

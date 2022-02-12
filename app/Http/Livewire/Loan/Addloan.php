@@ -31,9 +31,8 @@ class AddLoan extends Component
     
     public function render()
     {
-        return view('livewire.loan.addloan',[
-            'showcustform'=>$this->showcustform
-        ]);
+        $this->showcustform=false;
+        return view('livewire.loan.addloan');
     }
 
     public function CustomerSearch(){
