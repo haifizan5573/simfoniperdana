@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Remark extends Model
 {
     use HasFactory;
+    protected $guarded=[];
 }

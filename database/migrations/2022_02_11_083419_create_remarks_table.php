@@ -14,13 +14,13 @@ class CreateRemarksTable extends Migration
     public function up()
     {
         Schema::create('remarks', function (Blueprint $table) {
-            Schema::create('remarks', function (Blueprint $table) {
+       
                 $table->id();
                 $table->timestamps();
                 $table->longtext('remark');
                 $table->string('remark_by');
                 $table->morphs('remarkable');
-            });
+            
         });
     }
 

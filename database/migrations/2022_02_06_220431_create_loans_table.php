@@ -17,6 +17,7 @@ class CreateLoansTable extends Migration
             $table->id();
             $table->BigInteger('customerid')->unsigned();
             $table->BigInteger('productid')->unsigned();
+            $table->string('appID')->nullable();
             $table->string('amountapplied')->nullable();
             $table->string('cashinhand')->nullable();
             $table->string('amountapproved')->nullable();

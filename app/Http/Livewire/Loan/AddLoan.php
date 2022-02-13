@@ -5,12 +5,14 @@ namespace App\Http\Livewire\Loan;
 use Livewire\Component;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\Status;
+use Illuminate\Support\Facades\Auth;
 
 
 class AddLoan extends Component
 {
     public $message,$icnumber,$policeic,$showcustform,$labeltxt;
-    public $name,$phone,$email,$agent,$product;
+    public $name,$phone,$email,$agent,$product,$remark;
 
     protected $searchrules=[
        'icnumber'=>'required_without:policeic',
@@ -31,7 +33,6 @@ class AddLoan extends Component
     
     public function render()
     {
-        dd(1);
       return view('livewire.loan.addloan');
     }
 
@@ -56,26 +57,36 @@ class AddLoan extends Component
             $this->labeltxt="Existing Customer";
             $this->name=$this->getCust->name;
             $this->email=$this->getCust->email;
-            $this->phone=$this->getCust->Contacts()->pluck('phonenumber');
+            $this->phone=$this->getCust->Contacts()->where('phonetype','default')->first()->phonenumber;
        }
 
     }
 
-    public function AddLoan(){
+    public function AddLoan(Request $request){
 
         $validated=$this->validate($this->loanrules);
         $this->emit('load');
 
-        dd($this->product);
+   
 
-        if(isset($this->getCust->id)){ // update customer
-            $custid=$this->getCust->id;
-            $this->getCust->Update([
+
+        $policeic=$this->policeic;
+        $cust=Customer::where('icnumber',$this->icnumber)
+                        ->when (!empty($this->policeic) , function ($query) use($policeic){
+                            return $query->where('policeic',$policeic);
+                        })->first();
+
+        $status=Status::where('name','new')->first()->id;
+
+        if(isset($cust->id)){ // update customer
+            $custid=$cust->id;
+            $cust->Update([
                 'name'=>$this->name,
                 'email'=>$this->email
             ]);
 
-            $contact=$this->getCust->Contacts()->where('phonetype','default')->first();
+        
+            $contact=$cust->Contacts()->where('phonetype','default')->first();
             $contact->Update(['phonenumber'=>$this->phone]);
 
         }else{ 
@@ -101,13 +112,41 @@ class AddLoan extends Component
                 'address'=>NULL,
              ]);
 
+
              $custid=$cust->id;
         }
+
+            
+
+             //loan application
+             $loan=$cust->Loan()->create([
+                'appid'=>date('Ymd').substr($this->icnumber,10,4),
+                'productid'=>$this->product,
+                'agentid'=>$this->agent,
+                'status'=>$status
+            ]);
+
+             //remark
+             if(!empty($this->remark)){
+                $loan->Remark()->create([
+                    'remark'=>$this->remark,
+                    'remark_by'=>Auth::user()->id
+                ]);
+             }
+
+        //if success go to all application
+
+
+       
+
+        $result = array("alert-type" => "success", "message" => "New Application Added");
+        return redirect()->route('applist')->with($result);
 
     }
 
     public function cancelForm(){
         $this->showcustform=false;
+        $this->emit('load');
     }
 
     public function updatedProduct(){

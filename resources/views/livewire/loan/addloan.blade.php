@@ -59,7 +59,7 @@ Add New Loan Application
                         <form id="AddLoan" wire:submit.prevent="AddLoan">
 
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                         <div class="mb-3">
                                     
                                         @include('components.input',[
@@ -76,7 +76,7 @@ Add New Loan Application
                                                 
                                         </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                         <div class="mb-3">
                                     
                                         @include('components.select',[
@@ -93,6 +93,25 @@ Add New Loan Application
                                                 
                                         </div>
                                 </div>
+
+                                <div class="col-md-3">
+                                            <div class="mb-3" wire:ignore >
+                                        
+                                            @include('components.select',[
+                                            'name'=>'product',
+                                            'selectid'=>'product',
+                                            'fieldname'=>'name',
+                                            'id'=>'id',
+                                            'label'=>'Product',
+                                            'placeholder'=>'-Select Product-',  
+                                            ])   
+
+                                           
+
+                                                    
+                                            </div>
+                                </div>
+
                             </div>
                             <div class="row">
                                     <div class="col-md-3">
@@ -103,7 +122,7 @@ Add New Loan Application
                                                 'id'=>'',
                                                 'label'=>'Phone',
                                                 'placeholder'=>'',
-                                                'datas'=>App\Models\ProductGroup::all(),
+                                                'datas'=>'',
                                                 'fieldname'=>'name',
                                                 'group'=>"product",
                                                 ])   
@@ -129,25 +148,18 @@ Add New Loan Application
                                             </div>
                                     </div>
 
-                                    <div class="col-md-3">
-                                            <div class="mb-3" wire:ignore >
-                                        
-                                            @include('components.select',[
-                                            'name'=>'product',
-                                            'selectid'=>'product',
-                                            'fieldname'=>'name',
-                                            'id'=>'id',
-                                            'label'=>'Product',
-                                            'placeholder'=>'-Select Product-',  
-                                            ])   
-
-                                           
-
-                                                    
-                                            </div>
-                                    </div>
+                                
                             </div>
-
+                            <div class="row">
+                                <div class="col-md-12 mb-3" wire:ignore>
+                                @include('components.textarea',[
+                                            'element'=>'remark',
+                                            'name'=>'remark',
+                                            'content'=>'',
+                                            'label'=>'Remark',
+                                            ])   
+                                </div>
+                            </div>
                             <div>
                                
                                     @include('components.button',[
@@ -179,6 +191,8 @@ Add New Loan Application
 @push('scripts')
 
 <script src="{{ URL::asset('/assets/libs/select2/select2.min.js') }}"></script>
+ <!--tinymce js-->
+ <script src="{{ URL::asset('assets/libs/tinymce/tinymce.min.js') }}"></script>
 <script>
 window.livewire.on('disabled', $data => {
     document.getElementById('icnumber').readOnly= true;
@@ -187,47 +201,77 @@ window.livewire.on('disabled', $data => {
 
 window.livewire.on('load', $data => {
  
-    $('.select2').select2();
-
+    
     $('#product').select2({
-    placeholder: 'Select Product',
-    tags: false, selectOnBlur: true,
-    ajax: {
-        url: "{{route('productlist')}}",
-        dataType: 'json',
-        delay: 250,
-        processResults: function (data) {
-        return {
-            results:  $.map(data, function (item) {
+            placeholder: 'Select Product',
+            tags: false, selectOnBlur: true,
+            ajax: {
+                url: "{{route('productlist')}}",
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
                 return {
-                    text: item.name,
-                    id: item.id
-                }
-            })
-        };
-        },
-        //Allow manually entered text in drop down.
-        // createSearchChoice:function(term, results) {
-        //     if ($(results).filter( function() {
-        //         return term.localeCompare(this.text)===0; 
-        //     }).length===0) {
-        //         return {id:term, text:term + ' [New]'};
-        //     }
-        // },
-        // cache: true
-    }
+                    results:  $.map(data, function (item) {
+                        return {
+                            text: item.name,
+                            id: item.id
+                        }
+                    })
+                };
+                },
+                //Allow manually entered text in drop down.
+                // createSearchChoice:function(term, results) {
+                //     if ($(results).filter( function() {
+                //         return term.localeCompare(this.text)===0; 
+                //     }).length===0) {
+                //         return {id:term, text:term + ' [New]'};
+                //     }
+                // },
+                // cache: true
+            }
     });
 
    $('#product').on('change', function(e) {
-    //getproduct();
+
     let data = $(this).val();
         @this.set('product', data);        
     });
 
+
+    // $("#remark").length &&
+    tinymce.init({
+      selector: "textarea#remark",
+      height: 300,
+      forced_root_block: false,
+        setup: function (editor) {
+            editor.on('init change', function () {
+                editor.save();
+            });
+            editor.on('change', function (e) {
+            @this.set('remark', editor.getContent());
+            });
+        },
+      toolbar:
+        "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | forecolor backcolor",
+      style_formats: [
+        { title: "Bold text", inline: "b" },
+        { title: "Red text", inline: "span", styles: { color: "#ff0000" } },
+        { title: "Red header", block: "h1", styles: { color: "#ff0000" } },
+        { title: "Example 1", inline: "span", classes: "example1" },
+        { title: "Example 2", inline: "span", classes: "example2" },
+        { title: "Table styles" },
+        { title: "Table row 1", selector: "tr", classes: "tablerow1" },
+      ],
+    });
+
 });    
 
- 
+
+
+
 
 
 </script>
+ 
+
 @endpush
