@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class ApplicationList extends Component
 {
     use WithPagination;
-    public $filter;
+    public $filter,$search;
 
     public $sortField = "status";
     public $sortAsc = true;
@@ -42,15 +42,23 @@ class ApplicationList extends Component
     public function render()
     {
         
-        return view('livewire.loan.application-list');
+        return view('livewire.loan.application-list',[
+            'loans'=>$this->loanList()
+        ]);
     }
 
     public function loanList(){
 
+   
         if(!$this->filter){
-            return Loan::orderBy('date_created','asc')->paginate(30);
+            return Loan::whereHas('customer', function ($query) {
+                if(!empty($this->search)){
+                $query->where('name', 'like', '%' . $this->search . '%');
+                $query->orwhere('icnumber', 'like', '%' . $this->search . '%');
+                }
+            })->orderBy('created_at','asc')->paginate(5);
         }else{
-            return Loan::where('productid',$this->filter)->orderBy('date_created','asc')->paginate(30);
+            return Loan::where('productid',$this->filter)->orderBy('created_at','asc')->paginate(30);
         }
        
     }

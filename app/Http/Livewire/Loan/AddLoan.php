@@ -117,10 +117,10 @@ class AddLoan extends Component
         }
 
             
-
+             $idno=(!empty($this->icnumber))?$this->icnumber:$this->policeic;
              //loan application
              $loan=$cust->Loan()->create([
-                'appid'=>date('Ymd').substr($this->icnumber,10,4),
+                'appid'=>date('ymdhis').substr($idno,12,2),
                 'productid'=>$this->product,
                 'agentid'=>$this->agent,
                 'status'=>$status

@@ -38,9 +38,33 @@
                                         <th class="align-middle">Status</th>
                                     </tr>
                                 <thead>
-
+                                @foreach($loans as $loan)
+                                    <tr>
+                                        <td>{{$loan->appid}}</td>
+                                        <td>{{$loan->Customer->name}}</td>
+                                        <td>{{$loan->Customer->icnumber}}</td>
+                                        <td>{{$loan->Customer->Contacts()->first()->phonenumber}}</td>
+                                        <td>@if(isset($loan->Product->name)){{$loan->Product->name}}@else - @endif</td>
+                                        <td>{{$loan->amountapplied}}</td>
+                                        <td>
+                                            @if(isset($loan->Remark->last()->remark))
+                                            {{$loan->Remark->last()->remark}}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($loan->Status()->first()->name)
+                                            {{$loan->Status()->first()->name}}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </table>
                     </div>
+                </div>
+                <div class="row mt-10 ml-4">
+                        <div class="mt-10 ml-110">
+                        {{ $loans->links() }}
+                        </div>
                 </div>
 
             </div>

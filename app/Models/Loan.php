@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Remark;
+use App\Models\Customer;
+use App\Models\Product;
+use App\Models\Status;
 
 class Loan extends Model
 {
@@ -13,5 +16,17 @@ class Loan extends Model
 
     public function Remark(){
         return $this->morphMany(Remark::class,'remarkable');
+    }
+
+    public function Customer(){
+        return $this->hasOne(Customer::class,'id','customerid');
+    }
+
+    public function Product(){
+        return $this->hasOne(Product::class,'id','productid');
+    }
+
+    public function Status(){
+        return $this->hasOne(Status::class,'id','status');
     }
 }
