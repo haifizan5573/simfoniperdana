@@ -14,7 +14,7 @@ class Loan extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function Remark(){
+    public function Remarks(){
         return $this->morphMany(Remark::class,'remarkable');
     }
 

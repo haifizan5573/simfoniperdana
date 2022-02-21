@@ -14,8 +14,9 @@
         "laravel/ui": "^3.4",
         "laravelcollective/html": "^6.2",
         "livewire/livewire": "^2.9",
-        "spatie/laravel-permission": "^5.5",
-        "sendgrid/sendgrid": "~7"
+        "mews/purifier": "^3.3",
+        "sendgrid/sendgrid": "~7",
+        "spatie/laravel-permission": "^5.5"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

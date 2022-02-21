@@ -77,19 +77,16 @@ Add New Loan Application
                                         </div>
                                 </div>
                                 <div class="col-md-3">
-                                        <div class="mb-3">
+                                        <div class="mb-3" wire:ignore>
                                     
-                                        @include('components.select',[
+                                            @include('components.select',[
                                             'name'=>'agent',
+                                            'selectid'=>'agent',
                                             'fieldname'=>'name',
                                             'id'=>'id',
                                             'label'=>'Agent',
-                                            'placeholder'=>'-Select Agent-',
-                                            'datas'=>App\Models\User::all(),
-                                            'filtertype'=>'roles',
-                                            'filter'=>'Agent'
-                                        
-                                            ])   
+                                            'placeholder'=>'-Select Agent-', 
+                                            ])  
                                                 
                                         </div>
                                 </div>
@@ -173,7 +170,7 @@ Add New Loan Application
                                     @include('components.button',[
                                         'type'=>'button',
                                         'class'=>'btn btn-warning',
-                                        'onclick'=>'wire:click="cancelForm"',
+                                        'onclick'=>"onclick='window.location.href=\"addapp\"'",
                                         'label'=>'Cancel',
                                         'target'=>''
                                     ])
@@ -231,6 +228,32 @@ window.livewire.on('load', $data => {
             }
     });
 
+    $('#agent').select2({
+            placeholder: 'Select Agent',
+            tags: false, selectOnBlur: true,
+            ajax: {
+                url: "{{route('productlist')}}",
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                return {
+                    results:  $.map(data, function (item) {
+                        return {
+                            text: item.name,
+                            id: item.id
+                        }
+                    })
+                };
+                },
+            }
+    });
+
+    $('#agent').on('change', function(e) {
+
+    let data = $(this).val();
+        @this.set('agent', data);        
+    });
+
    $('#product').on('change', function(e) {
 
     let data = $(this).val();
@@ -252,16 +275,7 @@ window.livewire.on('load', $data => {
             });
         },
       toolbar:
-        "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | forecolor backcolor",
-      style_formats: [
-        { title: "Bold text", inline: "b" },
-        { title: "Red text", inline: "span", styles: { color: "#ff0000" } },
-        { title: "Red header", block: "h1", styles: { color: "#ff0000" } },
-        { title: "Example 1", inline: "span", classes: "example1" },
-        { title: "Example 2", inline: "span", classes: "example2" },
-        { title: "Table styles" },
-        { title: "Table row 1", selector: "tr", classes: "tablerow1" },
-      ],
+        "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | forecolor backcolor",
     });
 
 });    

@@ -5,6 +5,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::group(['middleware' => ['can:app-list']], function () {
         Route::get('/applist/{id?}', App\Http\Livewire\Loan\ApplicationList::class)->name('applist');
+        Route::get('/viewapp/{id?}', App\Http\Livewire\Loan\ViewApplication::class)->name('viewapp');
     });
    
     Route::group(['middleware' => ['can:app-create']], function () {

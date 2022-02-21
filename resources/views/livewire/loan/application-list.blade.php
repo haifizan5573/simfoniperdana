@@ -40,15 +40,15 @@
                                 <thead>
                                 @foreach($loans as $loan)
                                     <tr>
-                                        <td>{{$loan->appid}}</td>
+                                        <td><a href="{{route('viewapp',['id'=>$loan->id])}}">{{$loan->appid}}</a></td>
                                         <td>{{$loan->Customer->name}}</td>
                                         <td>{{$loan->Customer->icnumber}}</td>
                                         <td>{{$loan->Customer->Contacts()->first()->phonenumber}}</td>
                                         <td>@if(isset($loan->Product->name)){{$loan->Product->name}}@else - @endif</td>
                                         <td>{{$loan->amountapplied}}</td>
                                         <td>
-                                            @if(isset($loan->Remark->last()->remark))
-                                            {{$loan->Remark->last()->remark}}
+                                            @if(isset($loan->Remarks->last()->remark))
+                                            {!!$loan->Remarks->last()->remark!!}
                                             @endif
                                         </td>
                                         <td>
@@ -74,21 +74,6 @@
 
 @push('scripts')
 
-<script>
-
-$(document).ready(function() {
-    $('#example').DataTable( {
-        ajax:           "../data/2500.txt",
-        deferRender:    true,
-        scrollY:        200,
-        scrollCollapse: true,
-        scroller:       true
-    } );
-} );
-
-</script>
-
-@include('components.datatablescript')
 @include('components.toastr') 
 
 @endpush

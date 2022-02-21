@@ -10,6 +10,6 @@ class Menu extends Model
     use HasFactory;
 
     public function submenu(){
-        return $this->hasMany(Menu::class,"parent","id");
+        return $this->hasMany(Menu::class,"parent","id")->orderBy('order');
     }
 }

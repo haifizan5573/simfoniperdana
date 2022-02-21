@@ -21,6 +21,7 @@ class CreateLoansTable extends Migration
             $table->string('amountapplied')->nullable();
             $table->string('cashinhand')->nullable();
             $table->string('amountapproved')->nullable();
+            $table->date('receiveddate')->nullable();
             $table->date('approvaldate')->nullable();
             $table->date('disburseddate')->nullable();
             $table->date('rejecteddate')->nullable();

@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['middleware' => ['auth']], function() {
+
+    //Route::apiResource('/agent',App\Http\Livewire\Form\Modal::class)->name('agent');
+
+});
