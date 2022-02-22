@@ -128,7 +128,7 @@ class AddLoan extends Component
 
              //remark
              if(!empty($this->remark)){
-                $loan->Remark()->create([
+                $loan->Remarks()->create([
                     'remark'=>$this->remark,
                     'remark_by'=>Auth::user()->id
                 ]);
