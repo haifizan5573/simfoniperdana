@@ -3,6 +3,8 @@
 
 <script>
 
+
+window.livewire.on('showmessage', data => {
     toastr.options = {
         "closeButton": false,
         "debug": false,
@@ -21,24 +23,28 @@
         "hideMethod": "fadeOut"
         }
 
-    @if(Session::has('message'))
-    var type = "{{ Session::get('alert-type') }}";
+
+    var type = data[0]['alert-type'];
     switch (type) {
         case 'info':
-            toastr.info("{{ Session::get('message') }}");
+            toastr.info(data[0]['message']);
             break;
 
         case 'warning':
-            toastr.warning("{{ Session::get('message') }}");
+            toastr.warning(data[0]['message']);
             break;
 
         case 'success':
-            toastr.success("{{ Session::get('message') }}");
+            toastr.success(data[0]['message']);
             break;
 
         case 'error':
-            toastr.error("{{ Session::get('message') }}");
+            toastr.error(data[0]['message']);
             break;
+        default: 
+            toastr.info(data[0]['message']);
     }
-    @endif
+ 
+});
+
 </script>

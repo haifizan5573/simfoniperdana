@@ -1,23 +1,133 @@
 
 
-@section('content')
+
 
 <div class="row mb-0">
-                    <div class="col-12 card border shadow-none card-body">
+        <div class="col-12 card border shadow-none card-body">
+            <form id="editcustomer" wire:submit.prevent="editcustomer">
+                        <div class="row mb-2">
+                          
+                            <div class="col-6">
 
-                        <dl class="row mb-0">
-                            @include('components.dldt',['dlclass'=>'col-2 fw-bold','dtclass'=>'col-4','label'=>'Name','desc'=>": "])
+                        
+                                
+                                    @include('components.input',[
+                                            'name'=>'name',
+                                            'id'=>'',
+                                            'label'=>'Name',
+                                            'placeholder'=>'',
+                                        
+                                            ])   
+                            </div>
 
-                            @include('components.dldt',['dlclass'=>'col-2 fw-bold','dtclass'=>'col-4','label'=>'IC No.','desc'=>": "])
-                        </dl>
+                            <div class="col-6">
+                                
+                                @include('components.input',[
+                                        'name'=>'icnumber',
+                                        'id'=>'',
+                                        'label'=>'IC No.',
+                                        'placeholder'=>'',
+                                    
+                                        ])   
+                             </div>
+  
+                        </div>
 
-                        <dl class="row mb-0">
-                            @include('components.dldt',['dlclass'=>'col-2 fw-bold','dtclass'=>'col-4','label'=>'Phone','desc'=>": "])
-
-                            @include('components.dldt',['dlclass'=>'col-2 fw-bold','dtclass'=>'col-4','label'=>'Address','desc'=>": "])
-                        </dl>
+                    <div class="row mb-2">
+                          
+                          <div class="col-6">
+                              
+                                  @include('components.input',[
+                                          'name'=>'phone',
+                                          'id'=>'',
+                                          'label'=>'Phone',
+                                          'placeholder'=>'',
                                       
-                    </div>
-</div>
+                                          ])   
+                          </div>
 
-@endsection
+                          <div class="col-6">
+                              
+                                 @include('components.input',[
+                                          'name'=>'email',
+                                          'id'=>'',
+                                          'label'=>'Email',
+                                          'placeholder'=>'',
+                                      
+                                          ])   
+                             
+                           </div>
+
+                      </div>
+
+                      <div class="row mb-2">
+                          
+                          <div class="col-12">
+                              
+                                  @include('components.textarea',[
+                                          'name'=>'fulladdress',
+                                          'id'=>'',
+                                          'element'=>"fulladdress",
+                                          'label'=>'Address',
+                                          'placeholder'=>'',
+                                      
+                                          ])   
+                          </div>
+
+                      </div>
+
+                      <div class="row mb-4" wire:ignore>
+                          
+                          <div class="col-4" >
+
+                          @include('components.select',[
+                                            'name'=>'postcode',
+                                            'selectid'=>'postcode',
+                                            'fieldname'=>'',
+                                            'id'=>'',                         
+                                            'label'=>'Postcode',
+                                            'placeholder'=>'', 
+                                            ])  
+                              
+                             
+                          </div>
+
+                          <div class="col-8">
+                              
+                             @include('components.select',[
+                                            'name'=>'location',
+                                            'selectid'=>'location',
+                                            'fieldname'=>'',
+                                            'id'=>'',
+                                            'label'=>'Location',
+                                            'placeholder'=>'', 
+                                            ])  
+                             
+                           </div>
+
+                      </div>
+
+                      <div class="row">
+                            <div class="col-12">
+                               @include('components.button',[
+                                   'type'=>'submit',
+                                   'class'=>'btn btn-primary',
+                                   'onclick'=>'',
+                                   'label'=>'Submit Changes',
+                                   'target'=>'editcustomer'
+                               ])
+                           
+                               @include('components.button',[
+                                   'type'=>'button',
+                                   'class'=>'btn btn-warning',
+                                   'onclick'=>'data-bs-dismiss="modal"',
+                                   'label'=>'Cancel',
+                                   'target'=>''
+                               ])
+                            </div>
+                       </div>
+            </form>
+                     
+                                      
+        </div>
+</div>

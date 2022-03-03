@@ -281,10 +281,6 @@ window.livewire.on('load', $data => {
 });    
 
 
-
-
-
-
 </script>
  
 

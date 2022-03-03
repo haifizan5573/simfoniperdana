@@ -36,5 +36,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/modal/{id?}',App\Http\Livewire\Form\Modal::class)->name('modal');
+    Route::get('/postcode',[App\Http\Livewire\API\Address::class,'postcode'])->name('postcode');
+    Route::get('/location/{id?}',[App\Http\Livewire\API\Address::class,'location'])->name('location');
 
 });

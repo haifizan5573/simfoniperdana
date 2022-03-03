@@ -1,2 +1,2 @@
 <label class="form-label">{{ $label }}</label>
-<textarea id="{{$element}}" wire:model.lazy="{{$name}}" >{{$content}}</textarea>
+<textarea @if(isset($element))id="{{$element}}"@endif wire:model.lazy="{{$name}}" class="form-control">@if(isset($content)){{$content}}@endif</textarea>

@@ -29,7 +29,7 @@
                                 <thead>
                                     <tr>
                                         <th class="align-middle">App. ID</th>
-                                        <th class="align-middle">Customer Name</th>
+                                        <th class="align-middle"><a wire:click="sortBy()">Customer Name</a></th>
                                         <th class="align-middle">IC No.</th>
                                         <th class="align-middle">Phone</th>
                                         <th class="align-middle">Product Applied</th>
