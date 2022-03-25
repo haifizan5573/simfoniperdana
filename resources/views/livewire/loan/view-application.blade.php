@@ -13,6 +13,7 @@ Application Details
 }
 </style>
 <link href="{{ URL::asset('assets/libs/toastr/build/toastr.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css">
 @endsection
 <div>
     <div class="row">
@@ -36,7 +37,7 @@ Application Details
                             </div>
                             <div class="card-body">
 
-                                @if($buttcustdetails)
+                            @if($buttcustdetails)
                             
                                 <div class="row mb-0">
                                     <div class="col-6">
@@ -77,36 +78,151 @@ Application Details
 
                                         <dl class="row mb-0">
                                             
-                                        @include('components.dldt',['dlclass'=>'col-2 fw-bold','dtclass'=>'col-10','label'=>'Address','desc'=>$address->address."<br/>".$address->location."<br/>".$address->postcode])
+                                        @include('components.dldt',['dlclass'=>'col-2 fw-bold','dtclass'=>'col-10','label'=>'Address','desc'=>$fulladdressview])
 
                                         </dl>
                                                     
                                     </div>
                                 </div>
-                                <h6 class="mb-3">Employment Details :</h6>
+
+                                <div class="row mb-0">
+                                    <div class="col-6">
+                                            <h6 class="mb-3">Employment Details :</h6>
+                                    </div>
+                                    <div class="col-6 d-flex justify-content-end mb-2">
+                                            @can('app-edit')
+                                         
+                                                @include('components.button',[
+                                                            'type'=>'button',
+                                                            'class'=>'btn btn-light btn-sm waves-effect waves-light',
+                                                            'onclick'=>"wire:click=\"open('livewire.form.employer','Edit Employment Details',$loan->id)\"",
+                                                            'label'=>'Edit',
+                                                            'icon'=>'<i class="bx bx-edit-alt font-size-16 align-middle me-2"></i>',
+                                                            'loader'=>true,
+                                                            'targetloader'=>"editcust",
+                                                        ])
+                                            
+                                            @endcan
+                                    </div>
+                                </div>
+                                
                                 <div class="row mb-0">
                                     <div class="col-12 card border shadow-none card-body">
 
                                         <dl class="row mb-0">
-                                            @include('components.dldt',['dlclass'=>'col-2 fw-bold','dtclass'=>'col-4','label'=>'Job Title','desc'=>$customer->name])
+                                            @include('components.dldt',['dlclass'=>'col-2 fw-bold','dtclass'=>'col-4','label'=>'Job Title','desc'=>$customer->jobtitle])
 
-                                            @include('components.dldt',['dlclass'=>'col-2 fw-bold','dtclass'=>'col-4','label'=>'Emp. Name','desc'=>$customer->icnumber])
+                                            @include('components.dldt',['dlclass'=>'col-2 fw-bold','dtclass'=>'col-4','label'=>'Emp. Name','desc'=>$employername])
                                         </dl>
 
                                         <dl class="row mb-0">
-                                            @include('components.dldt',['dlclass'=>'col-2 fw-bold','dtclass'=>'col-4','label'=>'Phone','desc'=>$contact->phonenumber])
+                                            @include('components.dldt',['dlclass'=>'col-2 fw-bold','dtclass'=>'col-4','label'=>'Phone','desc'=>$employerphone])
 
-                                            @include('components.dldt',['dlclass'=>'col-2 fw-bold','dtclass'=>'col-4','label'=>'Address','desc'=>$address->address])
+                                            @include('components.dldt',['dlclass'=>'col-2 fw-bold','dtclass'=>'col-4','label'=>'Date Joined','desc'=>$datejoinedformatted])
+                                        </dl>
+
+                                        <dl class="row mb-0">
+                                            
+                                            @include('components.dldt',['dlclass'=>'col-2 fw-bold','dtclass'=>'col-10','label'=>'Address','desc'=>$employeraddress])
+    
                                         </dl>
                                                     
                                     </div>
                                 </div>
-                                <h6 class="mb-3">Payslip :</h6>
+                                
+                                <div class="row mb-0">
+                                    <div class="col-6">
+                                            <h6 class="mb-3">Payslip :</h6>
+                                    </div>
+                                    <div class="col-6 d-flex justify-content-end mb-2">
+                                            @can('app-edit')
+                                        
+                                                @include('components.button',[
+                                                                'type'=>'button',
+                                                                'class'=>'btn btn-light btn-sm waves-effect waves-light',
+                                                                'onclick'=>"wire:click=\"open('livewire.form.payslip','Edit Payslip',$loan->id)\"",
+                                                                'label'=>'Edit',
+                                                                'icon'=>'<i class="bx bx-edit-alt font-size-16 align-middle me-2"></i>',
+                                                                'loader'=>true,
+                                                                'targetloader'=>"editloan",
+                                                            ])
+                                            @endcan
+                                    </div>
+                                </div>
                                 <div class="row mb-0">
                                     <div class="col-12 card border shadow-none card-body">
 
-                                    
-                                                    
+                                        <dl class="row mb-0">
+                                           <div class="col-3 fw-bold">Income</div>
+                                           <div class="col-3 fw-bold">Amount</div>
+                                           <div class="col-3 fw-bold">Deduction</div>
+                                           <div class="col-3 fw-bold">Amount</div>
+                                        </dl>
+                                        <dl class="row mb-0 mt-2">
+                                           <div class="col-6">
+                                               @if(!empty($basicincome))
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                          Basic Income
+                                                        </div>
+                                                        <div class="col-6">
+                                                          @if(!empty($basicincome))RM {!!number_format($basicincome,2) !!}@endif
+                                                        </div>
+                                                    </div>
+                                               @endif
+                                               @foreach($income as $inc)
+
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                          {{$inc->name}}
+                                                        </div>
+                                                        <div class="col-6">
+                                                          @if(!empty($inc->amount))RM {!!number_format($inc->amount,2) !!}@endif
+                                                        </div>
+                                                    </div>
+                                               @endforeach
+                                           </div>
+                                           <div class="col-6">
+                                           @foreach($deduction as $deduct)
+                                            <div class="row">
+                                                <div class="col-6">
+                                                {{$deduct->name}}
+                                                </div>
+                                                <div class="col-6">
+                                                @if(!empty($deduct->amount))RM {!!number_format($deduct->amount,2) !!}@endif
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                           </div>
+                                        </dl>
+                                        <hr/>
+                                        <dl class="row mb-0">
+                                           <div class="col-3 ">Total Income</div>
+                                           <div class="col-3 fw-bold">  
+                                               @if(!empty($totalincome))RM {!!number_format($totalincome,2) !!}@endif
+                                            </div>
+                                           <div class="col-3 ">Total Deduction</div>
+                                           <div class="col-3 fw-bold">
+                                                @if(!empty($totaldeduction))RM {!!number_format($totaldeduction,2) !!}@endif
+                                           </div>
+                                        </dl>
+                                        <hr/>
+                                        <dl class="row mb-0">
+                                           <div class="col-3 fw-bold"></div>
+                                           <div class="col-3 fw-bold"></div>
+                                           <div class="col-3 ">Net Income</div>
+                                           <div class="col-3 fw-bold">
+                                           @if(!empty($netincome))RM {!!number_format($netincome,2) !!}@endif
+                                           </div>
+                                        </dl>
+                                        <dl class="row mb-0">
+                                           <div class="col-3 fw-bold"></div>
+                                           <div class="col-3 fw-bold"></div>
+                                           <div class="col-3">% Net Income</div>
+                                           <div class="col-3 fw-bold">
+                                           @if(!empty($netincomepercen)){!!round($netincomepercen,2) !!}%@endif
+                                           </div>
+                                        </dl>
                                     </div>
                                 </div>
                                 <!-- loan details -->
@@ -116,9 +232,16 @@ Application Details
                                     </div>
                                     <div class="col-6 d-flex justify-content-end mb-2">
                                             @can('app-edit')
-                                            <button onclick="openModal('appmodal','loan','Edit Loan Details')" id="getModal" data-url="{{ route('modal',['id'=>'loan'])}}" class="btn btn-light btn-sm waves-effect waves-light">
-                                                <i class="bx bx-edit-alt font-size-16 align-middle me-2"></i>Edit
-                                            </button>
+                                        
+                                                @include('components.button',[
+                                                                'type'=>'button',
+                                                                'class'=>'btn btn-light btn-sm waves-effect waves-light',
+                                                                'onclick'=>"wire:click=\"open('livewire.form.loan','Edit Loan Details',$loan->id)\"",
+                                                                'label'=>'Edit',
+                                                                'icon'=>'<i class="bx bx-edit-alt font-size-16 align-middle me-2"></i>',
+                                                                'loader'=>true,
+                                                                'targetloader'=>"editloan",
+                                                            ])
                                             @endcan
                                     </div>
                                 </div>
@@ -126,33 +249,33 @@ Application Details
                                     <div class="col-12 card border shadow-none card-body">
 
                                         <dl class="row mb-0">
-                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Product Group','desc'=>""])
+                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Product Group','desc'=>$productgroup])
 
-                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Product Name','desc'=>""])
+                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Product Name','desc'=>$productname])
                                         </dl>
 
                                         <dl class="row mb-0">
-                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Date Submitted','desc'=>""])
+                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Date Submitted','desc'=>$datesubmittedformatted])
 
-                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Date Approved','desc'=>""])
+                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Date Approved','desc'=>$dateapprovedformatted])
                                         </dl>
 
                                         <dl class="row mb-0">
-                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Amount Applied','desc'=>""])
+                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Amount Applied','desc'=>(!empty($amountapplied))?"RM".number_format($amountapplied,2):""])
 
-                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Amount Approved','desc'=>""])
+                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Amount Approved','desc'=>(!empty($amountapproved))?"RM".number_format($amountapproved,2):""])
                                         </dl>
 
                                         <dl class="row mb-0">
-                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Tenure Applied','desc'=>""])
+                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Tenure Applied','desc'=>(!empty($tenureapplied))?$tenureapplied." Year(s)":""])
 
-                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Tenure Approved','desc'=>""])
+                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Tenure Approved','desc'=>(!empty($tenureapproved))?$tenureapproved." Year(s)":""])
                                         </dl>
 
                                         <dl class="row mb-0">
-                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Date Disbursed','desc'=>""])
+                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Date Disbursed','desc'=>$datedisbursedformatted])
 
-                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Date Rejected','desc'=>""])
+                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-3','label'=>'Date Rejected','desc'=>$daterejectedformatted])
                                         </dl>
 
                                     
@@ -161,7 +284,7 @@ Application Details
                                                     
                                     </div>
                                 </div>
-                                @endif
+                            @endif
                             
                             </div>
                         </div>       
@@ -233,7 +356,7 @@ Application Details
     
     </div>
     
-   
+
     
     @include('components.modal',['size'=>'lg'])  
                                         
@@ -245,7 +368,11 @@ Application Details
 @push('scripts')
 <script src="{{ URL::asset('assets/libs/tinymce/tinymce.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/libs/select2/select2.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+
 <script>
+
+
 
 tinymce.init({
   selector: 'textarea#remark',  // change this value according to your HTML
@@ -281,51 +408,245 @@ window.livewire.on('modal', data => {
 
     $(window).on('shown.bs.modal', function(e) { 
         e.preventDefault();
-        
+       
 
     });
 
-    @this.set('postcode', {{$postcode}}); 
+    
+    if(data[0]=="livewire.form.customer"){
+            @this.set('postcode', {{$postcode}}); 
 
-    $('#postcode').select2({
-            placeholder: 'Select Postcode',
-            dropdownParent:  $("#appmodal"),
-            width: '250px',
-            tags: false, selectOnBlur: true,
-            ajax: {
-                url:  "{{route('postcode')}}@if(!empty($postcode))?q={{$postcode}} @endif",
-                dataType: 'json',
-                delay: 250,
-                processResults: function (data) {
-                return {
-                    results:  $.map(data, function (item) {
+            $('#postcode').select2({
+                    placeholder: @if(!empty($postcode))'{{$postcode}}'@else'Select Postcode'@endif,
+                    dropdownParent:  $("#appmodal"),
+                    width: '250px',
+                    tags: false, selectOnBlur: true,
+                    ajax: {
+                        url:  "{{route('postcode')}}@if(!empty($postcode))?q={{$postcode}} @endif",
+                        dataType: 'json',
+                        delay: 250,
+                        processResults: function (data) {
                         return {
-                            text: item.name,
-                            id: item.id
+                        
+                            results:  $.map(data, function (item) {
+                            
+                                return {
+                                    text: item.name,
+                                    id: item.id
+                                }
+                            })
+                        };
+                        },
+                        formatSelection: function(item){ return item.name },
+                    }
+            });
+
+            $('#postcode').on('change', function(e) {
+
+            let data = $(this).val();
+                @this.set('postcode', data);        
+            });
+    }
+
+    if(data[0]=="livewire.form.employer"){
+            $('#employer').select2({
+                    placeholder: @if(!empty($employername))'{{$employername}}'@else'Select Employer'@endif,
+                    dropdownParent:  $("#appmodal"),
+                    width: '350px',
+                    tags: false, selectOnBlur: true,
+                    ajax: {
+                        url:  "{{route('employer')}}@if(!empty($employername))?q={{$employername}} @endif",
+                        dataType: 'json',
+                        delay: 250,
+                        processResults: function (data) {
+                        return {
+                        
+                            results:  $.map(data, function (item) {
+                            
+                                return {
+                                    text: item.name,
+                                    id: item.id
+                                }
+                            })
+                        };
                         }
-                    })
-                };
-                },
-            }
-    });
+                    }
+            });
 
-    $("#postcode").select2('val',{{$postcode}});
+            $('#employer').on('change', function(e) {
 
-    $('#postcode').on('change', function(e) {
+                let data = $(this).val();
+                    @this.set('employer', data);        
+            });
 
-    let data = $(this).val();
-        @this.set('postcode', data);        
-    });
+         
 
+             $('#datejoined').datepicker({
+                todayHighlight: true,
+                format: 'dd M, yyyy',
+                }).on('changeDate', function(e){
+                $(this).datepicker('hide');
+                @this.set('datejoined', $('#datejoined').val());
+            });
+
+            $('#datejoined').datepicker('setDate', '{{$datejoinedformatted}}');
+    }
+
+    if(data[0]=="livewire.form.loan"){
+
+            @this.set('productgroup', {{$productgroupid}}); 
+
+            $('#productgroup').select2({
+                    placeholder: @if(!empty($productgroupid))'{{$productgroup}}'@else'Select Product Group'@endif,
+                    dropdownParent:  $("#appmodal"),
+                    width: '350px',
+                    tags: false, selectOnBlur: true,
+                    ajax: {
+                        url:  "{{route('productgroup')}}@if(!empty($productgroup))?q={{$productgroup}} @endif",
+                        dataType: 'json',
+                        delay: 250,
+                        processResults: function (data) {
+                        return {
+                        
+                            results:  $.map(data, function (item) {
+                            
+                                return {
+                                    text: item.name,
+                                    id: item.id
+                                }
+                            })
+                        };
+                        },
+                        formatSelection: function(item){ return item.name },
+                    }
+            });
+
+            $('#productgroup').on('change', function(e) {
+
+            let data = $(this).val();
+                @this.set('productgroup', data);        
+            });
+
+            $('#tenureapplied').select2({
+                    placeholder: @if(!empty($tenureapplied))'{{$tenureapplied}}'@else'Select Tenure Applied'@endif,
+                    dropdownParent:  $("#appmodal"),
+                    width: '350px',
+                    tags: false, selectOnBlur: true,
+                    ajax: {
+                        url:  "{{route('tenure')}}",
+                        dataType: 'json',
+                        delay: 250,
+                        processResults: function (data) {
+                        return {
+                        
+                            results:  $.map(data, function (item) {
+                            
+                                return {
+                                    text: item.name,
+                                    id: item.id
+                                }
+                            })
+                        };
+                        },
+                        formatSelection: function(item){ return item.name },
+                    }
+            });
+
+            $('#tenureapplied').on('change', function(e) {
+
+            let data = $(this).val();
+                @this.set('tenureapplied', data);        
+            });
+
+            $('#tenureapproved').select2({
+                    placeholder: @if(!empty($tenureapplied))'{{$tenureapproved}}'@else'Select Tenure Approved'@endif,
+                    dropdownParent:  $("#appmodal"),
+                    width: '350px',
+                    tags: false, selectOnBlur: true,
+                    ajax: {
+                        url:  "{{route('tenure')}}",
+                        dataType: 'json',
+                        delay: 250,
+                        processResults: function (data) {
+                        return {
+                        
+                            results:  $.map(data, function (item) {
+                            
+                                return {
+                                    text: item.name,
+                                    id: item.id
+                                }
+                            })
+                        };
+                        },
+                        formatSelection: function(item){ return item.name },
+                    }
+            });
+
+            $('#tenureapproved').on('change', function(e) {
+
+            let data = $(this).val();
+                @this.set('tenureapproved', data);        
+            });
+
+
+            $('#datesubmitted').datepicker({
+                todayHighlight: true,
+                format: 'dd M, yyyy',
+                }).on('changeDate', function(e){
+                $(this).datepicker('hide');
+                @this.set('datesubmitted', $('#datesubmitted').val());
+            });
+
+            $('#datesubmitted').datepicker('setDate', '{{$datesubmittedformatted}}');
+
+            $('#dateapproved').datepicker({
+                todayHighlight: true,
+                format: 'dd M, yyyy',
+                }).on('changeDate', function(e){
+                $(this).datepicker('hide');
+                @this.set('dateapproved', $('#dateapproved').val());
+            });
+
+            $('#dateapproved').datepicker('setDate', '{{$dateapprovedformatted}}');
+
+
+            $('#datedisbursed').datepicker({
+                todayHighlight: true,
+                format: 'dd M, yyyy',
+                }).on('changeDate', function(e){
+                $(this).datepicker('hide');
+                @this.set('datedisbursed', $('#datedisbursed').val());
+            });
+
+            $('#datedisbursed').datepicker('setDate', '{{$datedisbursedformatted}}');
+
+
+
+            $('#daterejected').datepicker({
+                todayHighlight: true,
+                format: 'dd M, yyyy',
+                }).on('changeDate', function(e){
+                $(this).datepicker('hide');
+                @this.set('daterejected', $('#daterejected').val());
+            });
+
+            $('#daterejected').datepicker('setDate', '{{$daterejectedformatted}}');
+
+    }
+
+            
+
+       
 
 });
 
 window.livewire.on('location', pcode => {
 
   
-
+    @this.set('location','{{$location}}'); 
     $('#location').select2({
-            placeholder: 'Select Location',
+            placeholder: @if(!empty($location))'{{$location}}'@else'Select Location'@endif,
             dropdownParent:  $("#appmodal"),
             width: '450px',
             tags: false, selectOnBlur: true,
@@ -351,6 +672,41 @@ window.livewire.on('location', pcode => {
     let data = $(this).val();
         @this.set('location', data);        
     });
+
+
+});
+
+window.livewire.on('productname', pname => {
+
+  
+        @this.set('productname','{{$productnameid}}'); 
+        $('#productname').select2({
+                placeholder: @if(!empty($productname))'{{$productname}}'@else'Select Product Name'@endif,
+                dropdownParent:  $("#appmodal"),
+                width: '370px',
+                tags: false, selectOnBlur: true,
+                ajax: {
+                    url: "{{route('productname')}}/"+pname,
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (item) {
+                            return {
+                                text: item.name,
+                                id: item.id
+                            }
+                        })
+                    };
+                    },
+                }
+        });
+
+        $('#productname').on('change', function(e) {
+
+        let data = $(this).val();
+            @this.set('productname', data);        
+        });
 
 
 });

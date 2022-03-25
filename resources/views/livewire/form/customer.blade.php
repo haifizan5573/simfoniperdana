@@ -27,7 +27,7 @@
                                         'id'=>'',
                                         'label'=>'IC No.',
                                         'placeholder'=>'',
-                                    
+                                        'wire'=>'wire:change="formatIC"  wire:keyup="formatIC"'
                                         ])   
                              </div>
   

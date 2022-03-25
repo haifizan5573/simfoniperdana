@@ -40,7 +40,7 @@
                                 <thead>
                                 @foreach($loans as $loan)
                                     <tr>
-                                        <td><a href="{{route('viewapp',['id'=>$loan->id])}}">{{$loan->appid}}</a></td>
+                                        <td><a href="{{route('viewapp',['appid'=>$loan->id])}}">{{$loan->appid}}</a></td>
                                         <td>{{$loan->Customer->name}}</td>
                                         <td>{{$loan->Customer->icnumber}}</td>
                                         <td>{{$loan->Customer->Contacts()->first()->phonenumber}}</td>

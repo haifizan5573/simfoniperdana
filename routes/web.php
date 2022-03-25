@@ -39,4 +39,14 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/postcode',[App\Http\Livewire\API\Address::class,'postcode'])->name('postcode');
     Route::get('/location/{id?}',[App\Http\Livewire\API\Address::class,'location'])->name('location');
 
+    Route::get('/employer',[App\Http\Livewire\API\Employers::class,'list'])->name('employer');
+
+    Route::get('/productgroup',[App\Http\Livewire\API\Loan::class,'list'])->name('productgroup');
+    Route::get('/productname/{id?}',[App\Http\Livewire\API\Loan::class,'productname'])->name('productname');
+
+    Route::get('/tenure',[App\Http\Livewire\API\Loan::class,'tenure'])->name('tenure');
+
+
+
+
 });

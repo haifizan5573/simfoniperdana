@@ -5,21 +5,28 @@ use Illuminate\Http\Request;
 use Livewire\Component;
 use App\Models\Loan;
 use App\Models\Customer;
+use App\Models\Employer;
 use App\Models\Contact;
 use App\Models\Address;
+use App\Helpers\Formatter;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 use Purifier;
 
 class ViewApplication extends Component
 {
     public $appid,$loan,$customer,$contact,$address,$payslip,$remark;
     public $buttcustdetails,$buttdocument,$butthistory,$message;
-    public $custid,$name,$phone,$email,$postcode,$location,$fulladdress;
-    
+    public $custid,$name,$phone,$email,$postcode,$location,$fulladdress,$fulladdressview;
+    public $employer,$employerdata,$employername,$employeraddress,$employerphone,$datejoined,$datejoinedformatted,$jobtitle;
+    public $productgroup,$productgroupid,$productname,$productnameid,$amountapplied,$amountapproved,$datesubmitted,$dateapproved,$tenureapplied,$tenureapproved,$datedisbursed,$daterejected;
+    public $paysliptype=[],$label=[],$amount=[];
+    public $keyincome=3,$keydeduction=3,$basicincome,$labelincome=array(),$labeldeduction=array(),$amountincome=array(),$amountdeduction=array(),$income,$deduction,$totalincome,$totaldeduction,$netincome,$netincomepercen;
     public $isOpen = false;
     public $page = "";
     public $dataid = "";
     public $title = "";
+    protected $formatter;
 
     protected $listeners = ['showModal' => 'open', 'closeModal' => 'close'];
 
@@ -52,23 +59,34 @@ class ViewApplication extends Component
 
     }
 
-    public function mount(Request $request){
+    public function updatedProductgroup(){
+
+        $this->emit('productname',[$this->productgroup]);
+
+    }
+
+    public function mount($appid){
 
         $this->buttcustdetails=true;
         $this->buttdocument=false;
         $this->butthistory=false;
-        $this->appid=$request->id;
+        $this->appid=$appid;
         $this->message=array("message"=>"1","alert-type"=>"info");
-   
-       
+        $this->totalincome=0;
+        $this->totaldeduction=0;
+
+    
+        $this->formatter=new Formatter();
 
         
-       $this->loan=Loan::find($request->id);
+       $this->loan=Loan::find($appid);
        if(isset($this->loan->id)){
 
         $this->customer=$this->loan->Customer()->first();
         $this->contact=$this->customer->Contacts()->first();
         $this->address=$this->customer->Addresses()->first();
+
+        $this->fulladdressview=$this->formatter->formatAddress($this->address);
 
 
         $this->custid=$this->customer->id;
@@ -82,7 +100,62 @@ class ViewApplication extends Component
         $this->fulladdress=$this->address->address;
         $this->location=$this->address->location;
         $this->postcode=$this->address->postcode;
+
+        $this->employername=(isset($this->customer->Employer->name))?$this->customer->Employer->name:"";
+        $this->jobtitle=$this->customer->jobtitle;
+        $this->datejoined=$this->customer->datejoined;
+        $this->datejoinedformatted=(!empty($this->datejoined))?Carbon::parse($this->datejoined)->format('d M, Y'):"";
        
+
+        $this->employerdata=Employer::find($this->customer->employerid);
+        $this->employeraddress=(isset($this->employerdata->id)&&isset($this->employerdata->Addresses()->first()->address))?$this->formatter->formatAddress($this->employerdata->Addresses()->first()):"";
+        $this->employerphone=(isset($this->employerdata->id)&&isset($this->employerdata->Contacts()->first()->phonenumber))?$this->employerdata->Contacts()->first()->phonenumber:"";
+
+        //loan
+
+        $this->productgroupid=(isset($this->loan->Product->ProductGroup->id))?$this->loan->Product->ProductGroup->id:"";
+        $this->productgroup=(isset($this->loan->Product->ProductGroup->name))?$this->loan->Product->ProductGroup->name:"";
+        $this->productname=(isset($this->loan->Product->name))?$this->loan->Product->name:"";
+        $this->productnameid=(isset($this->loan->Product->id))?$this->loan->Product->id:"";
+        $this->amountapproved=(isset($this->loan->amountapproved))?$this->loan->amountapproved:"";
+        $this->amountapplied=(isset($this->loan->amountapplied))?$this->loan->amountapplied:"";
+        $this->tenureapproved=(isset($this->loan->tenureapproved))?$this->loan->tenureapproved:"";
+        $this->tenureapplied=(isset($this->loan->tenureapplied))?$this->loan->tenureapplied:"";
+        $this->datesubmittedformatted=(!empty($this->loan->submitteddate))?Carbon::parse($this->loan->submitteddate)->format('d M, Y'):"";
+        $this->dateapprovedformatted=(!empty($this->loan->approvaldate))?Carbon::parse($this->loan->approvaldate)->format('d M, Y'):"";
+        $this->datedisbursedformatted=(!empty($this->loan->disburseddate))?Carbon::parse($this->loan->disburseddate)->format('d M, Y'):"";
+        $this->daterejectedformatted=(!empty($this->loan->rejecteddate))?Carbon::parse($this->loan->rejecteddate)->format('d M, Y'):"";
+
+        //payslip
+        $this->basicincome=(isset($this->customer->Payslip()->where('type','basicincome')->first()->amount))?$this->customer->Payslip()->where('type','basicincome')->first()->amount:"";
+        $this->income=$this->customer->Payslip()->where('type','income')->get();
+        $this->deduction=$this->customer->Payslip()->where('type','deduction')->get();
+
+        $this->totalincome+=$this->basicincome;
+        if(count($this->income)){
+            $i=0;
+            foreach($this->income as $inclist){
+                $this->labelincome[$i]=$inclist->name;
+                $this->amountincome[$i]=$inclist->amount;
+                $this->totalincome+=$inclist->amount;
+                $i++;
+            }
+
+        }
+
+        if(count($this->deduction)){
+            $i=0;
+            foreach($this->deduction as $deductlist){
+                $this->labeldeduction[$i]=$deductlist->name;
+                $this->amountdeduction[$i]=$deductlist->amount;
+                $this->totaldeduction+=$deductlist->amount;
+                $i++;
+            }
+
+        }
+
+        $this->netincome=$this->totalincome-$this->totaldeduction;
+        $this->netincomepercen=($this->netincome>0)?($this->netincome/$this->totalincome)*100:"";
 
        }else{
            abort(404);
@@ -95,6 +168,23 @@ class ViewApplication extends Component
       
         return view('livewire.loan.view-application');
     }
+
+    public function addincome(){
+        $this->keyincome++;
+    }
+
+    public function adddeduction(){
+        $this->keydeduction++;
+    }
+
+    public function deletededuction(){
+        $this->keydeduction--;
+    }
+
+    public function deleteincome(){
+        $this->keyincome--;
+    }
+
 
     public function addremark(){
 
@@ -140,7 +230,117 @@ class ViewApplication extends Component
 
         $this->emit('showmessage',[$this->message]);
         $this->emit('closemodal');
+        $this->mount($this->appid);
     
+    }
+
+    public function editemployer(){
+        $this->formatter=new Formatter();
+       // dd($this->datejoined);
+        $cust=Customer::where("id",$this->custid)->first();
+
+        if(!empty($this->datejoined)){
+            $cust->datejoined=$this->formatter->formatDate($this->datejoined);
+        }
+
+        if(!empty($this->employer)){
+            $cust->employerid=$this->employer;
+        }
+
+        $cust->jobtitle=$this->jobtitle;
+
+        $cust->update();
+
+  
+        $this->message=array("message"=>"Employer Details Updated","alert-type"=>"success");
+
+        $this->emit('showmessage',[$this->message]);
+        $this->emit('closemodal');
+        $this->mount($this->appid);
+
+    }
+
+    public function editloan(){
+
+        $cust=Loan::where("appid",$this->loan->appid)->first();
+        $this->formatter=new Formatter();
+
+       // dd($this->datesubmitted);
+
+        if(!empty($this->datesubmitted)){
+            $cust->submitteddate=$this->formatter->formatDate($this->datesubmitted);
+        }
+
+        if(!empty($this->dateapproved)){
+            $cust->approvaldate=$this->formatter->formatDate($this->dateapproved);
+        }
+
+        if(!empty($this->datedisbursed)){
+            $cust->disburseddate=$this->formatter->formatDate($this->datedisbursed);
+        }
+
+        if(!empty($this->daterejected)){
+            $cust->rejecteddate=$this->formatter->formatDate($this->daterejected);
+        }
+
+        $cust->productid=$this->productname;
+        $cust->tenureapplied=$this->tenureapplied;
+        $cust->tenureapproved=$this->tenureapproved;
+        $cust->amountapplied=$this->amountapplied;
+        $cust->amountapproved=$this->amountapproved;
+
+        $cust->update();
+        $this->message=array("message"=>"Loan Details Updated","alert-type"=>"success");
+
+        $this->emit('showmessage',[$this->message]);
+        $this->emit('closemodal');
+        $this->mount($this->appid);
+
+    }
+
+    public function editpayslip(){
+
+
+        //dd($this->labelincome);
+
+        $cust=Customer::where("id",$this->custid)->first();
+
+        $cust->Payslip()->delete();
+
+        if(!empty($this->basicincome)){
+            $cust->Payslip()->create([
+                'name'=>'Basic Income',
+                'amount'=>$this->basicincome,
+                'type'=>'basicincome'
+            ]);
+        }
+
+        for($i=0;$i<$this->keyincome;$i++){
+            if(!empty($this->labelincome[$i])&&!empty($this->amountincome[$i])){
+                $cust->Payslip()->create([
+                    'name'=>$this->labelincome[$i],
+                    'amount'=>$this->amountincome[$i],
+                    'type'=>'income'
+                ]);
+             }
+        }
+
+        for($i=0;$i<$this->keydeduction;$i++){
+            if(!empty($this->labeldeduction[$i])&&!empty($this->amountdeduction[$i])){
+                $cust->Payslip()->create([
+                    'name'=>$this->labeldeduction[$i],
+                    'amount'=>$this->amountdeduction[$i],
+                    'type'=>'deduction'
+                ]);
+            }
+         }
+
+         $this->message=array("message"=>"Payslip Updated","alert-type"=>"success");
+
+         $this->emit('showmessage',[$this->message]);
+         $this->emit('closemodal');
+         $this->mount($this->appid);
+
     }
 
  
@@ -153,4 +353,20 @@ class ViewApplication extends Component
         $this->$button=true;
 
     }
+
+    public function formatIC(){
+        $icnumber = $this->icnumber;
+        $icnumber= preg_replace('/[^0-9]+/', '', $icnumber);
+        $icnumber = substr($icnumber, 0, 12);
+        $length = strlen($icnumber);
+        $formatted = "";
+        for ($i = 0; $i < $length; $i++) { 
+            $formatted .= $icnumber[$i];
+            if($i == 5 || $i == 7){
+                $formatted .= "-";
+            }
+        }
+        $this->icnumber=$formatted;
+    }
+  
 }

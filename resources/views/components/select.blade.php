@@ -11,7 +11,7 @@
                     @endif
                 @endif
              @else
-                    <option value="{{ $data->$id }}">{{$data->$fieldname}}</option>
+                    <option value="{{ $data[$id] }}">{{$data[$fieldname]}}</option>
              @endif
         @endforeach
     @endif                                                             

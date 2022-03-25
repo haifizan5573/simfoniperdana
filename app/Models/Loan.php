@@ -26,6 +26,10 @@ class Loan extends Model
         return $this->hasOne(Product::class,'id','productid');
     }
 
+    public function ProductGroup(){
+        return $this->hasOne(ProductGroup::class,'id','productid');
+    }
+
     public function Status(){
         return $this->hasOne(Status::class,'id','status');
     }

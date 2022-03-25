@@ -18,3 +18,7 @@ body[data-sidebar=dark] #sidebar-menu ul li a {
     user-select: none;
     -webkit-user-select: none;
 }
+
+dd::before {
+    content: ': ';
+}

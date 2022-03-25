@@ -12,6 +12,7 @@ class Customer extends Model
 {
     use HasFactory;
     protected $guarded=[];
+    protected $dateFormat = 'd M, Y';
 
     public function Contacts(){
         return $this->morphMany(Contact::class,'contactable');
@@ -27,5 +28,9 @@ class Customer extends Model
 
     public function Employer(){
         return $this->hasOne(Employer::class,"id","employerid");
+    }
+
+    public function Payslip(){
+        return $this->morphMany(Payslip::class,"payslipsable");
     }
 }
