@@ -5,6 +5,7 @@ namespace App\Http\Livewire\API;
 use Livewire\Component;
 use App\Models\ProductGroup;
 use App\Models\Product;
+use App\Models\Status;
 use Illuminate\Http\Request;
 
 class Loan extends Component
@@ -76,6 +77,35 @@ class Loan extends Component
           }
 
           return response()->json($data);
+    }
+
+
+    public function status(Request $request){
+
+        
+        $data = [];
+  
+        if($request->has('q')){
+            $search = $request->q;
+            $datas =Status::where('name','like','%'.$search.'%')
+                    ->where('isactive',1)
+            		->get();
+       }else{
+
+            $datas =Status::orderby('id','asc')
+            ->where('isactive',1)->get();
+
+       }
+
+
+       foreach($datas as $status){
+      
+            $data[]=array("id"=>$status->id,"name"=>$status->name);
+       }
+
+       return response()->json($data);
+
+
     }
 
 

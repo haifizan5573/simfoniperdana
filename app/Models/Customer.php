@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Contact;
 use App\Models\Address;
 use App\Models\Employer;
+use App\Models\FileUpload;
 
 class Customer extends Model
 {
@@ -32,5 +33,9 @@ class Customer extends Model
 
     public function Payslip(){
         return $this->morphMany(Payslip::class,"payslipsable");
+    }
+
+    public function FileUploads(){
+        return $this->morphMany(FileUpload::class,"file_uploadsable");
     }
 }

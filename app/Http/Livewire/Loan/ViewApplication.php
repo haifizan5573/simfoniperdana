@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Livewire\Loan;
+use Livewire\WithFileUploads;
 use Illuminate\Http\Request;
 use Livewire\Component;
 use App\Models\Loan;
@@ -8,6 +9,9 @@ use App\Models\Customer;
 use App\Models\Employer;
 use App\Models\Contact;
 use App\Models\Address;
+use App\Models\FileUpload;
+use App\Models\Documents;
+use App\Models\LoanDocuments;
 use App\Helpers\Formatter;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -15,13 +19,15 @@ use Purifier;
 
 class ViewApplication extends Component
 {
+    use WithFileUploads;
     public $appid,$loan,$customer,$contact,$address,$payslip,$remark;
     public $buttcustdetails,$buttdocument,$butthistory,$message;
     public $custid,$name,$phone,$email,$postcode,$location,$fulladdress,$fulladdressview;
     public $employer,$employerdata,$employername,$employeraddress,$employerphone,$datejoined,$datejoinedformatted,$jobtitle;
     public $productgroup,$productgroupid,$productname,$productnameid,$amountapplied,$amountapproved,$datesubmitted,$dateapproved,$tenureapplied,$tenureapproved,$datedisbursed,$daterejected;
     public $paysliptype=[],$label=[],$amount=[];
-    public $keyincome=3,$keydeduction=3,$basicincome,$labelincome=array(),$labeldeduction=array(),$amountincome=array(),$amountdeduction=array(),$income,$deduction,$totalincome,$totaldeduction,$netincome,$netincomepercen;
+    public $keyincome=3,$keydeduction=3,$basicincome,$labelincome=array(),$labeldeduction=array(),$amountincome=array(),$amountdeduction=array(),$income,$deduction,$totalincome,$totaldeduction,$netincome,$netincomepercen,$payslipattachment,$payslipattachmentview;
+    public $docstatus=array(),$agentid,$agentname,$status,$appstatus;
     public $isOpen = false;
     public $page = "";
     public $dataid = "";
@@ -75,6 +81,10 @@ class ViewApplication extends Component
         $this->totalincome=0;
         $this->totaldeduction=0;
 
+        $this->doclistall = Documents::all();
+        $this->doclist = Documents::where('type', 'basic')->get();
+        $this->doclistadd = Documents::where('type', 'additional')->where('group', '')->get();
+
     
         $this->formatter=new Formatter();
 
@@ -82,6 +92,8 @@ class ViewApplication extends Component
        $this->loan=Loan::find($appid);
        if(isset($this->loan->id)){
 
+        $this->fileid=$this->loan->appid;
+        $this->status=(isset($this->loan->Status()->first()->name))?$this->loan->Status()->first()->name:"";
         $this->customer=$this->loan->Customer()->first();
         $this->contact=$this->customer->Contacts()->first();
         $this->address=$this->customer->Addresses()->first();
@@ -125,13 +137,18 @@ class ViewApplication extends Component
         $this->dateapprovedformatted=(!empty($this->loan->approvaldate))?Carbon::parse($this->loan->approvaldate)->format('d M, Y'):"";
         $this->datedisbursedformatted=(!empty($this->loan->disburseddate))?Carbon::parse($this->loan->disburseddate)->format('d M, Y'):"";
         $this->daterejectedformatted=(!empty($this->loan->rejecteddate))?Carbon::parse($this->loan->rejecteddate)->format('d M, Y'):"";
+        $this->agentname=(!empty($this->loan->agentid))?$this->loan->Agent()->first()->name:"";
+        $this->agentid=$this->loan->agentid;
 
         //payslip
         $this->basicincome=(isset($this->customer->Payslip()->where('type','basicincome')->first()->amount))?$this->customer->Payslip()->where('type','basicincome')->first()->amount:"";
         $this->income=$this->customer->Payslip()->where('type','income')->get();
         $this->deduction=$this->customer->Payslip()->where('type','deduction')->get();
 
-        $this->totalincome+=$this->basicincome;
+        if(!empty($this->basicincome)){
+            $this->totalincome+=$this->basicincome;
+        }
+       
         if(count($this->income)){
             $i=0;
             foreach($this->income as $inclist){
@@ -156,6 +173,17 @@ class ViewApplication extends Component
 
         $this->netincome=$this->totalincome-$this->totaldeduction;
         $this->netincomepercen=($this->netincome>0)?($this->netincome/$this->totalincome)*100:"";
+        $this->payslipattachmentview=($this->customer->FileUploads()->where('type','payslip')->first())?$this->customer->FileUploads()->where('type','payslip')->first():"";
+
+        $docdata = LoanDocuments::where('loan_id', $appid)->get();
+
+
+
+        foreach ($docdata as $data) {
+
+            //$this->docremark[$data->doc_id] = $data->remark;
+            $this->docstatus[$data->doc_id] = ($data->status == 1) ? $data->status : '';
+        }
 
        }else{
            abort(404);
@@ -190,15 +218,18 @@ class ViewApplication extends Component
 
         $loan = Loan::find($this->appid);
         $cleanremark = Purifier::clean($this->remark);
-        $remark = $loan->remarks()->create([
-            'remark' => $cleanremark,
-            'remark_by' => Auth::user()->id
-        ]);
 
-        $this->dispatchBrowserEvent(
-            'alert',
-            ['type' => 'info',  'message' => 'New comment added']
-        );
+        if(!empty($cleanremark)){
+            $remark = $loan->remarks()->create([
+                'remark' => $cleanremark,
+                'remark_by' => Auth::user()->id
+            ]);
+
+            $this->dispatchBrowserEvent(
+                'alert',
+                ['type' => 'info',  'message' => 'New comment added']
+            );
+        }
 
         $this->emit('cleartext');
 
@@ -342,6 +373,88 @@ class ViewApplication extends Component
          $this->mount($this->appid);
 
     }
+
+    public function payslipattachment(){
+
+        $this->validate([
+            'payslipattachment' => 'required', // 1MB Max
+        ]);
+
+        $cust=Customer::where("id",$this->custid)->first();
+        $path = $this->payslipattachment->store('public/attachment/' . $this->icnumber);
+
+        $cust->FileUploads()->create([
+            'name'=>'Payslip',
+            'path'=>$path,
+            'type'=>'payslip'
+        ]);
+
+        $this->message=array("message"=>"Payslip Added","alert-type"=>"success");
+
+        $this->emit('showmessage',[$this->message]);
+        $this->emit('closemodal');
+        $this->mount($this->appid);
+    }
+
+    public function editdocu(){
+
+
+        foreach ($this->doclistall as $docu) {
+
+            $checkdoc = LoanDocuments::where('doc_id', $docu->id)->where('loan_id', $this->appid)->first();
+
+
+            if (empty($checkdoc->id)) { //exist
+                LoanDocuments::create([
+                    'doc_id' => $docu->id,
+                    'loan_id' => $this->appid,
+                    'name' => $docu->name,
+                    'status' => (isset($this->docstatus[$docu->id])) ? $this->docstatus[$docu->id] : '',
+                   // 'remark' => (isset($this->docremark[$docu->id])) ? $this->docremark[$docu->id] : ''
+                ]);
+            } else {
+                //dd($this->docstatus);
+                $checkdoc->update([
+                    'status' => (isset($this->docstatus[$docu->id])) ? $this->docstatus[$docu->id] : '',
+                    //'remark' => (isset($this->docremark[$docu->id])) ? $this->docremark[$docu->id] : ''
+                ]);
+            }
+        }
+
+        $this->message=array("message"=>"Document List Updated","alert-type"=>"success");
+
+        
+        $this->emit('showmessage',[$this->message]);
+        $this->emit('closemodal');
+        $this->mount($this->appid);
+        $this->togglebutton('buttdocument');
+    }
+
+    public function editloandetails(){
+
+       // dd($this->appstatus);
+
+        $loan = Loan::find($this->appid);
+
+        if(!empty($this->agentid)){
+        $loan->agentid=$this->agentid;
+        }
+
+        if(!empty($this->appstatus)){
+        $loan->status=$this->appstatus;  
+        }
+
+        $loan->update();
+
+        $this->message=array("message"=>"Loan Details Updated","alert-type"=>"success");
+
+        
+        $this->emit('showmessage',[$this->message]);
+        $this->emit('closemodal');
+        $this->mount($this->appid);
+       
+    }
+
 
  
     public function togglebutton($button){

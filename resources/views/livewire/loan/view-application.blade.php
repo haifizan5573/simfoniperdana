@@ -136,6 +136,16 @@ Application Details
                                     </div>
                                     <div class="col-6 d-flex justify-content-end mb-2">
                                             @can('app-edit')
+
+                                            @include('components.button',[
+                                                                'type'=>'button',
+                                                                'class'=>'btn btn-light btn-sm waves-effect waves-light mx-2',
+                                                                'onclick'=>"wire:click=\"open('livewire.form.payslipattachment','Add/Edit Attachment',$loan->id)\"",
+                                                                'label'=>(!empty($payslipattachmentview))?'Edit Attachment':'Add Attachment',
+                                                                'icon'=>'<i class="bx bx-paperclip font-size-16 align-middle me-2"></i>',
+                                                                'loader'=>true,
+                                                                'targetloader'=>"editloan",
+                                                            ])
                                         
                                                 @include('components.button',[
                                                                 'type'=>'button',
@@ -208,7 +218,13 @@ Application Details
                                         </dl>
                                         <hr/>
                                         <dl class="row mb-0">
-                                           <div class="col-3 fw-bold"></div>
+                                           <div class="col-3">
+                                               @if(!empty($payslipattachmentview))
+
+                                                 <a href="{!! Storage::url($payslipattachmentview->path) !!}" target="_blank"><i class="bx bx-paperclip"></i> Payslip</a>
+
+                                               @endif
+                                           </div>
                                            <div class="col-3 fw-bold"></div>
                                            <div class="col-3 ">Net Income</div>
                                            <div class="col-3 fw-bold">
@@ -285,6 +301,86 @@ Application Details
                                     </div>
                                 </div>
                             @endif
+
+                            @if($buttdocument)
+
+                            <form wire:submit.prevent="editdocu" >
+                            <table class="table table-bordered align-middle">
+                                <thead>
+
+                                <td><strong>Basic Documents</strong></td>
+                                <td><strong>Additional Documents</strong></td>
+
+                                </thead>
+                                <tbody>
+                                <tr><td valign="top">
+
+
+                                    @foreach($doclist as $docu)
+                                    <div class="row">
+                                            <div class="col-md-10">{{ $docu->name}}</div>
+                                         
+                                            <div class="col-md-2">
+                                        
+                                            <input class="form-check-input" style=" border-radius: .25em;
+                                                height: 20px;
+                                                width: 20px;"  type="checkbox"  wire:model="docstatus.{{$docu->id}}">
+                                    
+                                            </div>
+                                        
+                                    </div>
+                                    <hr/>
+                                    @endforeach
+                                
+                                    </td>
+                                    <td valign="top">
+                                    
+                                    @foreach($doclistadd as $docu)
+                                        <div class="row" >
+                                                <div class="col-md-10">{{ $docu->name}}</div>
+                                                <!-- <div class="col-md-6">
+                                                    @if($docu->remark_status==1)
+                                                    <input type="text" class="form-control"  value="" wire:model="docremark.{{$docu->id}}">
+                                                    @endif
+                                                </div> -->
+                                                <div class="col-md-2 d-flex align-items-end">
+                                            
+                                                <input class="form-check-input" style=" border-radius: .25em;
+                                                height: 20px;
+                                                width: 20px;"  type="checkbox"  wire:model="docstatus.{{$docu->id}}">
+                                        
+                                                </div>
+                                            
+                                        </div>
+                                    <hr/>
+                                    @endforeach     
+                                    </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                @can('app-edit')
+
+                                <div class="row">
+                                        <div class="col-12">
+                                        @include('components.button',[
+                                            'type'=>'submit',
+                                            'class'=>'btn btn-primary',
+                                            'onclick'=>'',
+                                            'label'=>'Submit Changes',
+                                            'target'=>'editdocu'
+                                        ])
+                                        </div>
+                                </div>
+
+                                @endcan
+                            
+                            </form>
+
+
+
+
+                            @endif
                             
                             </div>
                         </div>       
@@ -349,6 +445,48 @@ Application Details
                                 </div>
                             </div>
                         </div>
+
+                        <div class="card">
+                            <div class="card-body" >   
+                                <h4 class="card-title">Application Details</h4>
+                                <hr>
+                                <div class="row mb-2">
+                                    <div class="col-md-12 d-flex justify-content-end">
+                            
+                                        @can('app-edit')
+
+                                        @include('components.button',[
+                                                                'type'=>'button',
+                                                                'class'=>'btn btn-light btn-sm waves-effect waves-light',
+                                                                'onclick'=>"wire:click=\"open('livewire.form.loandetails','Edit Application Details',$loan->id)\"",
+                                                                'label'=>'Edit',
+                                                                'icon'=>'<i class="bx bx-edit-alt font-size-16 align-middle me-2"></i>',
+                                                                'loader'=>true,
+                                                                'targetloader'=>"editloandetails",
+                                                            ])
+                                          
+                                        @endcan
+                                    </div>
+                                    <dl class="row mb-0">
+                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-7','label'=>'FileID','desc'=>$fileid])
+
+                                    </dl>
+                                    <dl class="row mb-0">
+                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-7','label'=>'Agent ID','desc'=>$agentname])
+
+                                    </dl>
+
+                                    <dl class="row mb-0">
+                                            @include('components.dldt',['dlclass'=>'col-3 fw-bold','dtclass'=>'col-7','label'=>'Status','desc'=>$status])
+
+                                    </dl>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
             </div>
             
@@ -502,7 +640,7 @@ window.livewire.on('modal', data => {
                     width: '350px',
                     tags: false, selectOnBlur: true,
                     ajax: {
-                        url:  "{{route('productgroup')}}@if(!empty($productgroup))?q={{$productgroup}} @endif",
+                        url:  "{{route('productgroup')}}",
                         dataType: 'json',
                         delay: 250,
                         processResults: function (data) {
@@ -632,6 +770,78 @@ window.livewire.on('modal', data => {
             });
 
             $('#daterejected').datepicker('setDate', '{{$daterejectedformatted}}');
+
+    }
+
+    if(data[0]=="livewire.form.loandetails"){
+
+
+
+        @this.set('agentid', {{$agentid}}); 
+
+        $('#agentid').select2({
+                placeholder: @if(!empty($agentid))'{{$agentname}}'@else'Select Agent'@endif,
+                dropdownParent:  $("#appmodal"),
+                width: '350px',
+                tags: false, selectOnBlur: true,
+                ajax: {
+                    url:  "{{route('listagent')}}",
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                    return {
+                    
+                        results:  $.map(data, function (item) {
+                        
+                            return {
+                                text: item.name,
+                                id: item.id
+                            }
+                        })
+                    };
+                    },
+                    formatSelection: function(item){ return item.name },
+                }
+        });
+
+        $('#agentid').on('change', function(e) {
+
+        let data = $(this).val();
+            @this.set('agentid', data);        
+        });
+
+
+        $('#appstatus').select2({
+                placeholder: @if(!empty($status))'{{$status}}'@else'Select Status'@endif,
+                dropdownParent:  $("#appmodal"),
+                width: '350px',
+                tags: false, selectOnBlur: true,
+                ajax: {
+                    url:  "{{route('status')}}@if(!empty($appstatus))?q={{$appstatus}} @endif",
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                    return {
+                    
+                        results:  $.map(data, function (item) {
+                        
+                            return {
+                                text: item.name,
+                                id: item.id
+                            }
+                        })
+                    };
+                    },
+                    formatSelection: function(item){ return item.name },
+                }
+        });
+
+        $('#appstatus').on('change', function(e) {
+
+        let data = $(this).val();
+            @this.set('appstatus', data);        
+        });
+
 
     }
 

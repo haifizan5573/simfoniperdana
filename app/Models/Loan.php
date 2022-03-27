@@ -33,4 +33,8 @@ class Loan extends Model
     public function Status(){
         return $this->hasOne(Status::class,'id','status');
     }
+
+    public function Agent(){
+        return $this->hasOne(User::class,'id','agentid');
+    }
 }
