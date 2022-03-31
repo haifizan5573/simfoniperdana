@@ -314,7 +314,10 @@ class ViewApplication extends Component
             $cust->rejecteddate=$this->formatter->formatDate($this->daterejected);
         }
 
-        $cust->productid=$this->productname;
+        if(!empty($this->productname)){
+            $cust->productid=$this->productname;
+        }
+        
         $cust->tenureapplied=$this->tenureapplied;
         $cust->tenureapproved=$this->tenureapproved;
         $cust->amountapplied=$this->amountapplied;

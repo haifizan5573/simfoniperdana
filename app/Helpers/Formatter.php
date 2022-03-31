@@ -50,5 +50,18 @@ class Formatter
         return $formatted;
     }
 
+    public static function generateCode($number,$initial){
+
+      
+        if(strlen($number)<=4){
+            return $initial.str_pad($number,4, '0', STR_PAD_LEFT);
+        }
+        
+        return $initial.$number;
+        
+        
+        
+    }
+
 
 }

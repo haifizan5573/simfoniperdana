@@ -74,6 +74,18 @@
 
 @push('scripts')
 
+@if(!empty($toastrdata['message']))
+    <script>
+        $( document ).ready(function() {
+            
+
+            let data=[{ message: "{{$toastrdata['message']}}", 'alert-type': "{{$toastrdata['alert-type']}}" }]; 
+           
+           livewire.emit('showmessage',data);
+        });
+    </script>
+    @endif
+
 @include('components.toastr') 
 
 @endpush

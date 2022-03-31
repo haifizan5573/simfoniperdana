@@ -53,7 +53,7 @@
                                                           
                                                                 <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
                                                                     <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
-                                                                       <p><b>{{ env('appname') }}</b><br/>
+                                                                       <p><b>{{ env('APP_NAME') }}</b><br/>
                                             
                                                                     </td>
                                                                 </tr>
@@ -61,7 +61,7 @@
                                                                 <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
                                                                     <td class="content-block" style="text-align: center;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0;" valign="top">
                                                                        <hr/>
-                                                                        <p>© <?php date('Y') ?>{{ env('appname') }}</p>
+                                                                        <p>© <?php date('Y') ?>{{ env('APP_NAME') }}</p>
                                                                     </td>
                                                                 </tr>
                                                             </tbody></table>

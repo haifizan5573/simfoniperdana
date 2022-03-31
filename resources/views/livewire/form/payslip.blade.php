@@ -52,11 +52,7 @@
 
 
                                             @endfor
-                                            <div class="row" wire:ignore>
-                                                <div class="col-3">
-                                                <input wire:click="addincome()" type="button" class="btn btn-success" value="Add Income">
-                                                </div>
-                                            </div>
+                                            
                                     </div>
                                     <div class="col-6">
 
@@ -84,15 +80,18 @@
 
 
                                             @endfor
-                                            <div class="row" >
-                                                <div class="col-5">
-                                                  
-                                                    <button type="button" wire:click="adddeduction()" class="btn btn-success">
-                                                        Add Deduction
-                                                    </button>
-                                                </div>
-                                            </div>
+                                          
                                     </div>    
+                      </div>
+                      <div class="row" >
+                                <div class="col-6">
+                                    <input wire:click="addincome()" type="button" class="btn btn-success" value="Add Income">
+                                </div>
+                                <div class="col-6">
+                                        <button type="button" wire:click="adddeduction()" class="btn btn-success">
+                                            Add Deduction
+                                        </button>
+                                </div>
                       </div>
                      
                       <hr/>

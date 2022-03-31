@@ -12,68 +12,41 @@
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-body">
-                    <form wire:submit.prevent="adduser">
-                    <h5 class="card-title">Add New User</h5>
+                    <form wire:submit.prevent="editproductgroup">
+                    <h5 class="card-title">Edit Product Group</h5>
                 
-
-                        <div class="row">
+                        <div class="row mt-2">
                            <div class="col-md-12 mb-2">
-                           
                            @include('components.input',[
                                             'name'=>'name',
                                             'id'=>'',
-                                            'label'=>'Name',
+                                            'label'=>'Product Group Name',
                                             'placeholder'=>'',
                                         
                                             ])  
                             @error('name') <span class="error">{{ $message }}</span> @enderror
                             </div>
                         </div>
-                        <div class="row">
-                           <div class="col-md-12 mb-2">
-                           @include('components.input',[
-                                            'name'=>'nickname',
-                                            'id'=>'',
-                                            'label'=>'Nickname',
-                                            'placeholder'=>'',
-                                        
-                                            ])  
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 mb-2">
-                               
-                            @include('components.input',[
-                                            'name'=>'email',
-                                            'id'=>'',
-                                            'label'=>'Email',
-                                            'type'=>'email',
-                                            'placeholder'=>'',
-                                        
-                                            ])  
-                                    @error('email') <span class="error">{{ $message }}</span> @enderror
-                                
-                            </div>
-                        </div>
-                        <div class="row" >
+
+
+                       <div class="row" >
                             <div class="col-md-12" wire:ignore>
 
     
 
                                      @include('components.select',[
-                                            'name'=>'role',
-                                            'selectid'=>'role',
+                                            'name'=>'status',
+                                            'selectid'=>'status',
                                             'fieldname'=>'',
                                             'id'=>'',
-                                            'label'=>'Role',
+                                            'label'=>'Status',
                                             'placeholder'=>'', 
                                             ])     
                                     
                                         
                             </div>
-                            @error('role') <span class="error">{{ $message }}</span> @enderror
-                        </div>
-                    
+                            @error('status') <span class="error">{{ $message }}</span> @enderror
+                       </div>
              
                  <div class="mt-2">
                  
@@ -82,13 +55,13 @@
                                    'class'=>'btn btn-primary',
                                    'onclick'=>'',
                                    'label'=>'Submit',
-                                   'target'=>'adduser'
+                                   'target'=>'addproductgroup'
                                ])
                            
                                @include('components.button',[
                                    'type'=>'button',
                                    'class'=>'btn btn-warning',
-                                   'onclick'=>"onclick='window.location.href=\"userlist\"'",
+                                   'onclick'=>"onclick='window.location.href=\"product\"'",
                                    'label'=>'Cancel',
                                    'target'=>''
                                ])
@@ -105,8 +78,6 @@
 
 
 @push('scripts')
-
-
 <script src="{{ URL::asset('/assets/libs/select2/select2.min.js') }}"></script>
 <script>
 
@@ -116,15 +87,13 @@ $( document ).ready(function() {
 });
 window.livewire.on('load', data => {
       
-                    //@this.set('role', data);
-                    
 
-                    $('#role').select2({
-                            placeholder: 'Select Role',
-                            //width: '250px',
+                    $('#status').select2({
+                            placeholder: '{{$statusname}}',
+                            width: '250px',
                             tags: false, selectOnBlur: true,
                             ajax: {
-                                url:  "{{route('rolelist')}}/1",
+                                url:  "{{route('label')}}/status",
                                 dataType: 'json',
                                 delay: 250,
                                 processResults: function (data) {
@@ -143,13 +112,11 @@ window.livewire.on('load', data => {
                             }
                     });
 
-                    $('#role').on('change', function(e) {
+                    $('#status').on('change', function(e) {
 
                     let dataval= $(this).val();
-                        @this.set('role', dataval);        
+                        @this.set('status', dataval);        
                     });
-            
-     
 });
 </script>
 @include('components.toastr') 

@@ -1,4 +1,10 @@
+@section('css')
 
+
+<link href="{{ URL::asset('assets/libs/toastr/build/toastr.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('assets/libs/toastr/build/toastr.min.css') }}" rel="stylesheet" type="text/css" />
+
+@endsection
 <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -32,7 +38,7 @@
                             <thead class="table-light">
                                 <tr>
                                     <th style="width: 20px;">
-                                       Staff ID
+                                       User ID
                                     </th>
                                     <th class="align-middle">Name</th>
                                     <th class="align-middle">Email</th>
@@ -46,19 +52,19 @@
                             @foreach($users as $user)
                                 <tr>
                                     <td>
-                                       
+                                       {{ $user->usercode }}
                                     </td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
                                    
-
+                                        @if(isset($user->roles()->first()->name))
+                                        {{ $user->roles()->first()->name }}
+                                        @endif
                                  
-                                    </td>
-                            
-                                   
+                                    </td>                                  
                                     <td class="text-center">
-                                        <span class="badge badge-pill {{ ($user->status=='Active')? 'badge-soft-success': 'badge-soft-danger' }}  font-size-11">{{ $user->status }}</span>
+                                        <span class="badge badge-pill {{ ($user->isactive==1)? 'badge-soft-success': 'badge-soft-danger' }}  font-size-11">{{ $user->Label()->first()->name }}</span>
                                     </td>
                                     <td class="text-center">
                                         <!-- Button trigger modal -->
@@ -86,3 +92,20 @@
             </div>
         </div>
     </div>
+
+   
+  
+@push('scripts')
+    @if(!empty($toastrdata['message']))
+    <script>
+        $( document ).ready(function() {
+            
+
+            let data=[{ message: "{{$toastrdata['message']}}", 'alert-type': "{{$toastrdata['alert-type']}}" }]; 
+           
+           livewire.emit('showmessage',data);
+        });
+    </script>
+    @endif
+@include('components.toastr')
+@endpush

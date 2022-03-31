@@ -3,31 +3,71 @@
 namespace App\Http\Livewire\User;
 
 use Livewire\Component;
+use Spatie\Permission\Models\Role;
+use App\Models\User;
+use App\Helpers\Formatter;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewUser;
+use Illuminate\Support\Facades\Hash;
 
 class Adduser extends Component
 {
+
+    public $role,$name,$email,$nickname;
+
+    protected $rules = [
+        'name' => 'required|min:4',
+        'role'=>'required',
+        'email' => 'required|unique:users|email',  
+    ];
+
+    public function mount(){
+
+     
+    }
+  
+
     public function render()
     {
-        return view('livewire.user.adduser');
+        
+       
+        return view('livewire.user.adduser',[
+           // 'roles'=>Role::all(),
+        ]);
     }
 
     public function adduser(){
 
+     
+        $this->validate();
+
+        $formatter=new Formatter();
+        $rolename=Role::find($this->role)->name;
+        //dd($rolename);
+        $number=User::with("roles")->whereHas("roles", function($q) use ($rolename){   
+                        $q->where("name",$rolename);
+                        })->count();
+        $usercode=$formatter->generateCode($number+1,strtoupper(substr($rolename,0,2)));
+
+       // dd($usercode."|".$rolename."|".$this->role);
+
         $user = User::create([
             'name' => $this->name,
+            'nickname'=>$this->nickname,
             'email' => $this->email,
+            'usercode'=>$usercode,
             'password' => Hash::make('abc123'),
-            'isactive'=>0
+            'isactive'=>2
         ]);
        
         $user->assignRole($this->role);
 
         $data = [
-            'name' => env('appname'),
-            'subject' => env('appname').' New User Registration',
+            'name' => env('APP_NAME'),
+            'subject' => env('APP_NAME').' New User Registration',
             'newuser' => $this->name,
-            'content' => 'We are pleased to inform you that your '.env('appname').' account has been created. Your account details as folows;<br/>
-             '.env('appname').' Url: <a href="'.env('appnameurl').'">'.env('appnameurl').'/a><br/>
+            'content' => 'We are pleased to inform you that your '.env('APP_NAME').' account has been created. Your account details as folows;<br/>
+             '.env('APP_NAME').' Url: <a href="'.env('APP_NAMEURL').'">'.env('APP_NAMEURL').'</a><br/>
              Username: '.$this->email.'<br/>
              Temporary Password: abc123<br/><br/>
 
@@ -36,5 +76,10 @@ class Adduser extends Component
         ];
 
         Mail::to($this->email)->send(new NewUser($data));
+
+        $this->message=array("message"=>"New User Created","alert-type"=>"success");
+
+        $this->emit('showmessage',[$this->message]);
+    
     }
 }

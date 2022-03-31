@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Menu extends Model
 {
     use HasFactory;
+    protected $guarded=[];
 
     public function submenu(){
         return $this->hasMany(Menu::class,"parent","id")->orderBy('order');

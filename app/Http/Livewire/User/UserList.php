@@ -5,6 +5,7 @@ namespace App\Http\Livewire\User;
 use Livewire\Component;
 use App\Models\User;
 use Livewire\WithPagination;
+use Session;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class UserList extends Component
@@ -23,6 +24,8 @@ class UserList extends Component
     public function mount(){
          $this->sortField="status";
          $this->sortAsc=false;
+          
+   
      }
 
      public function sortBy($field)
@@ -42,15 +45,31 @@ class UserList extends Component
      }
     public function render()
     {
+        $message=Session::get('message');
+        $alerttype=Session::get('alert-type');
+        $toastrdata=array("message"=>$message,"alert-type"=>$alerttype);
+
         $users=User::with("roles")->whereHas("roles", function($q) {   
 
             if(!empty($this->filter)){
                 $q->where("name",$this->filter);
             }                                                                                                       
             
-        })->paginate(30);
+        })
+        ->when(!empty($this->search),function($q){
+            $q->where('name','like','%'.$this->search.'%');
+        })
+        ->paginate(30);
         return view('livewire.user.userlist',[
-            'users'=>$users
+            'users'=>$users,
+            'toastrdata'=>$toastrdata
         ]);
+
+        
+    }
+
+    function updateuser(){
+
+        $this->mount();
     }
 }

@@ -28,6 +28,7 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 require __DIR__.'/loan.php';
 require __DIR__.'/user.php';
+require __DIR__.'/product.php';
 
 Auth::routes();
 
@@ -49,7 +50,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/status',[App\Http\Livewire\API\Loan::class,'status'])->name('status');
 
     Route::get('/listagent',[App\Http\Livewire\API\UserData::class,'listagent'])->name('listagent');
+    Route::get('/rolelist/{type?}',[App\Http\Livewire\API\UserData::class,'rolelist'])->name('rolelist');
 
-
+    Route::get('/label/{type?}',[App\Http\Livewire\API\SystemData::class,'status'])->name('label');
 
 });

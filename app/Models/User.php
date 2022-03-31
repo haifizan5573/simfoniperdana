@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Label;
 
 class User extends Authenticatable
 {
@@ -18,11 +19,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded=[];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -45,5 +42,9 @@ class User extends Authenticatable
 
     public function Remark(){
         return $this->morphMany(Remark::class,'remarkable');
+    }
+
+    public function Label(){
+        return $this->hasOne(Label::class,"typeid","isactive");
     }
 }

@@ -13,8 +13,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/addappgen/{id?}', App\Http\Livewire\Loan\AddLoan::class)->name('addappgen');
     });
        
-    
-     Route::get('/productlist',[App\Http\Livewire\Loan\LoanProduct::class,'list'])->name('productlist');
+   
    
 
 });
