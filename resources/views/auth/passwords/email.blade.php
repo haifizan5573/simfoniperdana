@@ -89,7 +89,7 @@
                     </div>
                     <div class="mt-5 text-center">
                         <p>Remember It ? <a href="{{ route('login') }}" class="fw-medium text-primary"> Sign In here</a> </p>
-                        <p>© <script>document.write(new Date().getFullYear())</script> 2nd Hope Sdn Bhd</p>
+                        <p>© <script>document.write(new Date().getFullYear())</script> {{ env('APP_NAME') }}</p>
                     </div>
 
                 </div>

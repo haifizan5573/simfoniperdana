@@ -11,7 +11,7 @@
 
 @section('body')
 
-    <body class="auth-body-bg" style="background-image: url('{{ URL::asset('/assets/images/mrcbg.jpg') }}'); background-size: cover; background-repeat: no-repeat; background-position: center; ">
+    <body class="auth-body-bg" style="background-image: url('{{ URL::asset('/assets/images/simfoni-3.jpg') }}'); background-size: cover; background-repeat: no-repeat; background-position: center; ">
     @endsection
 
    
@@ -45,7 +45,7 @@
                                     <div class="col-10">
                                         <div class="text-primary p-4">
                                             <h5 class="text-primary">Welcome Back !</h5>
-                                            <p>Sign in to continue to MRC Putrajaya Dashboard</p>
+                                            <p>Sign in to continue to {{ env('APP_NAME') }} Dashboard</p>
                                         </div>
                                     </div>
                                     <div class="col-5 align-self-end">
@@ -141,7 +141,7 @@
                                         <p>© <script>
                                                 document.write(new Date().getFullYear())
 
-                                            </script> MRC Putrajaya
+                                            </script> {{ env('APP_NAME') }}
                                         </p>
                                     </div>
                                 </div>
