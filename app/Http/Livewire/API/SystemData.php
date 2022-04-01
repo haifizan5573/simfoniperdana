@@ -52,7 +52,7 @@ class SystemData extends Component
         $street=6;
         
         for($i=1;$i<=6;$i++){
-            $data[]=array("id"=>"Jalan $i","name"=>"Jalan $i");
+            $data[]=array("id"=>"Simfoni $i","name"=>"Simfoni $i");
         }
 
         return response()->json($data);
