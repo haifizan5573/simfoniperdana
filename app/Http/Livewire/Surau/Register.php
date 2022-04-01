@@ -22,7 +22,7 @@ class Register extends Component
         'name' => 'required|min:4',
         'unit'=>"required|regex:'^[0-9]{1,3}[a-zA-Z]{1}$'",
         'email' => 'required|unique:users|email',  
-        'phone' => 'required',
+        'phone' => "required|regex:'^(01)[0-46-9]*[0-9]{7,8}$'",
         'street' => 'required',
         'membership' =>'required',
         'attachment'=>'required'

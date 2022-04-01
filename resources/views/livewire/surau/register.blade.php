@@ -215,7 +215,7 @@
                                                 'name'=>'phone',
                                                 'id'=>'',
                                                 'label'=>'Phone',
-                                                'placeholder'=>'',
+                                                'placeholder'=>'eg: 0196456209, exclude country code',
                                             
                                                 ])  
                                                     
