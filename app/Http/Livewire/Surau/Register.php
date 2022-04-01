@@ -39,7 +39,7 @@ class Register extends Component
         $this->khairat=Khairat::where('year',date('Y'))->first();
         $this->title=$this->khairat->name;
         $this->buttintro=true;
-        $this->show=false;
+        $this->show=true;
     }
  
     public function render()
