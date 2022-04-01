@@ -19,6 +19,7 @@ class CreateKhairatsTable extends Migration
             $table->date('startdate');
             $table->date('enddate');
             $table->string('year');
+            $table->string('isactive')->default(1);
             $table->timestamps();
         });
     }

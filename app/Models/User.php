@@ -56,4 +56,8 @@ class User extends Authenticatable
     public function Addresses(){
         return $this->morphMany(Address::class,'addressable');
     }
+
+    public function FileUploads(){
+        return $this->morphMany(FileUpload::class,"file_uploadsable");
+    }
 }

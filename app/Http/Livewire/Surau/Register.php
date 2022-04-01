@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Label;
 use App\Models\Khairat;
 use App\Models\KhairatUser;
+use App\Models\FileUpload;
 use App\Helpers\Formatter;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,7 +15,8 @@ class Register extends Component
 {
     use WithFileUploads;
 
-    public $name,$email,$street,$unit,$phone,$userstatus,$membership,$totalPayment,$attachment;
+    public $name,$email,$street,$unit,$phone,$userstatus,$membership,$totalPayment,$attachment,$khairat;
+    public $buttintro,$buttbenefits,$buttcond,$buttpayment,$buttcontact,$show;
  
     protected $rules = [
         'name' => 'required|min:4',
@@ -30,6 +32,14 @@ class Register extends Component
 
         $label=Label::find($this->membership);        
         $this->totalPayment=$label->other;
+    }
+
+    public function mount(){
+
+        $this->khairat=Khairat::where('year',date('Y'))->first();
+        $this->title=$this->khairat->name;
+        $this->buttintro=true;
+        $this->show=false;
     }
  
     public function render()
@@ -91,16 +101,29 @@ class Register extends Component
           //create khairat for this year
           KhairatUser::create([
           
-            'userid'=>$this->user->id,
+            'userid'=>$user->id,
             'khairat' => $khairatid,
             'membership'=>$this->membership,
-            'attachment' => Hash::make('abc123'),
+            'attachment' => $path,
             'status'=>env('DEFAULT_KHAIRAT')
         ]);
 
+        $this->show=false;
         $this->message=array("message"=>"Record Successfully Created","alert-type"=>"success");
 
         $this->emit('showmessage',[$this->message]);
+
+    }
+
+    public function togglebutton($button){
+
+        $this->buttintro=false;
+        $this->buttbenefits=false;
+        $this->buttcond=false;
+        $this->buttpayment=false;
+        $this->buttcontact=false;
+
+        $this->$button=true;
 
     }
 }
