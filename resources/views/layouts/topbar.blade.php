@@ -5,19 +5,19 @@
             <div class="navbar-brand-box">
                 <a href="index" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ URL::asset ('/assets/images/mrc.jpg') }}" alt="" height="22">
+                        <img src="{{ URL::asset ('/assets/images/SimfoniPerdanaTransparentSmall.png') }}" alt="" height="10">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ URL::asset ('/assets/images/mrc.jpg') }}" alt="" height="17">
+                        <img src="{{ URL::asset ('/assets/images/SimfoniPerdanaTransparent.png') }}" alt="" height="17">
                     </span>
                 </a>
 
                 <a href="index" class="logo logo-light mt-2">
                     <span class="logo-sm">
-                        <img src="{{ URL::asset ('/assets/images/mrc.jpg') }}" alt="" height="60">
+                        <img src="{{ URL::asset ('/assets/images/SimfoniPerdanaTransparentSmall.png') }}" alt="" height="38">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ URL::asset ('/assets/images/mrc.jpg') }}" alt="" height="60">
+                        <img src="{{ URL::asset ('/assets/images/SimfoniPerdanaTransparent.png') }}" alt="" height="60">
                     </span>
                 </a>
             </div>

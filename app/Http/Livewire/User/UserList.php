@@ -60,6 +60,7 @@ class UserList extends Component
             $q->where('name','like','%'.$this->search.'%');
         })
         ->paginate(30);
+        
         return view('livewire.user.userlist',[
             'users'=>$users,
             'toastrdata'=>$toastrdata
@@ -68,8 +69,4 @@ class UserList extends Component
         
     }
 
-    function updateuser(){
-
-        $this->mount();
-    }
 }

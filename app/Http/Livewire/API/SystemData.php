@@ -46,6 +46,30 @@ class SystemData extends Component
 
     }
 
+    public function streetlist(){
+
+        $data=array();
+        $street=6;
+        
+        for($i=1;$i<=6;$i++){
+            $data[]=array("id"=>"Jalan $i","name"=>"Jalan $i");
+        }
+
+        return response()->json($data);
+    }
+
+    public function numberlist($number){
+
+        $data=array();
+        
+        
+        for($i=1;$i<=$number;$i++){
+            $data[]=array("id"=>$i,"name"=>$i);
+        }
+
+        return response()->json($data);
+    }
+
 }
 
 

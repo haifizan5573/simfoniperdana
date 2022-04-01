@@ -58,9 +58,9 @@
                                     <td>{{ $user->email }}</td>
                                     <td>
                                    
-                                        @if(isset($user->roles()->first()->name))
-                                        {{ $user->roles()->first()->name }}
-                                        @endif
+                                        @foreach($user->roles()->get() as $userrole)
+                                        <span class="badge rounded-pill badge-soft-dark">{{ $userrole->name }}</span>
+                                        @endforeach
                                  
                                     </td>                                  
                                     <td class="text-center">

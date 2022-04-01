@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 class Adduser extends Component
 {
 
-    public $role,$name,$email,$nickname;
+    public $role,$name,$email,$nickname,$street,$unit;
 
     protected $rules = [
         'name' => 'required|min:4',
@@ -36,18 +36,22 @@ class Adduser extends Component
         ]);
     }
 
+    public function updatedStreet(){
+
+        $this->emit('unit',[$this->street]);
+    }
     public function adduser(){
 
      
         $this->validate();
 
+    
+
         $formatter=new Formatter();
-        $rolename=Role::find($this->role)->name;
+        //$rolename=Role::find($this->role)->name;
         //dd($rolename);
-        $number=User::with("roles")->whereHas("roles", function($q) use ($rolename){   
-                        $q->where("name",$rolename);
-                        })->count();
-        $usercode=$formatter->generateCode($number+1,strtoupper(substr($rolename,0,2)));
+        $number=User::count();
+        $usercode=$formatter->generateCode($number+1,'SIM');
 
        // dd($usercode."|".$rolename."|".$this->role);
 

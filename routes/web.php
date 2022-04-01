@@ -52,6 +52,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/listagent',[App\Http\Livewire\API\UserData::class,'listagent'])->name('listagent');
     Route::get('/rolelist/{type?}',[App\Http\Livewire\API\UserData::class,'rolelist'])->name('rolelist');
 
-    Route::get('/label/{type?}',[App\Http\Livewire\API\SystemData::class,'status'])->name('label');
-
+    
 });
+
+    Route::get('/label/{type?}',[App\Http\Livewire\API\SystemData::class,'status'])->name('label');
+    Route::get('/streetlist',[App\Http\Livewire\API\SystemData::class,'streetlist'])->name('streetlist');
+    Route::get('/unitlist/{type?}',[App\Http\Livewire\API\SystemData::class,'unitlist'])->name('unitlist');
+    Route::get('/numberlist/{number?}',[App\Http\Livewire\API\SystemData::class,'numberlist'])->name('numberlist');
+Route::get('/khairatkematian',App\Http\Livewire\Surau\Register::class)->name('khairatkematian');

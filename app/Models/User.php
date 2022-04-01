@@ -47,4 +47,13 @@ class User extends Authenticatable
     public function Label(){
         return $this->hasOne(Label::class,"typeid","isactive");
     }
+
+
+    public function Contacts(){
+        return $this->morphMany(Contact::class,'contactable');
+    }
+
+    public function Addresses(){
+        return $this->morphMany(Address::class,'addressable');
+    }
 }

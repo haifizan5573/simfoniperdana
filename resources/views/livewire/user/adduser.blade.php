@@ -55,6 +55,37 @@
                                 
                             </div>
                         </div>
+                        <div class="row mb-2" >
+                            <div class="col-md-6" wire:ignore>
+                                     @include('components.select',[
+                                            'name'=>'street',
+                                            'selectid'=>'street',
+                                            'fieldname'=>'',
+                                            'id'=>'',
+                                            'label'=>'Street No.',
+                                            'placeholder'=>'', 
+                                            ])                    
+                            </div>
+                            <div class="col-md-6" wire:ignore>
+                                     @include('components.select',[
+                                            'name'=>'unit',
+                                            'selectid'=>'unit',
+                                            'fieldname'=>'',
+                                            'id'=>'',
+                                            'label'=>'Unit',
+                                            'placeholder'=>'', 
+                                            ])                    
+                            </div>
+                            
+                        </div>
+                        <div class="row" >
+                            <div class="col-md-6">
+                                @error('street') <span class="error">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="col-md-6">
+                                @error('unit') <span class="error">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
                         <div class="row" >
                             <div class="col-md-12" wire:ignore>
 
@@ -116,13 +147,13 @@ $( document ).ready(function() {
 });
 window.livewire.on('load', data => {
       
-                    //@this.set('role', data);
-                    
-
+    
                     $('#role').select2({
                             placeholder: 'Select Role',
                             //width: '250px',
-                            tags: false, selectOnBlur: true,
+                            multiple: true,
+                            tags: false,
+                            selectOnBlur: true,
                             ajax: {
                                 url:  "{{route('rolelist')}}/1",
                                 dataType: 'json',
@@ -148,9 +179,79 @@ window.livewire.on('load', data => {
                     let dataval= $(this).val();
                         @this.set('role', dataval);        
                     });
+
+
+                    $('#street').select2({
+                            placeholder: 'Select Street No',
+                           
+                            tags: false,
+                            selectOnBlur: true,
+                            ajax: {
+                                url:  "{{route('streetlist')}}",
+                                dataType: 'json',
+                                delay: 250,
+                                processResults: function (data) {
+                                return {
+                                
+                                    results:  $.map(data, function (item) {
+                                    
+                                        return {
+                                            text: item.name,
+                                            id: item.id
+                                        }
+                                    })
+                                };
+                                },
+                                formatSelection: function(item){ return item.name },
+                            }
+                    });
+
+                    $('#street').on('change', function(e) {
+
+                    let dataval= $(this).val();
+                        @this.set('street', dataval);        
+                    });
+
+                  
             
      
 });
+
+window.livewire.on('unit', data => {
+
+                    $('#unit').select2({
+                            placeholder: 'Select Unit',
+                            //width: '250px',
+                            multiple: true,
+                            tags: false,
+                            selectOnBlur: true,
+                            ajax: {
+                                url:  "{{route('unitlist')}}/"+data,
+                                dataType: 'json',
+                                delay: 250,
+                                processResults: function (data) {
+                                return {
+                                
+                                    results:  $.map(data, function (item) {
+                                    
+                                        return {
+                                            text: item.name,
+                                            id: item.id
+                                        }
+                                    })
+                                };
+                                },
+                                formatSelection: function(item){ return item.name },
+                            }
+                    });
+
+                    $('#unit').on('change', function(e) {
+
+                    let dataval= $(this).val();
+                        @this.set('unit', dataval);        
+                    });
+
+});   
 </script>
 @include('components.toastr') 
 @endpush
