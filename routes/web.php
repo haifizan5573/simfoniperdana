@@ -57,10 +57,11 @@ Route::group(['middleware' => ['auth']], function() {
  
            $filedata=FileUpload::where('file_uploadsable_id',$id)->first();
            $data = [
-          'link' => (!empty($filedata->path))?Storage::url($filedata->path):""
+          'img' => (!empty($filedata->path))?Storage::url($filedata->path):""
         
             ];
 
+         
           $pdf = PDF::loadView('livewire.form.viewimage',['data' => $data]);
           return $pdf->stream('document.pdf');
 
