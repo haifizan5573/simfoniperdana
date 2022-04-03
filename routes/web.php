@@ -60,10 +60,10 @@ Route::group(['middleware' => ['auth']], function() {
           'img' => (!empty($filedata->path))?Storage::url($filedata->path):""
         
             ];
-  
-           $pdf = PDF::loadView('livewire.form.viewimage',['data' => $data]);
-           return $pdf->stream('document.pdf');
-           
+  dd($filedata);
+        //    $pdf = PDF::loadView('livewire.form.viewimage',['data' => $data]);
+        //    return $pdf->stream('document.pdf');
+
       })->name('viewattachment');
 
     
