@@ -80,7 +80,7 @@
                                     </td>
                                     <td class="text-center">
 
-                                    <span class="badge badge-pill {{ ($khairat->status==8)? 'badge-soft-success': 'badge-soft-danger' }}  font-size-11">{{ $khairat->Label()->first()->name }}</span>
+                                    <span class="badge badge-pill {{ ($khairat->status==8)? 'badge-soft-success': 'badge-soft-danger' }}  font-size-11"> {!! nl2br($khairat->Label()->first()->name) !!}</span>
 
                                     </td>
                                     <td class="text-center">
