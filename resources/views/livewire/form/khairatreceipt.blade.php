@@ -2,9 +2,9 @@
 
   @if(!empty($dataid))
         
-        @if($data->getMime($data->path)=="application/pdf"))
+        @if($data->getMime($data->path)=="application/pdf")
             
-          <iframe src="{{ env('APP_URL')}}/{{ $data->file_uploadsable_id }}" frameborder="0" style="width:100%;min-height:640px;"></iframe>
+          <iframe src="{{ env('APP_URL')}}/viewattachment/{{ $data->file_uploadsable_id }}" frameborder="0" style="width:100%;min-height:640px;"></iframe>
 
          @elseif($data->getMime($data->path)=="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
