@@ -15,6 +15,7 @@
         "laravelcollective/html": "^6.2",
         "livewire/livewire": "^2.9",
         "mews/purifier": "^3.3",
+        "niklasravnsborg/laravel-pdf": "^4.1",
         "sendgrid/sendgrid": "~7",
         "spatie/laravel-permission": "^5.5"
     },
