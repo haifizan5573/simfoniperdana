@@ -32,7 +32,7 @@ class KhairatData extends Component
      
         
         $break=0;
-        if(in_array('Admin',$this->roles)){
+        if(in_array('Admin',$this->roles)||in_array('Surau Committee',$this->roles)){
               // dd($this->filter);
               $khairatdata=KhairatUser::whereHas('khairat', function($q){
                        $q->where('year', '=',$this->filter);

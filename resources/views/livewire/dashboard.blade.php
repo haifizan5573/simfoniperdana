@@ -1,16 +1,23 @@
-@extends('layouts.master')
+@section('css')
 
-@section('content')
+
+
+@endsection
 
    
 <div class="row">
 
+
+   
+
+    <div class="row">
         @include('livewire.dashboard.upcomingevents')
 
         @include('livewire.dashboard.notifications')
 
-        @include('livewire.dashboard.upcomingevents')
+        @include('livewire.dashboard.forms')
+    </div>
+    
     
 </div>
                  
-@endsection
