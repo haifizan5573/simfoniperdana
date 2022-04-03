@@ -95,7 +95,9 @@ class KhairatData extends Component
         }
 
 
-        return redirect()->route('khairat')->with($this->message);
+        $this->emit('showmessage',[$this->message]);
+        $this->emit('closemodal');
+        $this->mount(); 
 
     }
 }
