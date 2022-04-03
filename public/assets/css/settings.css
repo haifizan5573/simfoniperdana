@@ -22,3 +22,7 @@ body[data-sidebar=dark] #sidebar-menu ul li a {
 dd::before {
     content: ': ';
 }
+
+.iframe-loading { 
+    background:url(/assets/images/loader.gif) center center no-repeat; 
+}
