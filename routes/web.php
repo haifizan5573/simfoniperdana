@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Models\FileUpload;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,6 +53,19 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/listagent',[App\Http\Livewire\API\UserData::class,'listagent'])->name('listagent');
     Route::get('/rolelist/{type?}',[App\Http\Livewire\API\UserData::class,'rolelist'])->name('rolelist');
 
+    Route::get('/viewattachment/{id}', function ($id) {
+ 
+           $filedata=FileUpload::where('file_uploadsable_id',$id)->first();
+           $data = [
+          'img' => (!empty($filedata->path))?Storage::url($filedata->path):""
+        
+            ];
+  
+           $pdf = PDF::loadView('livewire.form.viewimage',['data' => $data]);
+           return $pdf->stream('document.pdf');
+           
+      })->name('viewattachment');
+
     
 });
 
@@ -60,4 +73,4 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/streetlist',[App\Http\Livewire\API\SystemData::class,'streetlist'])->name('streetlist');
     Route::get('/unitlist/{type?}',[App\Http\Livewire\API\SystemData::class,'unitlist'])->name('unitlist');
     Route::get('/numberlist/{number?}',[App\Http\Livewire\API\SystemData::class,'numberlist'])->name('numberlist');
-Route::get('/khairatkematian',App\Http\Livewire\Surau\Register::class)->name('khairatkematian');
+    Route::get('/khairatkematian',App\Http\Livewire\Surau\Register::class)->name('khairatkematian');
