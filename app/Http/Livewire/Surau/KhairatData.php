@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Surau;
 
 use Livewire\Component;
 use App\Models\Khairat;
+use App\Models\FileUpload;
 use App\Models\KhairatUser;
 use Auth;
 
@@ -46,6 +47,7 @@ class KhairatData extends Component
         $this->page = $page;
         $this->title = $title;
         $this->dataid = $dataid;
+        $this->data=FileUpload::where('file_uploadsable_id',$dataid)->first();
         $this->emit('modal',[$page,$title,$dataid]);
     }
 }
