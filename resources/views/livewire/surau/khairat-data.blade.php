@@ -57,7 +57,7 @@
                                     </td>
                                     <td>
                                    
-                                    {{ $khairat->Membership()->first()->name }}
+                                    {!! nl2br($khairat->Membership()->first()->name) !!}
                                  
                                     </td>                                  
                                     <td class="text-center">
