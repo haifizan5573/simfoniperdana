@@ -13,17 +13,17 @@ use App\Models\FileUpload;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
-Route::get('/index', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/index', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('livewire.dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 require __DIR__.'/loan.php';
@@ -33,10 +33,13 @@ require __DIR__.'/surau.php';
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 Route::group(['middleware' => ['auth']], function() {
+
+  Route::get('/dashboard', App\Http\Livewire\Dashboard::class)->name('dashboard');
+  Route::get('/', App\Http\Livewire\Dashboard::class)->name('dashboard');
+  Route::get('/home', App\Http\Livewire\Dashboard::class)->name('home');
 
     Route::get('/modal/{id?}',App\Http\Livewire\Form\Modal::class)->name('modal');
     Route::get('/postcode',[App\Http\Livewire\API\Address::class,'postcode'])->name('postcode');
