@@ -28,7 +28,7 @@ class KhairatData extends Component
                        ->paginate(30);
     }
   
-          dd($this->roles);
+        
   
           if(in_array('Owner',$this->roles)){
   
