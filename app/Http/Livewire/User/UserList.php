@@ -27,7 +27,7 @@ class UserList extends Component
          $this->sortAsc=false;
 
          $permission=Auth::user()->getAllPermissions()->pluck('name')->toArray();
-          
+          dd($permission);
          if(!in_array('userlist',$permission)){
             abort(404);
          }
