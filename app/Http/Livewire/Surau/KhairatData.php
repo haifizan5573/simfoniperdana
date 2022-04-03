@@ -26,9 +26,9 @@ class KhairatData extends Component
                        $q->where('year', '>=',$this->filter);
                        })
                        ->paginate(30);
-          }
+    }
   
-          //dd($this->khairats);
+          dd($this->roles);
   
           if(in_array('Owner',$this->roles)){
   
