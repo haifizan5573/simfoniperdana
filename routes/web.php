@@ -29,6 +29,7 @@ require __DIR__.'/auth.php';
 require __DIR__.'/loan.php';
 require __DIR__.'/user.php';
 require __DIR__.'/product.php';
+require __DIR__.'/surau.php';
 
 Auth::routes();
 

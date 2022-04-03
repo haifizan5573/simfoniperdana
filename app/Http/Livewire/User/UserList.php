@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\User;
 use Livewire\WithPagination;
 use Session;
+use Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class UserList extends Component
@@ -24,7 +25,12 @@ class UserList extends Component
     public function mount(){
          $this->sortField="status";
          $this->sortAsc=false;
+
+         $permission=Auth::user()->getAllPermissions()->pluck('name')->toArray();
           
+         if(!in_array('userlist',$permission)){
+            abort(404);
+         }
    
      }
 
