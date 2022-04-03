@@ -57,7 +57,7 @@ Route::group(['middleware' => ['auth']], function() {
  
            $filedata=FileUpload::where('file_uploadsable_id',$id)->first();
            $data = [
-          'img' => (!empty($filedata->path))?Storage::url($filedata->path):""
+          'link' => (!empty($filedata->path))?Storage::url($filedata->path):""
         
             ];
 
