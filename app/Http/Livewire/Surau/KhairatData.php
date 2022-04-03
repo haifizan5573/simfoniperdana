@@ -9,7 +9,9 @@ use Auth;
 
 class KhairatData extends Component
 {
-    public $filter,$roles;
+    public $filter,$roles,$search;
+
+
 
     public function mount(){
 
@@ -37,5 +39,13 @@ class KhairatData extends Component
         return view('livewire.surau.khairat-data',[
             'khairats'=>$khairatdata
         ]);
+    }
+
+    public function open($page,$title,$dataid)
+    {
+        $this->page = $page;
+        $this->title = $title;
+        $this->dataid = $dataid;
+        $this->emit('modal',[$page,$title,$dataid]);
     }
 }

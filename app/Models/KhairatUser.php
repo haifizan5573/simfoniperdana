@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Khairat;
 use App\Models\Label;
+use App\Models\FileUpload;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,6 +39,10 @@ class KhairatUser extends Model
     }
 
     public function Addresses(){
-        return $this->morphMany(Address::class,'addressable');
+        return $this->hasOne(Address::class,'addressable_id','userid');
+    }
+
+    public function FileUpload(){
+        return $this->hasOne(FileUpload::class,'file_uploadsable_id','userid');
     }
 }

@@ -5,6 +5,7 @@
 <link href="{{ URL::asset('assets/libs/toastr/build/toastr.min.css') }}" rel="stylesheet" type="text/css" />
 
 @endsection
+<div>
 <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -36,6 +37,7 @@
                                     <th class="align-middle">Home Unit</th>
                                     <th class="align-middle">Membership Type</th>
                                     <th class="align-middle text-center">Membership Fee</th>
+                                    <th class="align-middle text-center">Payment Receipt</th>
                                     <th class="align-middle text-center">Payment Status</th>
                                     <th class="align-middle text-center">Action</th>
                                 </tr>
@@ -47,10 +49,10 @@
                                     <td>
                                        {{ $khairat->user->usercode }}
                                     </td>
-                                    <td>{{ $khairat->user->name }}</td>
+                                    <td>{!! strtoupper($khairat->user->name) !!}</td>
                                     <td>
 
-                                    @if(isset($khairat->Addresses()->first()->location)){{ $khairat->Addresses()->first()->location }}@endif @if(isset($khairat->Addresses()->first()->unit)) ,{{ $khairat->Addresses()->first()->unit }} @endif
+                                    @if(isset($khairat->Addresses()->first()->street)){{ $khairat->Addresses()->first()->street }},@endif @if(isset($khairat->Addresses()->first()->location)){{ $khairat->Addresses()->first()->location }} @endif
 
                                     </td>
                                     <td>
@@ -62,13 +64,30 @@
                                     {{ $khairat->Membership()->first()->other }}
                                     </td>
                                     <td class="text-center">
+                                      
+                                        @if(!empty($khairat->FileUpload->first()->path))
+                                            @include('components.button',[
+                                                                'type'=>'button',
+                                                                'class'=>'btn btn-dark btn-sm waves-effect waves-light',
+                                                                'onclick'=>"wire:click=\"open('livewire.form.khairatreceipt','Payment Receipt','".$khairat->FileUpload->first()->path."')\"",
+                                                                'label'=>'View',
+                                                                'icon'=>'<i class="bx bx-search-alt-2 font-size-16 align-middle me-2"></i>',
+                                                                'loader'=>true,
+                                                                'targetloader'=>"view",
+                                                            ])
+                                        @endif
+                                  
+                                    </td>
+                                    <td class="text-center">
 
-                                    <span class="badge badge-pill {{ ($khairat->status==1)? 'badge-soft-success': 'badge-soft-danger' }}  font-size-11">{{ $khairat->Label()->first()->name }}</span>
+                                    <span class="badge badge-pill {{ ($khairat->status==8)? 'badge-soft-success': 'badge-soft-danger' }}  font-size-11">{{ $khairat->Label()->first()->name }}</span>
 
                                     </td>
                                     <td class="text-center">
+
+                                            @if($khairat->status!=8)
                                      
-                                   
+                                            @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -87,12 +106,13 @@
             </div>
         </div>
     </div>
-
-   
+    @include('components.modal',['size'=>'lg'])  
+</div>  
   
 @push('scripts')
+<script>
     @if(!empty($toastrdata['message']))
-    <script>
+   
         $( document ).ready(function() {
             
 
@@ -100,7 +120,23 @@
            
            livewire.emit('showmessage',data);
         });
-    </script>
+
+    
+  
     @endif
+
+        window.livewire.on('closemodal', data => {
+                $('#appmodal').modal('hide'); 
+            });
+
+        window.livewire.on('modal', data => {
+
+                $('#appmodal').modal('show'); 
+
+                $(window).on('shown.bs.modal', function(e) { 
+                    e.preventDefault();
+                });
+        });
+    </script>
 @include('components.toastr')
 @endpush
