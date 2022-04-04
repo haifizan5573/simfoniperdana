@@ -67,14 +67,13 @@
                                             ])                    
                             </div>
                             <div class="col-md-6" wire:ignore>
-                                     @include('components.select',[
+                                 @include('components.input',[
                                             'name'=>'unit',
-                                            'selectid'=>'unit',
-                                            'fieldname'=>'',
                                             'id'=>'',
                                             'label'=>'Unit',
-                                            'placeholder'=>'', 
-                                            ])                    
+                                            'placeholder'=>'',
+                                        
+                                            ])               
                             </div>
                             
                         </div>

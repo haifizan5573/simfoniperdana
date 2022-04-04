@@ -126,15 +126,23 @@ class Forms extends Component
                 $payment=(!isset($this->paymenttype))?0:$this->paymenttype;
 
                 //create khairat for this year
-                FormUser::create([
+                $formuser=FormUser::create([
                 
                     'userid'=>$user->id,
-                    'formud' => $this->formid,
-                    'membership'=>$this->membership,
+                    'formid' => $this->formid,
                     'contribution' => $contrib,
-                    'paymenttyoe' => $payment,
+                    'paymenttype' => $payment,
                     'status'=>env('DEFAULT_KHAIRAT')
                 ]);
+
+                for($i=0;$i<$this->keyuser;$i++){
+                    if(!empty($this->membername[$i])){
+                        $formuser->members()->create([
+                            "name"=>$this->membername[$i],
+                            "usertype"=>"tahlil"
+                        ]);
+                    }
+                }
 
                 $this->show=false;
                 $this->message=array("message"=>"Record Successfully Created","alert-type"=>"success");

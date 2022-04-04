@@ -36,9 +36,10 @@
                 }
             },
             error: function(response) {
-                $('#current_passwordError').text(response.responseJSON.errors.current_password);
-                $('#passwordError').text(response.responseJSON.errors.password);
-                $('#password_confirmError').text(response.responseJSON.errors.password_confirmation);
+                console.log(response);
+             //   $('#current_passwordError').text(response.responseJSON.errors.current_password);
+               // $('#passwordError').text(response.responseJSON.errors.password);
+               // $('#password_confirmError').text(response.responseJSON.errors.password_confirmation);
             }
         });
     });

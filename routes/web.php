@@ -70,6 +70,8 @@ Route::group(['middleware' => ['auth']], function() {
 
       })->name('viewattachment');
 
+     Route::get('/user/firsttime', App\Http\Livewire\Miscellaneous\ChangePassword::class)->name('FirstTime');
+      
     
 });
 
