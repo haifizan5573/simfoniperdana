@@ -52,7 +52,7 @@
                 
                                                 <h5 class="text-primary">{{$title}}</h5>
 
-                                                {{$description}}
+                                                {!! $description !!}
 
                                             </div>
                             
@@ -75,6 +75,11 @@
                                                     'placeholder'=>'',
                                                 
                                                     ])  
+                                                    @error('name') <span class="error">{{ $message }}</span> @enderror
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2" >
+                                            <div class="col-md-12">
                                                     @error('name') <span class="error">{{ $message }}</span> @enderror
                                             </div>
                                         </div>
@@ -141,45 +146,87 @@
                                                @error('unit') <span class="error">{{ $message }}</span> @enderror                
                                             </div>                         
                                         </div>
+                                    
+                                        @if($fund==1)
+
                                         <div class="row mb-2" >
                                             <div class="col-md-6" wire:ignore>
-                                                    @include('components.select',[
-                                                            'name'=>'membership',
-                                                            'selectid'=>'membership',
+                                            
+                                            @include('components.input',[
+                                                        'name'=>'contribution',
+                                                        'id'=>'',
+                                                        'label'=>'Contribution',
+                                                        'placeholder'=>'',
+                                                    
+                                                        ])                  
+                                            </div>
+                                            <div class="col-md-6"  wire:ignore>
+
+                                            @include('components.select',[
+                                                            'name'=>'paymenttype',
+                                                            'selectid'=>'paymenttype',
                                                             'fieldname'=>'',
                                                             'id'=>'',
-                                                            'label'=>'Membership Type',
+                                                            'label'=>'Payment Type',
                                                             'placeholder'=>'', 
-                                                            ])                    
-                                            </div>
-                                            <div class="col-md-6" >
-                                            @if(!empty($totalPayment))
-
-                                                @include('components.input',[
-                                                'name'=>'totalPayment',
-                                                'id'=>'',
-                                                'label'=>'Total Fees',
-                                                'placeholder'=>'',
-                                                'inputlock'=>true
-                                                ])  
-
-                                            @endif         
+                                                            ])       
                                             </div>                         
                                         </div>
+
                                         <div class="row mb-2" >
                                             <div class="col-md-6" >
-                                                @error('membership') <span class="error">{{ $message }}</span> @enderror                 
+                                                @error('contribution') <span class="error">{{ $message }}</span> @enderror                 
                                             </div>
                                             <div class="col-md-6">
-                                                           
+                                                @error('paymenttype') <span class="error">{{ $message }}</span> @enderror           
                                             </div>                         
                                         </div>
 
+
+                                        @endif
+
+                                        @if(!empty($form_user))
+                                        
+                                            <div class="card">
+                                                <div class="card-body">
+                                                <h5>{{$form_user}}</h5>
+                                                @for($i=0;$i<$keyuser;$i++)
+
+                                                    <div class="row">
+                                                        
+                                                        
+                                                        <div class="mb-2 col-10">
+                                                            <label class="form-label">Name</label>
+                                                            <input type="text" class="form-control" placeholder="" wire:model="membername.{{$i}}"> 
+                                                        </div>
+                                                        <div class="mb-2 col-2">
+                                                            <button wire:click="deleteuser()" type="button" class="btn btn-danger waves-effect waves-light mt-4">
+                                                                <i class="mdi mdi-trash-can font-size-16 align-middle"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+
+                                                 @endfor
+                                                    <div class="row">
+                                                            <div class="mb-2 col-10">
+                                                            <button wire:click="adduser()" type="button" class="btn btn-success waves-effect waves-light mt-4">
+                                                                   Add
+                                                                </button>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                     
+                                        @endif
+                                    
+                                        
+                                        @if($paymenttype!=17)
                                         <div class="row mb-2">
-                          
-                                            <div class="col-6" wire:ignore>
+         
+                                          <div class="col-6" >
                                                 
-                                                    @include('components.input',[
+                                          @include('components.input',[
                                                                 'name'=>'attachment',
                                                                 'id'=>'',
                                                                 'type'=>'file',
@@ -190,7 +237,6 @@
                                                     
                                             </div>
                                         </div>
-
                                         <div class="row mb-2" >
                                             <div class="col-md-6" >
                                             @error('attachment') <span class="error">{{ $message }}</span> @enderror               
@@ -199,9 +245,9 @@
                                                            
                                             </div>                         
                                         </div>
-                                     
+                                        @endif
 
-                                        <div class="row mt-4">
+                                        <div class="row mt-4" >
                                                 <div class="col-4">
                                                         @include('components.button',[
                                                             'type'=>'submit',
@@ -224,8 +270,8 @@
                                                        
         
                                                         <div>
-                                                            <h5 class="text-success">Pending Confirmation</h5>
-                                                            <p>Thanks for being a part of us. Your submission is pending payment confirmation. We will send you the payment receipt shortly.</p>
+                                                        
+                                                            <p>Record successfully added.</p>
                                                              
                                                         </div>
                                         </div>
@@ -304,13 +350,13 @@ window.livewire.on('load', data => {
                     });
 
 
-                    $('#membership').select2({
-                            placeholder: 'Select Membership Type',
+                    $('#paymenttype').select2({
+                            placeholder: 'Select Payment Type',
                            
                             tags: false,
                             selectOnBlur: true,
                             ajax: {
-                                url:  "{{route('label')}}/surau_khairat_membership",
+                                url:  "{{route('label')}}/payment_type",
                                 dataType: 'json',
                                 delay: 250,
                                 processResults: function (data) {
@@ -329,10 +375,10 @@ window.livewire.on('load', data => {
                             }
                     });
 
-                    $('#membership').on('change', function(e) {
+                    $('#paymenttype').on('change', function(e) {
 
                     let dataval= $(this).val();
-                        @this.set('membership', dataval);        
+                        @this.set('paymenttype', dataval);        
                     });
 
                   

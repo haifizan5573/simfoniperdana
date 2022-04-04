@@ -2,17 +2,48 @@
 
 namespace App\Http\Livewire\Miscellaneous;
 
+use Livewire\WithFileUploads;
 use Livewire\Component;
 use App\Models\Form;
+use App\Models\FormUser;
+use App\Models\User;
+use App\Models\Label;
+use App\Models\Khairat;
+use App\Models\KhairatUser;
+use App\Models\FileUpload;
+use App\Models\Address;
+use App\Helpers\Formatter;
+use Illuminate\Support\Facades\Hash;
+
 
 class Forms extends Component
 {
+
+    use WithFileUploads;
+
+    public $keyuser=3;
+    public $name,$email,$street,$unit,$phone,$userstatus,$attachment,$contribution,$paymenttype,$membername=array();
+    public $show;
+ 
+    protected $rules = [
+        'name' => 'required|min:4',
+        'unit'=>"required|regex:'^[0-9]{1,3}[a-zA-Z]{1}$'",
+        'email' => 'required|unique:users|email',  
+        'phone' => "required|regex:'^(01)[0-46-9]*[0-9]{7,8}$'",
+        'street' => 'required',
+        'attachment'=>'sometimes|required',
+        'contribution'=>'sometimes|required',
+        'paymenttype'=>'sometimes|required',
+    ];
     public function mount($id){
 
         $this->form=Form::find($id);
         if(isset($this->form->id)){
+        $this->formid=$id;
         $this->title=$this->form->title;
         $this->description=$this->form->description;
+        $this->fund=$this->form->form_fund;
+        $this->form_user=$this->form->form_user;
         $this->buttintro=true;
         $this->show=true;
         }else{
@@ -23,6 +54,15 @@ class Forms extends Component
     public function render()
     {
         return view('livewire.miscellaneous.form')->layout('layouts.master-plain');
+    }
+
+
+    public function adduser(){
+        $this->keyuser++;
+    }
+
+    public function deleteuser(){
+        $this->keyuser--;
     }
 
     public function register(){
@@ -69,9 +109,8 @@ class Forms extends Component
 
             
 
-                $khairatid=Khairat::where('year',date('Y'))->first()->id;
-
-            
+                $path="";
+                if(!empty($this->attachment)){
 
                 $path = $this->attachment->store('public/attachment/' . $usercode);
 
@@ -81,13 +120,19 @@ class Forms extends Component
                     'type'=>'paymentreceipt'
                 ]);
 
+                }
+
+                $contrib=(!isset($this->contribution))?0:$this->contribution;
+                $payment=(!isset($this->paymenttype))?0:$this->paymenttype;
+
                 //create khairat for this year
-                KhairatUser::create([
+                FormUser::create([
                 
                     'userid'=>$user->id,
-                    'khairat' => $khairatid,
+                    'formud' => $this->formid,
                     'membership'=>$this->membership,
-                    'attachment' => $path,
+                    'contribution' => $contrib,
+                    'paymenttyoe' => $payment,
                     'status'=>env('DEFAULT_KHAIRAT')
                 ]);
 

@@ -18,6 +18,8 @@ class CreateFormUsersTable extends Migration
             $table->bigInteger('userid')->unsigned();
             $table->bigInteger('formid')->unsigned();
             $table->longText('formdata');
+            $table->string('contribution')->nullable();
+            $table->string('paymenttype')->nullable();
             $table->timestamps();
 
             $table->foreign('userid')
