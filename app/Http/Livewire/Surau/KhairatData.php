@@ -13,7 +13,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class KhairatData extends Component
 {
-   // use WithPagination;
+    use WithPagination;
     use AuthorizesRequests;
 
     public $filter,$roles,$search,$status;
@@ -68,21 +68,21 @@ class KhairatData extends Component
 
     
 
-    public function open($page,$title,$dataid)
+    public function open($pagemodal,$title,$dataid)
     {
-        $this->page = $page;
+        $this->pagemodal = $pagemodal;
         $this->title = $title;
         $this->dataid = $dataid;
         $this->data=FileUpload::where('file_uploadsable_id',$dataid)->first();
         $this->appstatus="";
-        if($page=="livewire.form.updatestatus"){
+        if($pagemodal=="livewire.form.updatestatus"){
             $this->khairatuser=KhairatUser::where('userid',$dataid)->first();
             $this->appstatus=$this->khairatuser->label()->first()->name;
             $this->status=$this->khairatuser->status;
             $this->userid=$dataid;
         }
         
-        $this->emit('modal',[$page,$title,$dataid,$this->appstatus]);
+        $this->emit('modal',[$pagemodal,$title,$dataid,$this->appstatus]);
     }
 
     public function editstatus(){
