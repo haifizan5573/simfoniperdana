@@ -134,6 +134,7 @@
                         </div>
             </div>
         </div>
+        @include('components.modal',['size'=>'lg'])  
     </div>
  
 
