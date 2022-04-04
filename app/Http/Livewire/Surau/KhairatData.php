@@ -43,15 +43,14 @@ class KhairatData extends Component
                             });
                        })
                        ->paginate(30);
-            $break=1;
+           // $break=1;
          }
   
         
   
         if(in_array('Owner',$this->roles)&&$break==0){
 
-            $khairatdata=KhairatUser::where('userid',Auth::user()->id)
-                ->paginate(30);
+            $khairatdata=KhairatUser::paginate(30);
 
         }
 
