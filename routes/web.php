@@ -78,3 +78,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/unitlist/{type?}',[App\Http\Livewire\API\SystemData::class,'unitlist'])->name('unitlist');
     Route::get('/numberlist/{number?}',[App\Http\Livewire\API\SystemData::class,'numberlist'])->name('numberlist');
     Route::get('/khairatkematian',App\Http\Livewire\Surau\Register::class)->name('khairatkematian');
+    Route::get('/tahlil',App\Http\Livewire\Surau\Tahlil::class)->name('tahlil');
+    Route::get('/form/{id}',App\Http\Livewire\Miscellaneous\Forms::class)->name('form');
