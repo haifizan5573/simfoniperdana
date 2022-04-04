@@ -2,7 +2,7 @@
 <link href="{{ URL::asset('assets/libs/toastr/build/toastr.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
-
+<div>
 <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -134,10 +134,10 @@
                         </div>
             </div>
         </div>
-        @include('components.modal',['size'=>'lg'])  
     </div>
- 
-
+    @include('components.modal',['size'=>'lg'])  
+</div>  
+  
 @push('scripts')
 <script src="{{ URL::asset('/assets/libs/select2/select2.min.js') }}"></script>
 <script>
