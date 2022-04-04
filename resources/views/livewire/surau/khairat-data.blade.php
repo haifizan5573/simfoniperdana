@@ -136,7 +136,7 @@
         </div>
     </div>
  
-@include('components.modal',['size'=>'lg'])  
+
 @push('scripts')
 <script src="{{ URL::asset('/assets/libs/select2/select2.min.js') }}"></script>
 <script>
