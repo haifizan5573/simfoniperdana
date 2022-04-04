@@ -9,11 +9,14 @@ use App\Models\KhairatUser;
 use Livewire\WithPagination;
 use Auth;
 use Session;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class KhairatData extends Component
 {
+   // use WithPagination;
+    use AuthorizesRequests;
+
     public $filter,$roles,$search,$status;
-    use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
 
