@@ -6,13 +6,15 @@ use Livewire\Component;
 use App\Models\Khairat;
 use App\Models\FileUpload;
 use App\Models\KhairatUser;
+use Livewire\WithPagination;
 use Auth;
 use Session;
 
 class KhairatData extends Component
 {
     public $filter,$roles,$search,$status;
-
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
 
 
     public function mount(){
@@ -43,14 +45,15 @@ class KhairatData extends Component
                             });
                        })
                        ->paginate(30);
-           // $break=1;
+            $break=1;
          }
   
         
   
         if(in_array('Owner',$this->roles)&&$break==0){
 
-            $khairatdata=KhairatUser::paginate(30);
+            $khairatdata=KhairatUser::where('userid',Auth::user()->id)
+                ->paginate(30);
 
         }
 
