@@ -40,10 +40,10 @@ class EditProfile extends Component
         $user = User::find($this->uid);
         $user->name =$this->name;
         $user->nickname = $this->nickname;
-        $user->avatar=$this->avatar;
+       // $user->avatar=$this->avatar;
         
 
-        if ($this->avatar) {
+        if ($this->avatar!=null) {
             $avatar = $this->avatar;
             $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
             // $avatarPath = public_path('/images/');
@@ -57,10 +57,9 @@ class EditProfile extends Component
         $user->update();
 
 
-        $this->dispatchBrowserEvent('alert', 
-        ['type' => 'info',  'message' => 'User Profile Updated!']);
+        $result = array("alert-type" => "success", "message" => "Profile Updated");
      
-        return redirect()->route('showprofile',['id'=>$this->uid]);
+        return redirect()->route('showprofile',['id'=>$this->uid])->with($result);
 
     }
 }
