@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -28,6 +29,34 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        if ($response = $this->authenticated($request, $this->guard()->user())) {
+            return $response;
+        }
+        auth()->logoutOtherDevices($request->password);
+        return $request->wantsJson()
+                    ? new Response('', 204)
+                    : redirect()->intended($this->redirectPath());
+    }
+
+    protected function authenticated()
+    {
+
+       // dd($curpass."|".$defaultpass);
+       if(Auth()->user()->isactive==2){
+        return redirect()->route('FirstTime');
+       }
+
+       if(Auth()->user()->isactive==0){
+        Auth::logout();
+        abort(404);
+       }
+    }
     /**
      * Create a new controller instance.
      *
