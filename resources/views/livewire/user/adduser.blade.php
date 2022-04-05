@@ -55,6 +55,21 @@
                                 
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12 mb-2">
+                               
+                            @include('components.input',[
+                                            'name'=>'phone',
+                                            'id'=>'',
+                                            'label'=>'Phone',
+                                          
+                                            'placeholder'=>'',
+                                        
+                                            ])  
+                                    @error('phone') <span class="error">{{ $message }}</span> @enderror
+                                
+                            </div>
+                        </div>
                         <div class="row mb-2" >
                             <div class="col-md-6" wire:ignore>
                                      @include('components.select',[

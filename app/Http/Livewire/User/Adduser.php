@@ -19,7 +19,11 @@ class Adduser extends Component
     protected $rules = [
         'name' => 'required|min:4',
         'role'=>'required',
-        'email' => 'required|unique:users|email',  
+        'email' => 'required|unique:users|email',
+        'phone' => "regex:'^(01)[0-46-9]*[0-9]{7,8}$'",
+        'unit'=>"required|regex:'^[0-9]{1,3}[a-zA-Z]{1}$'",
+        'street' => 'required',
+
     ];
 
     public function mount(){
