@@ -150,6 +150,7 @@ window.livewire.on('load', data => {
                     $('#role').select2({
                             placeholder: '{{$rolename}}',
                             //width: '250px',
+                            multiple: true,
                             tags: false, selectOnBlur: true,
                             ajax: {
                                 url:  "{{route('rolelist')}}/1",

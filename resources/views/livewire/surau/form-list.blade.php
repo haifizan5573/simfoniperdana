@@ -33,9 +33,11 @@
                                 <tr>
                                    
                                     <th class="align-middle">Title</th>
+                                    @can('update-khairat')
                                     <th class="align-middle">No. Of Submission</th>
-                                    <th class="align-middle">Contribution</th>
                                   
+                                    <th class="align-middle">Contribution</th>
+                                    @endcan
                                 
                                     <th class="align-middle text-center">Start Date</th>
                                     <th class="align-middle text-center">End Date</th>
@@ -51,6 +53,8 @@
                                 <tr>
                                  
                                     <td>{{$form->title}}</td>
+
+                                    @can('update-khairat')
                                     <td class="text-center">
 
                                      <a href="{{ route('formuser',['formid'=>$form->id])}}">{{$form->formuser()->count()}}</a>
@@ -60,7 +64,8 @@
                                      @if(!empty($form->formuser()->sum('contribution')))
                                         RM{{$form->formuser()->sum('contribution')}}
                                      @endif
-                                    </td>                                  
+                                    </td>      
+                                    @endcan                            
                                    
                                     <td class="text-center">
                                     @if(!empty($form->start_date))
