@@ -79,7 +79,7 @@ class Register extends Component
                 
                     //contact
                     $user->Contacts()->Create([
-                        'phonenumber'=>$"",
+                        'phonenumber'=>"",
                         'phonetype'=>'default' 
                     ]);
 
