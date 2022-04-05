@@ -27,7 +27,7 @@ class SystemData extends Component
             		->get();
        }else{
 
-            $datas =Label::orderby('id','asc')
+            $datas =Label::orderby('order','asc')
             ->when(!empty($type),function($q) use ($type){
                 $q->where('type',$type);
             })
