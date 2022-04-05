@@ -86,7 +86,7 @@ class Register extends Component
                     //address
                     $user->Addresses()->Create([
                         'location'=>strtoupper($this->unit),
-                        'street'="",
+                        'street'=>"",
                         'addresstype'=>'default'
                     ]);
 
