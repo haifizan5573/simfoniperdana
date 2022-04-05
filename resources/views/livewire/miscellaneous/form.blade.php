@@ -1,7 +1,7 @@
 
 
 @section('title')
-    Registration Of Khairat Kematian
+    {{$title}}
 @endsection
 
 @section('css')

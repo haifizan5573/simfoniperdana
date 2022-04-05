@@ -8,9 +8,9 @@
 
                         <tr>
                             <td>
-                                 <i class="bx bx-time-five align-middle me-1"></i> 
-                                 {{$act->description}}<br/>
-                                <small>{{ $act->name}}</small>
+                                 <i class="bx bx-receipt align-middle me-1"></i> 
+                                 {{$act->title}}<br/>
+                              
                             </td>
                         </tr>
 

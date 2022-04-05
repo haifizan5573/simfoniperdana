@@ -14,12 +14,14 @@ use App\Models\FileUpload;
 use App\Models\Address;
 use App\Helpers\Formatter;
 use Illuminate\Support\Facades\Hash;
-
+use Livewire\WithPagination;
 
 class Forms extends Component
 {
 
     use WithFileUploads;
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
 
     public $keyuser=3;
     public $name,$email,$street,$unit,$phone,$userstatus,$attachment,$contribution,$paymenttype,$membername=array();
@@ -32,7 +34,7 @@ class Forms extends Component
         'phone' => "required|regex:'^(01)[0-46-9]*[0-9]{7,8}$'",
         'street' => 'required',
         'attachment'=>'sometimes|required',
-        'contribution'=>'sometimes|required',
+        'contribution'=>"sometimes|required|regex:'^[0-9]$",
         'paymenttype'=>'sometimes|required',
     ];
     public function mount($id){
@@ -109,18 +111,7 @@ class Forms extends Component
 
             
 
-                $path="";
-                if(!empty($this->attachment)){
-
-                $path = $this->attachment->store('public/attachment/' . $usercode);
-
-                $user->FileUploads()->create([
-                    'name'=>'Payment Receipt',
-                    'path'=>$path,
-                    'type'=>'paymentreceipt'
-                ]);
-
-                }
+              
 
                 $contrib=(!isset($this->contribution))?0:$this->contribution;
                 $payment=(!isset($this->paymenttype))?0:$this->paymenttype;
@@ -142,6 +133,19 @@ class Forms extends Component
                             "usertype"=>"tahlil"
                         ]);
                     }
+                }
+
+                $path="";
+                if(!empty($this->attachment)){
+
+                $path = $this->attachment->store('public/attachment/' . $usercode);
+
+                $formuser->FileUploads()->create([
+                    'name'=>'Payment Receipt',
+                    'path'=>$path,
+                    'type'=>'paymentreceipt'
+                ]);
+
                 }
 
                 $this->show=false;

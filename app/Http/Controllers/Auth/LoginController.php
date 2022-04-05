@@ -29,20 +29,20 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    protected function sendLoginResponse(Request $request)
-    {
-        $request->session()->regenerate();
+    // protected function sendLoginResponse(Request $request)
+    // {
+    //     $request->session()->regenerate();
 
-        $this->clearLoginAttempts($request);
+    //     $this->clearLoginAttempts($request);
 
-        if ($response = $this->authenticated($request, $this->guard()->user())) {
-            return $response;
-        }
-        auth()->logoutOtherDevices($request->password);
-        return $request->wantsJson()
-                    ? new Response('', 204)
-                    : redirect()->intended($this->redirectPath());
-    }
+    //     if ($response = $this->authenticated($request, $this->guard()->user())) {
+    //         return $response;
+    //     }
+    //     auth()->logoutOtherDevices($request->password);
+    //     return $request->wantsJson()
+    //                 ? new Response('', 204)
+    //                 : redirect()->intended($this->redirectPath());
+    // }
 
     protected function authenticated()
     {
