@@ -79,14 +79,14 @@ class Register extends Component
                 
                     //contact
                     $user->Contacts()->Create([
-                        'phonenumber'=>$this->phone,
+                        'phonenumber'=>$"",
                         'phonetype'=>'default' 
                     ]);
 
                     //address
                     $user->Addresses()->Create([
                         'location'=>strtoupper($this->unit),
-                        'street'=>$this->street,
+                        'street'="",
                         'addresstype'=>'default'
                     ]);
 
