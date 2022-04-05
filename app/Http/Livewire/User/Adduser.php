@@ -9,6 +9,7 @@ use App\Helpers\Formatter;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NewUser;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Address;
 
 class Adduser extends Component
 {
