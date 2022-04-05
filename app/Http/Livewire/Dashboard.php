@@ -29,7 +29,7 @@ class Dashboard extends Component
         $formatter=new Formatter();
         return view('livewire.dashboard',[
             'formatter'=>$formatter,
-            'forms'=>Form::where("status",1)->take(10),
+            'forms'=>Form::where("status",1)->take(10)->get(),
         ]);
     }
 }
