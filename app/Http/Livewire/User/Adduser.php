@@ -106,7 +106,7 @@ class Adduser extends Component
         
         $result = array("alert-type" => "success", "message" => "New User Created");
         }else{
-            $this->message=array("message"=>"Unit Number already exist","alert-type"=>"error");  
+            $result=array("message"=>"Unit Number already exist","alert-type"=>"error");  
         }
         return redirect()->route('userlist')->with($result);
 
