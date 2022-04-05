@@ -81,9 +81,10 @@ class Adduser extends Component
 
         Mail::to($this->email)->send(new NewUser($data));
 
-        $this->message=array("message"=>"New User Created","alert-type"=>"success");
+        
+        $result = array("alert-type" => "success", "message" => "New User Created");
+        return redirect()->route('userlist')->with($result);
 
-        $this->emit('showmessage',[$this->message]);
     
     }
 }
