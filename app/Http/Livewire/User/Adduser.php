@@ -46,6 +46,9 @@ class Adduser extends Component
         $this->validate();
 
     
+        $addcount=Address::where('location',$this->unit)->where('street',$this->street)->count();
+        
+        if($addcount==0){
 
         $formatter=new Formatter();
         //$rolename=Role::find($this->role)->name;
@@ -63,6 +66,20 @@ class Adduser extends Component
             'password' => Hash::make('abc123'),
             'isactive'=>2
         ]);
+
+          //contact
+        $user->Contacts()->Create([
+            'phonenumber'=>$this->phone,
+            'phonetype'=>'default' 
+        ]);
+
+        //address
+        $user->Addresses()->Create([
+            'location'=>strtoupper($this->unit),
+            'street'=>$this->street,
+            'addresstype'=>'default'
+        ]);
+
        
         $user->assignRole($this->role);
 
@@ -83,6 +100,9 @@ class Adduser extends Component
 
         
         $result = array("alert-type" => "success", "message" => "New User Created");
+        }else{
+            $this->message=array("message"=>"Unit Number already exist","alert-type"=>"error");  
+        }
         return redirect()->route('userlist')->with($result);
 
     
