@@ -36,9 +36,9 @@ class FormUsers extends Component
         $this->data=FileUpload::where('file_uploadsable_id',$dataid)->first();
         $this->appstatus="";
         if($pagemodal=="livewire.form.updatestatus"){
-            $this->formuser=FormUser::where('userid',$dataid)->first();
-            $this->appstatus=$this->formuser->label()->first()->name;
-            $this->status=$this->formuser->status;
+            $this->formdata=FormUser::where('userid',$dataid)->first();
+            $this->appstatus=$this->formdata->label()->first()->name;
+            $this->status=$this->formdata->status;
             $this->userid=$dataid;
         }
         
@@ -62,7 +62,7 @@ class FormUsers extends Component
 
         $this->emit('showmessage',[$this->message]);
         $this->emit('closemodal');
-        $this->mount(); 
+        $this->mount($this->formid); 
 
     }
 }

@@ -83,7 +83,7 @@
                                 
                                     <td class="text-center">
 
-                                    <span class="badge badge-pill {{ ($form->status==1)? 'badge-soft-success': 'badge-soft-danger' }}  font-size-11"> {!! nl2br($form->Label()->first()->name) !!}</span>
+                                    <span class="badge badge-pill {{ ($form->status==8)? 'badge-soft-success': 'badge-soft-danger' }}  font-size-11"> {!! nl2br($form->Label()->first()->name) !!}</span>
 
                                     </td>
                                     @can('update-khairat')
