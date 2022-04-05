@@ -36,7 +36,7 @@
                             <span>Submit</span>
 
                             </button>
-                            <button type="button" class="btn btn-warning w-md" onclick="window.location.href='{{ route('ShowProfile',['id'=>Auth::user()->id]) }}'">Cancel</button>
+                            <button type="button" class="btn btn-warning w-md" onclick="window.location.href='{{ route('showprofile',['id'=>Auth::user()->id]) }}'">Cancel</button>
                         </div>
                     </form>
                         <div wire:loading wire:target="editprofile" >

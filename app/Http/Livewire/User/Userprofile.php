@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\User;
 
 use Livewire\Component;
+use App\Models\User;
+use Livewire\WithFileUploads;
 
 class Userprofile extends Component
 {
@@ -10,4 +12,6 @@ class Userprofile extends Component
     {
         return view('livewire.user.userprofile');
     }
+
+    
 }

@@ -6,6 +6,7 @@ use Livewire\Component;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Livewire\WithFileUploads;
+use Auth;
 
 class EditProfile extends Component
 {
@@ -14,9 +15,9 @@ class EditProfile extends Component
     public $name,$avatar,$nickname,$uid;
 
 
-    public function mount($uid){
+    public function mount(){
 
-        $this->uid=$uid;
+        $this->uid=Auth::user()->id;
         $userdata = User::find($this->uid);
         $this->name=$userdata->name;
         $this->nickname=$userdata->nickname;
@@ -50,16 +51,16 @@ class EditProfile extends Component
             // if (file_exists(public_path($user->avatar))) {
             //    unlink(public_path($user->avatar));
             // }
-            $path=$this->avatar->store('public/attachment/avatar');
+            $path=$this->avatar->store('public/attachment/'.$user->usercode);
             $user->avatar = $path;
         }
         $user->update();
 
 
         $this->dispatchBrowserEvent('alert', 
-        ['type' => 'info',  'message' => 'New Flyer Added!']);
+        ['type' => 'info',  'message' => 'User Profile Updated!']);
      
-        return redirect()->route('ShowProfile',['id'=>$this->uid]);
+        return redirect()->route('showprofile',['id'=>$this->uid]);
 
     }
 }
