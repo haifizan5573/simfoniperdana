@@ -12,5 +12,6 @@ Route::group(['middleware' => ['auth']], function() {
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
-Route::get('/showprofile',App\Http\Livewire\User\UserList::class)->name('showprofile');
+Route::get('/showprofile',App\Http\Livewire\User\Userprofile::class)->name('showprofile');
+Route::get('/editprofile',App\Http\Livewire\User\EditProfile::class)->name('editprofile');
 });
