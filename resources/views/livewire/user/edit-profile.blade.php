@@ -10,7 +10,7 @@
                     <div class="mb-2">
                         <label for="floatingnameInput">Name</label>
                         <input type="text" class="form-control form-control-md" placeholder="Enter Name"
-                                                                    value="" wire:model="name" readonly>
+                                                                    value="" wire:model="name" >
                                                                 
                         @error('name') <span class="error">{{ $message }}</span> @enderror
                     </div>
