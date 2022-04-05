@@ -14,7 +14,7 @@ use App\Models\Address;
 class Adduser extends Component
 {
 
-    public $role,$name,$email,$nickname,$street,$unit;
+    public $role,$name,$email,$nickname,$street,$unit,$phone;
 
     protected $rules = [
         'name' => 'required|min:4',
