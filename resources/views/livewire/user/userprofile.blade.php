@@ -26,7 +26,7 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="avatar-md profile-user-wid mb-4">
-                                                    <img src="{{ isset(Auth::user()->avatar) ? Storage::url(Auth::user()->avatar) : asset('/assets/images/user.png') }}" alt="" class="img-thumbnail rounded-circle">
+                                                    <img src="{{ isset(Auth::user()->avatar) ? Storage::url(Auth::user()->avatar) : asset('/assets/images/user.png') }}" alt="" class="img-thumbnail rounded-circle" style="height: 70px !important; width: 100px!important">
                                                 </div>
                                                 <h5 class="font-size-15 text-truncate">{{ Auth::user()->name }}</h5>
                                                 @foreach(Auth::user()->roles()->get()->pluck('name')->toArray() as $role)
