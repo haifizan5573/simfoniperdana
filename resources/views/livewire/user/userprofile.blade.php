@@ -30,7 +30,7 @@
                                                 </div>
                                                 <h5 class="font-size-15 text-truncate">{{ Auth::user()->name }}</h5>
                                                 @foreach(Auth::user()->roles()->get()->pluck('name')->toArray() as $role)
-                                                <p class="text-muted mb-0 text-truncate">{{$role}}</p>
+                                               
                                                 <span class="badge rounded-pill badge-soft-primary">{{$role}}</span>
                                                 @endforeach
                                                 
