@@ -15,7 +15,7 @@
                        
                         <div class="col-lg-8 d-flex justify-content-end">
                                 @can('update-khairat')
-                                    <div class="app-search m-2">
+                                    <div class="app-search ">
                                         <div class="position-relative">
                                         <select class="form-control" wire:model="filter">
                                         
@@ -27,13 +27,23 @@
                                         </div>
                                     </div>
                                
-                                <div class="app-search m-2">
+                                <div class="app-search ">
                                     <div class="position-relative">
                                         <input type="text" class="form-control"  wire:model="search" id="search" type="search">
                                         <span class="bx bx-search-alt"></span>
                                     </div>
                                 </div>
                                 @endcan
+
+                                @if(in_array('Owner',$roles))
+
+                                    <div class="app-search">
+                                        <div class="position-relative">
+                                        <button type="button" onclick="window.location.href='{{ route('khairatkematian')}}'" class="btn btn-primary waves-effect waves-light pb5">Register</button>
+                                        </div>
+                                    </div>
+
+                                @endif
                         </div>
                     </div>
 

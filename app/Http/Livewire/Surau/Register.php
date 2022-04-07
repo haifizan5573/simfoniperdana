@@ -11,13 +11,14 @@ use App\Models\FileUpload;
 use App\Models\Address;
 use App\Helpers\Formatter;
 use Illuminate\Support\Facades\Hash;
+use Auth;
 
 class Register extends Component
 {
     use WithFileUploads;
 
     public $name,$email,$street,$unit,$phone,$userstatus,$membership,$totalPayment,$attachment,$khairat;
-    public $buttintro,$buttbenefits,$buttcond,$buttpayment,$buttcontact,$show;
+    public $buttintro,$buttbenefits,$buttcond,$buttpayment,$buttcontact,$show,$public;
  
     protected $rules = [
         'name' => 'required|min:4',
@@ -41,21 +42,46 @@ class Register extends Component
         $this->title=$this->khairat->name;
         $this->buttintro=true;
         $this->show=true;
+        $this->public=true;
     }
  
     public function render()
     {
-        return view('livewire.surau.register')->layout('layouts.master-plain');
+        if(isset(Auth::user()->id)){
+            return view('livewire.surau.register',[
+                'type'=>1
+            ]);
+        }else{
+            return view('livewire.surau.register',[
+                'type'=>0
+            ])->layout('layouts.master-plain');
+        }
+       
     }
 
     public function register(){
 
-
+        $addcount=0;
+        $khairatid=Khairat::where('year',date('Y'))->first()->id;
+        if(isset(Auth::user()->id)){
+        $addcount=KhairatUser::where('userid',Auth::user()->id)->where('khairat',$khairatid)->count();
+        $this->public=false;
+        }else{
         $addcount=Address::where('location',$this->unit)->where('street',$this->street)->count();
-        
+        }
+
         if($addcount==0){
 
-                $this->validate();
+                if(!isset(Auth::user()->id)){
+                    $this->validate();
+                }
+                else{
+                    $this->validate([
+                        'membership' =>'required',
+                        'attachment'=>'required'
+                    ]);
+                }
+            
                 
 
                 $formatter=new Formatter();
@@ -65,6 +91,7 @@ class Register extends Component
 
             // dd($usercode."|".$rolename."|".$this->role);
 
+            if(!isset(Auth::user()->id)){
                 $user = User::create([
                     'name' => $this->name,
                     'nickname'=>'',
@@ -90,9 +117,14 @@ class Register extends Component
                         'addresstype'=>'default'
                     ]);
 
-            
+                    $userid=$user->id;
 
-                $khairatid=Khairat::where('year',date('Y'))->first()->id;
+            }else{
+                $userid=Auth::user()->id;
+                $user=User::find($userid);
+            }
+
+                
 
             
 
@@ -107,7 +139,7 @@ class Register extends Component
                 //create khairat for this year
                 KhairatUser::create([
                 
-                    'userid'=>$user->id,
+                    'userid'=>$userid,
                     'khairat' => $khairatid,
                     'membership'=>$this->membership,
                     'attachment' => $path,
@@ -118,7 +150,11 @@ class Register extends Component
                 $this->message=array("message"=>"Record Successfully Created","alert-type"=>"success");
 
         }else{
+            if(!isset(Auth::user()->id)){
             $this->message=array("message"=>"Unit Number already exist. Please contact system admin at haifizan@gmail.com","alert-type"=>"error");  
+            }else{
+            $this->message=array("message"=>"You already registered for year ".date('Y'),"alert-type"=>"error");      
+            }
         }
         $this->emit('showmessage',[$this->message]);
 
