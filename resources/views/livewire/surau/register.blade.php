@@ -9,11 +9,6 @@
 <link href="{{ URL::asset('/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
-@section('body')
-
-    <body  style="background-image: url('{{ URL::asset('/assets/images/simfoni-3.jpg') }}'); background-repeat: no-repeat; background-position: center;  background-position:fixed; 
-    background-size: 100% 100%;  ">
-    @endsection
 
    
 
@@ -21,10 +16,13 @@
     @lang('translation.Login')
 @endsection
 
-@section('body')
+@if($type==0)
+    @section('body')
 
-    <body>
+        <body  style="background-image: url('{{ URL::asset('/assets/images/simfoni-3.jpg') }}'); background-repeat: no-repeat; background-position: center;  background-position:fixed; 
+        background-size: 100% 100%;  ">
     @endsection
+
 
    
         <div class="account-pages my-5 pt-sm-5">
@@ -38,6 +36,7 @@
                      </div>
 
             </div>
+@endif
                 <div class="row justify-content-center">
 
                 
@@ -184,6 +183,7 @@
                                 <div class="p-2">
                                     <form wire:submit.prevent="register" id="register">
 
+                                        @if($type==0)
                                          <div class="row mb-2" >
                                             <div class="col-md-12">
                                                     @include('components.input',[
@@ -259,6 +259,7 @@
                                                @error('unit') <span class="error">{{ $message }}</span> @enderror                
                                             </div>                         
                                         </div>
+                                        @endif
                                         <div class="row mb-2" >
                                             <div class="col-md-6" wire:ignore>
                                                     @include('components.select',[
@@ -347,7 +348,8 @@
                                                              
                                                         </div>
                                         </div>
-
+                                        
+                                        @if($public)
                                         <div class="alert alert-info fade show px-3 mt-4" role="alert">
                                                        
         
@@ -357,6 +359,7 @@
                                                             
                                                        </div>
                                        </div>
+                                       @endif
                                 </div>
                                 <div class="col-md-3">
                                     <img src="{{ URL::asset('/assets/images/thankyou.png') }}" alt="">
@@ -373,8 +376,10 @@
 
                     </div>
                 </div>
+    @if($type==0)
             </div>
         </div>
+    @endif
         <!-- end account-pages -->
 
 

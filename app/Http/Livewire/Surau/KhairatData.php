@@ -16,7 +16,7 @@ class KhairatData extends Component
     use WithPagination;
     use AuthorizesRequests;
 
-    public $filter,$roles,$search,$status;
+    public $filter,$roles,$search,$status,$khairat;
     protected $paginationTheme = 'bootstrap';
 
 
@@ -24,7 +24,7 @@ class KhairatData extends Component
 
         $this->filter=(empty($this->filter))?date('Y'):$this->filter;
         $this->roles=Auth::user()->roles()->pluck('name')->ToArray();
-
+        $this->khairat=Khairat::where('year',date('Y'))->first();
       
     }
 
@@ -62,7 +62,9 @@ class KhairatData extends Component
 
         return view('livewire.surau.khairat-data',[
             'khairats'=>$khairatdata,
-            'toastrdata'=>$toastrdata
+            'toastrdata'=>$toastrdata,
+            'roles'=>$this->roles,
+            'khairat'=>$this->khairat
         ]);
     }
 
