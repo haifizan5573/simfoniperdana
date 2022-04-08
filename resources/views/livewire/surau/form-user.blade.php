@@ -48,14 +48,14 @@
                                 <tr>
                                  
                                     <td>
-                                        {{ $form->user()->first()->name }}
+                                    {!! strtoupper($form->user()->first()->name) !!}
                                     </td>
                                     <td>
                                       
                                         <ul>
                                            @foreach($form->Members()->get() as $member)
 
-                                                <li>{{$member->name}}</li>
+                                                <li>{!! strtoupper($member->name) !!}</li>
                                            @endforeach
                                         </ul>
                                     
