@@ -23,5 +23,9 @@ class Form extends Model
         return $this->hasMany(FormUser::Class,"formid","id");
     }
 
+    public function isregistered($uid,$formid){
+
+        return FormUser::where('userid',$uid)->where('formid',$formid)->count();
+    }
  
 }
