@@ -58,6 +58,7 @@
                                 <div class="p-2">
                                     <form wire:submit.prevent="register" id="register">
 
+                                    @if($type==0)
                                          <div class="row mb-2" >
                                             <div class="col-md-12">
                                                     @include('components.input',[
@@ -138,6 +139,8 @@
                                                @error('unit') <span class="error">{{ $message }}</span> @enderror                
                                             </div>                         
                                         </div>
+
+                                        @endif
                                     
                                         @if($fund==1)
 
@@ -268,6 +271,7 @@
                                                         </div>
                                         </div>
 
+                                        @if($type==0)
                                         <div class="alert alert-info fade show px-3 mt-4" role="alert">
                                                        
         
@@ -277,6 +281,7 @@
                                                             
                                                        </div>
                                        </div>
+                                       @endif
                                 </div>
                                 <div class="col-md-3">
                                     <img src="{{ URL::asset('/assets/images/thankyou.png') }}" alt="">

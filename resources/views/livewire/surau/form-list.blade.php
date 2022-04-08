@@ -42,9 +42,9 @@
                                     <th class="align-middle text-center">Start Date</th>
                                     <th class="align-middle text-center">End Date</th>
                                     <th class="align-middle text-center">Status</th>
-                                    @can('update-khairat')
+                                   
                                     <th class="align-middle text-center">Action</th>
-                                    @endif
+                                  
                                 </tr>
                             </thead>
                             <tbody>
@@ -100,16 +100,25 @@
                                         @endif
                                         
                                         @if($form->status==1)
+
+                                          
+                                            @if($form->isregistered(Auth::user()->id,$form->id)>0)
+
+                                            <span class="badge badge-pill badge-soft-info font-size-11">Registered</span>
+
+                                            @else
                                         
-                                            @include('components.button',[
-                                                                'type'=>'button',
-                                                                'class'=>'btn btn-info btn-sm waves-effect waves-light',
-                                                                'onclick'=>"onclick=\"window.location.href=('".route('form',['id'=>$form->id])."')\"",
-                                                                'label'=>'Register',
-                                                                'icon'=>'<i class="bx bx-pencil font-size-16 align-middle me-2"></i>',
-                                                                'loader'=>true,
-                                                                'targetloader'=>"",
-                                            ])
+                                                @include('components.button',[
+                                                                    'type'=>'button',
+                                                                    'class'=>'btn btn-info btn-sm waves-effect waves-light',
+                                                                    'onclick'=>"onclick=\"window.location.href=('".route('form',['id'=>$form->id])."')\"",
+                                                                    'label'=>'Register',
+                                                                    'icon'=>'<i class="bx bx-pencil font-size-16 align-middle me-2"></i>',
+                                                                    'loader'=>true,
+                                                                    'targetloader'=>"",
+                                                ])
+
+                                            @endif
 
                                         @endif
                                     </td>
