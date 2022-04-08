@@ -84,10 +84,10 @@
                                     <span class="badge badge-pill {{ ($form->status==1)? 'badge-soft-success': 'badge-soft-danger' }}  font-size-11"> {!! nl2br($form->Label()->first()->name) !!}</span>
 
                                     </td>
-                                    @can('update-khairat')
+                                   
                                     <td class="text-center">
 
-                                        
+                                        @can('update-khairat')
                                            @include('components.button',[
                                                                 'type'=>'button',
                                                                 'class'=>'btn btn-info btn-sm waves-effect waves-light',
@@ -97,9 +97,23 @@
                                                                 'loader'=>true,
                                                                 'targetloader'=>"view",
                                             ])
-                                            
+                                        @endif
+                                        
+                                        @if($form->status==1)
+                                        
+                                            @include('components.button',[
+                                                                'type'=>'button',
+                                                                'class'=>'btn btn-info btn-sm waves-effect waves-light',
+                                                                'onclick'=>"onclick=\"window.location.href=('".route('form',['id'=>$form->id])."')\"",
+                                                                'label'=>'Register',
+                                                                'icon'=>'<i class="bx bx-pencil font-size-16 align-middle me-2"></i>',
+                                                                'loader'=>true,
+                                                                'targetloader'=>"",
+                                            ])
+
+                                        @endif
                                     </td>
-                                    @endif
+                                  
                                 </tr>
                             @endforeach
         

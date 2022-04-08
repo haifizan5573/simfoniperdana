@@ -9,22 +9,13 @@
 <link href="{{ URL::asset('/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
-@section('body')
+@if($type==0)
+    @section('body')
 
-    <body  style="background-image: url('{{ URL::asset('/assets/images/simfoni-3.jpg') }}'); background-repeat: no-repeat; background-position: center;  background-position:fixed; 
-    background-size: 100% 100%;  ">
+        <body  style="background-image: url('{{ URL::asset('/assets/images/simfoni-3.jpg') }}'); background-repeat: no-repeat; background-position: center;  background-position:fixed; 
+        background-size: 100% 100%;  ">
     @endsection
 
-   
-
-@section('title')
-    @lang('translation.Login')
-@endsection
-
-@section('body')
-
-    <body>
-    @endsection
 
    
         <div class="account-pages my-5 pt-sm-5">
@@ -38,6 +29,7 @@
                      </div>
 
             </div>
+@endif
                 <div class="row justify-content-center">
 
                 
@@ -301,8 +293,10 @@
 
                     </div>
                 </div>
+@if($type==0)
             </div>
         </div>
+@endif
         <!-- end account-pages -->
 
 
