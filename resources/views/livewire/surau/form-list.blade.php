@@ -3,6 +3,11 @@
 <link href="{{ URL::asset('/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 <div>
+    @include('components.breadcrumb',[
+        'title'=>"Forms",
+        'url'=>"#",
+        'subtitle'=>"Form Listing"
+        ])
 <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -52,12 +57,13 @@
                             @foreach($forms as $form)
                                 <tr>
                                  
-                                    <td>{{$form->title}}</td>
+                                    <td>
+                                    <a href="{{ route('formuser',['formid'=>$form->id])}}">{{$form->title}}</a></td>
 
                                     @can('update-khairat')
                                     <td class="text-center">
 
-                                     <a href="{{ route('formuser',['formid'=>$form->id])}}">{{$form->formuser()->count()}}</a>
+                                     {{$form->formuser()->count()}}
 
                                     </td>
                                     <td class="text-center">
