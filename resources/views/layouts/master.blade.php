@@ -8,7 +8,7 @@
     <meta content="Simfoni Portal" name="description" />
     <meta content="Mohd Haifizan" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ URL::asset('assets/images/SimfoniPerdanaTransparentSmall.png')}}">
     @include('layouts.head-css')
     @livewireStyles
     @yield('css')
