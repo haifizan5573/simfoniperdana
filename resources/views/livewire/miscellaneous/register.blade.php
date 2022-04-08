@@ -49,9 +49,42 @@
                                         <div class="card">
                                             <div class="card-body">
                 
-                                                <h5 class="text-primary">Registration</h5>
+                                                <h5 class="text-primary">Simfoni Perdana Portal - Registration</h5>
 
-                                             
+                                                <p>Hi Simfonians!, Welcome to Simfoni Perdana registration page. This is not a <u>replacement</u> of our current KipleCity, this portal aim to serve as community and communication platform. The platform development still ongoing (still buggy) and here some expected features coming soon;<br/>
+                                                  
+                                                   <ol>
+                                                        <li>Surau Management - Work In Progress</li>
+                                                        <li>Simfoni Marketplace - Not Started Yet</li>
+                                                        <li>Disussion Board - Not Started Yet</li>
+                                                        <li>JMB/Commitee Management (Voting) - Not Started Yet</li>
+                                                    </ol>
+                                                </p>
+                                                <p>Please note that, this is my own initiative with support from Surau Committee and JMB. This portal is totally free as it is and maybe some freemium features will be implemented in the future. </p>  
+                                                <p>Here my personal details;
+                                                <table class="table table-nowrap mb-0" style="width: 70%">
+                                                <tbody>
+                                                    <tr>
+                                                        <th scope="row">Full Name :</th>
+                                                        <td>Mohd Haifizan Mohd Raya</td>
+                                                    </tr>
+                                                   
+                                                    <tr>
+                                                        <th scope="row">Mobile :</th>
+                                                        <td>
+                                                           0193632309
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">E-mail :</th>
+                                                        <td>haifizan@gmail.com</td>
+                                                    </tr>
+                                                
+                                                 
+                                                </tbody>
+                                            </table>
+
+                                            <p class="mt-2">Feel free to share your thoughts and ideas. Adios</p>
                           
                                         </div>
                                     </div>
@@ -125,7 +158,7 @@
                                                         'name'=>'unit',
                                                         'id'=>'',
                                                         'label'=>'Unit',
-                                                        'placeholder'=>'',
+                                                        'placeholder'=>'eg: 47B',
                                                     
                                                         ])                 
                                             </div>                         
@@ -160,7 +193,7 @@
                                 </div>
                             @else
 
-                            <div class="row d-flex justify-content-center mb-2">
+                            <div class="row d-flex justify-content-center mb-4">
                                 <div class="col-md-6">
                                     
                                         
@@ -176,11 +209,11 @@
                                        @endif
                                 </div>
                                 <div class="col-md-3">
-                                    <img src="{{ URL::asset('/assets/images/registerpng') }}" alt="">
+                                <img src="{{ URL::asset('/assets/images/register.png') }}" alt="">
                                 </div>
 
                         </div>
-
+                        
                             @endif
                            
 

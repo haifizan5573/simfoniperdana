@@ -23,7 +23,7 @@
                         <!-- end page title -->
                         <div class="row">
                           <div class="col-md-12 d-flex justify-content-center">
-                              <img src="{{ URL::asset('assets/images/Logo06.png') }}" alt="" width="100">  
+                              <img src="{{ URL::asset('assets/images/simfoni-perdana.png') }}" alt="" width="100">  
                           </div>
 
                         </div>

@@ -26,6 +26,17 @@ class Surau extends Component
         return response()->json($data);
     }
 
+    public function groupActivity($datefrom,$dateend,$type){
+
+        $period = CarbonPeriod::create('2018-06-14', '2018-06-20');
+
+            // Iterate over the period
+            foreach ($period as $date) {
+                echo $date->format('Y-m-d');
+            }
+
+    }
+
 }
 
 
