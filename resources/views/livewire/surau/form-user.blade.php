@@ -3,13 +3,18 @@
 <link href="{{ URL::asset('/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 <div>
+@include('components.breadcrumb',[
+        'title'=>"Forms",
+        'url'=>route('formlist'),
+        'subtitle'=>$title
+        ])
 <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-8">
-                             <h4 class="card-title mt-4">Form Submission - {{$title}}</h4> 
+                            
                             
                         </div>
                        

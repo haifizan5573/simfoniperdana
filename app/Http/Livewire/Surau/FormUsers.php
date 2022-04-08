@@ -24,7 +24,8 @@ class FormUsers extends Component
     public function render()
     {
         return view('livewire.surau.form-user',[
-            'formuser'=>FormUser::where('formid',$this->formid)->paginate(30)
+            'formuser'=>FormUser::where('formid',$this->formid)->paginate(30),
+            'formid'=>$this->formid
         ]);
     }
 
