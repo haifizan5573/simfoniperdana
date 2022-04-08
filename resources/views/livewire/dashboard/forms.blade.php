@@ -9,7 +9,7 @@
                         <tr>
                             <td>
                                  <i class="bx bx-receipt align-middle me-1"></i> 
-                                 {{$act->title}}<br/>
+                                 <a href="{{ route('form',['id'=>$act->id]) }}">{{$act->title}}</a><br/>
                               
                             </td>
                         </tr>

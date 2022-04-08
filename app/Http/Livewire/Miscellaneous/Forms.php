@@ -49,6 +49,7 @@ class Forms extends Component
         $this->form_user=$this->form->form_user;
         $this->buttintro=true;
         $this->show=true;
+        $this->formstatus=$this->form->status;
         }else{
             abort(404);
         }
