@@ -12,7 +12,7 @@
                     </span>
                 </a>
 
-                <a href="index" class="logo logo-light mt-2">
+                <a href="index" class="logo logo-light ">
                     <span class="logo-sm">
                         <img src="{{ URL::asset ('/assets/images/SimfoniPerdanaTransparentSmall.png') }}" alt="" height="38">
                     </span>
