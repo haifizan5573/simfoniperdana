@@ -14,7 +14,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-4">
-                             <h4 class="card-title mt-4">Forms</h4> 
+                           
                             
                         </div>
                        
@@ -186,7 +186,7 @@
                         width: '350px',
                         tags: false, selectOnBlur: true,
                         ajax: {
-                            url:  "{{route('label')}}/status_khairat",
+                            url:  "{{route('label')}}/status",
                             dataType: 'json',
                             delay: 250,
                             processResults: function (data) {

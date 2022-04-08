@@ -30,6 +30,8 @@
 
             </div>
 @endif
+
+@if($formstatus==1)
                 <div class="row justify-content-center">
 
                 
@@ -298,6 +300,19 @@
 
                     </div>
                 </div>
+@else
+
+                                    <div class="alert alert-danger fade show px-3 mt-4" role="alert">
+                                                       
+        
+                                                       <div>
+                                                           <h6><span>Registration closed</span></h6>  
+                                                       </div>
+                                       </div>
+
+
+@endif
+
 @if($type==0)
             </div>
         </div>

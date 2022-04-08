@@ -8,8 +8,8 @@
 <div class="row">
 
 
-   
-
+    
+    @include('livewire.dashboard.slide')   
     <div class="row">
         @include('livewire.dashboard.upcomingevents')
 
