@@ -351,8 +351,6 @@
                                         
                                         @if($public)
                                         <div class="alert alert-info fade show px-3 mt-4" role="alert">
-                                                       
-        
                                                        <div>
                                                            <h5 class="text-success"><span>Simfoni Perdana Portal</span></h5>
                                                            <p>We will be launching Simfoni Portal soon, wait for announcement via Whatsapp Group. Your account details will be send to you once system ready.</p>

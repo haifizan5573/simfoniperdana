@@ -15,6 +15,7 @@ use App\Models\Address;
 use App\Helpers\Formatter;
 use Illuminate\Support\Facades\Hash;
 use Livewire\WithPagination;
+use Auth;
 
 class Forms extends Component
 {
@@ -34,7 +35,7 @@ class Forms extends Component
         'phone' => "required|regex:'^(01)[0-46-9]*[0-9]{7,8}$'",
         'street' => 'required',
         'attachment'=>'sometimes|required',
-        'contribution'=>"sometimes|required|regex:'^[0-9]$",
+        'contribution'=>"sometimes|required|regex:'^[0-9]$'",
         'paymenttype'=>'sometimes|required',
     ];
     public function mount($id){
@@ -55,7 +56,16 @@ class Forms extends Component
 
     public function render()
     {
-        return view('livewire.miscellaneous.form')->layout('layouts.master-plain');
+        if(isset(Auth::user()->id)){
+            return view('livewire.miscellaneous.form',[
+                'type'=>1
+            ]);
+        }else{
+          return view('livewire.miscellaneous.form',[
+              'type'=>0
+          ])->layout('layouts.master-plain');   
+        }
+        
     }
 
 
@@ -74,15 +84,25 @@ class Forms extends Component
         
         if($addcount==0){
 
+            if(!isset(Auth::user()->id)){
                 $this->validate();
+            }else{
+                $this->validate([
+                    'contribution' =>'required',
+                    'attachment'=>'required'
+                ]);
+            }
                 
 
                 $formatter=new Formatter();
                 //create user
-                $number=User::count();
-                $usercode=$formatter->generateCode($number+1,'SIM');
+               
 
             // dd($usercode."|".$rolename."|".$this->role);
+
+            if(!isset(Auth::user()->id)){
+                $number=User::count();
+                $usercode=$formatter->generateCode($number+1,'SIM');
 
                 $user = User::create([
                     'name' => $this->name,
@@ -108,7 +128,12 @@ class Forms extends Component
                         'street'=>$this->street,
                         'addresstype'=>'default'
                     ]);
+            }else{
 
+                $userid=Auth::user()->id;
+                $usercode=Auth::user()->usercode;
+                $user=User::find($userid);
+            }
             
 
               

@@ -12,8 +12,11 @@
                              <h4 class="card-title mt-4">Khairat Kematian (Mutual Benevolent)</h4> 
                             
                         </div>
+                    </div>
+                    <div class="row">
+                     
                        
-                        <div class="col-lg-8 d-flex justify-content-end">
+                        <div class="col-lg-12 d-flex justify-content-end">
                                 @can('update-khairat')
                                     <div class="app-search ">
                                         <div class="position-relative">
@@ -23,6 +26,17 @@
                                             <option value="{{$dt}}">Khairat Kematian for year {{$dt}}</option>
                                         @endfor
                                         </select>  
+                                        <span class="bx bx-filter-alt"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="app-search ">
+                                        <div class="position-relative">
+
+                                        <select class="form-control" wire:model="street" id="street">
+                                        
+                                        </select>  
+                                       
                                         <span class="bx bx-filter-alt"></span>
                                         </div>
                                     </div>
@@ -164,6 +178,42 @@
     
   
     @endif
+
+$( document ).ready(function() {
+    livewire.emit('load',0);
+});
+window.livewire.on('load', data => {
+                   $('#street').select2({
+                            placeholder: 'Select Street No',
+                            dropdownAutoWidth : true,
+                            tags: false,
+                            selectOnBlur: true,
+                            ajax: {
+                                url:  "{{route('streetlist')}}",
+                                dataType: 'json',
+                                delay: 250,
+                                processResults: function (data) {
+                                return {
+                                
+                                    results:  $.map(data, function (item) {
+                                    
+                                        return {
+                                            text: item.name,
+                                            id: item.id
+                                        }
+                                    })
+                                };
+                                },
+                                formatSelection: function(item){ return item.name },
+                            }
+                    });
+
+                    $('#street').on('change', function(e) {
+
+                    let dataval= $(this).val();
+                        @this.set('street', dataval);        
+                    });
+});
 
         window.livewire.on('closemodal', data => {
                 $('#appmodal').modal('hide'); 
