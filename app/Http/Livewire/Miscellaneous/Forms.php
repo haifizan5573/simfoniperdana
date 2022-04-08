@@ -35,7 +35,7 @@ class Forms extends Component
         'phone' => "required|regex:'^(01)[0-46-9]*[0-9]{7,8}$'",
         'street' => 'required',
         'attachment'=>'sometimes|required',
-        'contribution'=>"sometimes|required|regex:'^[0-9]$'",
+        'contribution'=>"sometimes|required|regex:'^[0-9]+$'",
         'paymenttype'=>'sometimes|required',
     ];
     public function mount($id){
