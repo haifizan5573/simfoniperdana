@@ -32,7 +32,7 @@
                             <thead class="table-light">
                                 <tr>
                                    
-                                   
+                                    <th class="align-middle">Sender</th>
                                     <th class="align-middle">Name List</th>
                                     <th class="align-middle">Contribution</th>
                                     <th class="align-middle text-center">Contribution Receipt</th>
@@ -47,6 +47,9 @@
                             @foreach($formuser as $form)
                                 <tr>
                                  
+                                    <td>
+                                        {{ $form->user()->first()->name }}
+                                    </td>
                                     <td>
                                       
                                         <ul>

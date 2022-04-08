@@ -35,4 +35,6 @@ class FormUser extends Model
     public function Addresses(){
         return $this->hasOne(Address::class,'addressable_id','userid');
     }
+
+   
 }

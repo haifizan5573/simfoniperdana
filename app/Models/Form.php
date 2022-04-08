@@ -28,4 +28,5 @@ class Form extends Model
         return FormUser::where('userid',$uid)->where('formid',$formid)->count();
     }
  
+   
 }
