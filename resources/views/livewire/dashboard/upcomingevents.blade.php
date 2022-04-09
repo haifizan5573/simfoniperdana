@@ -28,26 +28,49 @@
                                                 $b=0;
                                                 @endphp
 
-                                        <div class="tab-content mt-4" style="min-height: 340px;">
+                                        <div class="tab-content mt-4" >
                                             @foreach($suraucat as $cat)
 
                                             <div class="tab-pane @if($b==0) active @endif" id="ab{{$cat->id}}" role="tabpanel">
-                                                 <div class="scrollClass" style="min-height:400px !important;">
-                                                    <table class="table">
+                                                 <div class="scrollClass" style="height:200px !important;">
+                                                    <ul class="verti-timeline list-unstyled">
+
                                                     @foreach($cat->Surau()->get() as $act)
 
-                                                        <tr>
-                                                        <td>
-                                                        {{$act->description}}<br/>
-                                                        <small>{{ $act->name}}</small>
-                                                        </td>
-                                                        <td>
-                                                            <i class="bx bx-time-five align-middle me-1"></i> {!! $formatter->formatDate2($act->start_date) !!}
-                                                        </td>
-                                                        </tr>
+                                                    <li class="event-list pb-0 mb-0">
+                                                    <div class="event-timeline-dot">
+                                                        @if($act->start_date==date('Y-m-d')." 00:00:00")
+                                                        <i class="bx bx-right-arrow-circle bx-fade-right"></i>
+                                                        @else
+                                                        <i class="bx bx-right-arrow-circle"></i>
+                                                        @endif
+                                                    </div>
+                                                        <div class="media mb-2">                                        
+                                                            <div class="media-body">
+                                                               
+                                                            <div class="row">
+                                                               
+                                                                <div class="col-6">
+                                                                    @if($act->start_date < date('Y-m-d')." 00:00:00")
+                                                                    <strike> {{$act->description}}</strike>
+                                                                    @else
+                                                                    {{$act->description}}
+                                                                    @endif
+                                                                    <br/>
+                                                                    <small>{{ $act->name}}</small>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                <i class="bx bx-time-five align-middle me-1"></i> {!! $formatter->formatDate2($act->start_date) !!}
+                                                                </div>
+                                                            </div> 
+                                                                        
+                                                            </div>
+                                                        </div>
+                                                     </li>
 
                                                     @endforeach
-                                                    </table>  
+                                                    </ul>
+                                                   
                                                 </div>              
                                            </div>
 

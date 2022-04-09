@@ -1,6 +1,12 @@
 @section('css')
 
-
+<style>
+.scrollClass {
+  height:150px;
+  width: 100%;
+  overflow-y: scroll;
+}
+</style>
 
 @endsection
 
