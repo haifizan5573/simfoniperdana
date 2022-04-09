@@ -77,15 +77,43 @@ class HomeController extends Controller
 
     public function updatePassword(Request $request, $id)
     {
-        $request->validate([
-            'current_password' => ['required', 'string'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-        ]);
+        // $request->validate([
+        //     'current_password' => ['required', 'string'],
+        //     'password' => ['required', 'string', 'min:6', 'confirmed'],
+        // ]);
+
+        if(empty($request->get('current_password'))){
+            return response()->json([
+                'isSuccess' => false,
+                'Message' => "Current password required"
+            ], 200); // Status code 
+        }
+
+        if(empty($request->get('password'))){
+            return response()->json([
+                'isSuccess' => false,
+                'Message' => "New password required"
+            ], 200); // Status code 
+        }
+
+        if(empty($request->get('password_confirmation'))){
+            return response()->json([
+                'isSuccess' => false,
+                'Message' => "Password confirmation required"
+            ], 200); // Status code 
+        }
+
+        if($request->get('password_confirmation')!=$request->get('password')){
+            return response()->json([
+                'isSuccess' => false,
+                'Message' => "Password mismatch"
+            ], 200); // Status code 
+        }
 
         if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
             return response()->json([
                 'isSuccess' => false,
-                'Message' => "Your Current password does not matches with the password you provided. Please try again."
+                'Message' => "Your Current password does not matches with the password you provided. All fields required Please try again."
             ], 200); // Status code 
         } else {
             $user = User::find($id);
