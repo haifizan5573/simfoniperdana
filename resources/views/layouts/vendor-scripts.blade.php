@@ -24,6 +24,7 @@
                 "_token": "{{ csrf_token() }}",
             },
             success:function(response){
+                console.log(response);
                 $('#current_passwordError').text('');
                 $('#passwordError').text('');
                 $('#password_confirmError').text('');
@@ -37,9 +38,9 @@
             },
             error: function(response) {
                 console.log(response);
-             //   $('#current_passwordError').text(response.responseJSON.errors.current_password);
-               // $('#passwordError').text(response.responseJSON.errors.password);
-               // $('#password_confirmError').text(response.responseJSON.errors.password_confirmation);
+               $('#current_passwordError').text(response.responseJSON.errors.current_password);
+               $('#passwordError').text(response.responseJSON.errors.password);
+               $('#password_confirmError').text(response.responseJSON.errors.password_confirmation);
             }
         });
     });

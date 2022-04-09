@@ -50,7 +50,7 @@
                                             <div class="card-body">
                 
                                                 <h5 class="text-primary">Simfoni Perdana Portal - Registration</h5>
-
+                                                <hr/>
                                                 <p>Hi Simfonians!, Welcome to Simfoni Perdana registration page. This is not a <u>replacement</u> of our current KipleCity, this portal aim to serve as community and communication platform. The platform development still ongoing (still buggy) and here some expected features coming soon;<br/>
                                                   
                                                    <ol>
