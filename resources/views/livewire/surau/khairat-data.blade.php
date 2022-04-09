@@ -30,7 +30,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="app-search ">
+                                    <!-- <div class="app-search ">
                                         <div class="position-relative">
 
                                         <select class="form-control" wire:model="street" id="street">
@@ -39,7 +39,7 @@
                                        
                                         <span class="bx bx-filter-alt"></span>
                                         </div>
-                                    </div>
+                                    </div> -->
                                
                                 <div class="app-search ">
                                     <div class="position-relative">
