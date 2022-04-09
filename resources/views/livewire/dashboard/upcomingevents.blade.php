@@ -32,22 +32,23 @@
                                             @foreach($suraucat as $cat)
 
                                             <div class="tab-pane @if($b==0) active @endif" id="ab{{$cat->id}}" role="tabpanel">
-                                                
-                                                 <table class="table">
-                                                 @foreach($cat->Surau()->get() as $act)
+                                                 <div class="scrollClass" style="min-height:400px !important;">
+                                                    <table class="table">
+                                                    @foreach($cat->Surau()->get() as $act)
 
-                                                    <tr>
-                                                    <td>
-                                                       {{$act->description}}<br/>
-                                                       <small>{{ $act->name}}</small>
-                                                    </td>
-                                                    <td>
-                                                        <i class="bx bx-time-five align-middle me-1"></i> {!! $formatter->formatDate2($act->start_date) !!}
-                                                    </td>
-                                                    </tr>
+                                                        <tr>
+                                                        <td>
+                                                        {{$act->description}}<br/>
+                                                        <small>{{ $act->name}}</small>
+                                                        </td>
+                                                        <td>
+                                                            <i class="bx bx-time-five align-middle me-1"></i> {!! $formatter->formatDate2($act->start_date) !!}
+                                                        </td>
+                                                        </tr>
 
-                                                 @endforeach
-                                                </table>                
+                                                    @endforeach
+                                                    </table>  
+                                                </div>              
                                            </div>
 
                                                 @php
