@@ -43,6 +43,7 @@
                                     <th class="align-middle">Name</th>
                                     <th class="align-middle">Email</th>
                                     <th class="align-middle">Role</th>
+                                    <th class="align-middle">Group</th>
                                     <th class="align-middle text-center">Status</th>
                                     <th class="align-middle text-center">Action</th>
                                 </tr>
@@ -59,10 +60,17 @@
                                     <td>
                                    
                                         @foreach($user->roles()->get() as $userrole)
-                                        <span class="badge rounded-pill badge-soft-dark">{{ $userrole->name }}</span>
+                                        <span class="badge rounded-pill badge-soft-dark">{{ $userrole->name }}</span><br/>
                                         @endforeach
                                  
-                                    </td>                                  
+                                    </td>   
+                                    <td>
+                                       
+                                        @foreach($user->roles()->get() as $userrole)
+                                        <span class="badge rounded-pill badge-soft-dark">{{ $userrole->name }}</span><br/>
+                                        @endforeach
+                            
+                                    </td>                                
                                     <td class="text-center">
                                         <span class="badge badge-pill {{ ($user->isactive==1)? 'badge-soft-success': 'badge-soft-danger' }}  font-size-11">{{ $user->Label()->first()->name }}</span>
                                     </td>
