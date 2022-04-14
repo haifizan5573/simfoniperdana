@@ -53,7 +53,7 @@
                             @foreach($users as $user)
                                 <tr>
                                     <td>
-                                       {{ $user->usercode }}
+                                       <a href="{{ route('userprofile',['uid'=>$user->id])}}">{{ $user->usercode }}</a>
                                     </td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>

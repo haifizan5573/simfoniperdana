@@ -13,7 +13,7 @@ class CreateTeamUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('team__users', function (Blueprint $table) {
+        Schema::create('team_users', function (Blueprint $table) {
             
             $table->BigInteger('team_id')->unsigned();
             $table->BigInteger('user_id')->unsigned();

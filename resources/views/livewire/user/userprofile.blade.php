@@ -26,10 +26,10 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="avatar-md profile-user-wid mb-4">
-                                                    <img src="{{ isset(Auth::user()->avatar) ? Storage::url(Auth::user()->avatar) : asset('/assets/images/user.png') }}" alt="" class="img-thumbnail rounded-circle" style="height: 70px !important; width: 100px!important">
+                                                    <img src="{{ isset($user->avatar) ? Storage::url($user->avatar) : asset('/assets/images/user.png') }}" alt="" class="img-thumbnail rounded-circle" style="height: 70px !important; width: 100px!important">
                                                 </div>
-                                                <h5 class="font-size-15 text-truncate">{{ Auth::user()->name }}</h5>
-                                                @foreach(Auth::user()->roles()->get()->pluck('name')->toArray() as $role)
+                                                <h5 class="font-size-15 text-truncate">{{ $user->name }}</h5>
+                                                @foreach($user->roles()->get()->pluck('name')->toArray() as $role)
                                                
                                                 <span class="badge rounded-pill badge-soft-primary">{{$role}}</span>
                                                 @endforeach
@@ -66,29 +66,29 @@
                                                 <tbody>
                                                     <tr>
                                                         <th scope="row">Full Name :</th>
-                                                        <td>{{ Auth::user()->name}}</td>
+                                                        <td>{{ $user->name}}</td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">Nickname :</th>
-                                                        <td>{{ Auth::user()->nickname}}</td>
+                                                        <td>{{ $user->nickname}}</td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">Mobile :</th>
                                                         <td>
-                                                            @if(Auth::user()->Contacts()->first()!=NULL)
-                                                            {{ Auth::user()->Contacts()->first()->phonenumber}}
+                                                            @if($user->Contacts()->first()!=NULL)
+                                                            {{ $user->Contacts()->first()->phonenumber}}
                                                             @endif
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">E-mail :</th>
-                                                        <td>{{ Auth::user()->email}}</td>
+                                                        <td>{{ $user->email}}</td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">Location :</th>
                                                         <td>
-                                                            @if(Auth::user()->Addresses()->first()!=NULL)
-                                                            {{ Auth::user()->Addresses()->first()->street}}, {{ Auth::user()->Addresses()->first()->location}}
+                                                            @if($user->Addresses()->first()!=NULL)
+                                                            {{ $user->Addresses()->first()->street}}, {{ $user->Addresses()->first()->location}}
                                                             @endif
                                                         
                                                         </td>

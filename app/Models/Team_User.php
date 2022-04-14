@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Team_User extends Model
 {
     use HasFactory;
+    protected $guarder=[];
 }
