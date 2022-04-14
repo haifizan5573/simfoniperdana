@@ -47,7 +47,9 @@
                                                        
                                                     </div>
                                                     <div class="mt-4">
+                                                        @if($type==2)
                                                         <a href="{{ route('editprofile') }}" class="btn btn-primary waves-effect waves-light btn-sm">Edit Profile <i class="bx bx-pencil ms-1"></i></a>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>

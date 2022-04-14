@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\Label;
+use App\Models\Team;
+use App\Models\Team_User;
 
 class User extends Authenticatable
 {
@@ -59,5 +61,11 @@ class User extends Authenticatable
 
     public function FileUploads(){
         return $this->morphMany(FileUpload::class,"file_uploadsable");
+    }
+
+    public function Team()
+    {
+        
+        return $this->belongsToMany(Team::class,'team_users');
     }
 }
