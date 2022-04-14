@@ -9,4 +9,5 @@ class Team_User extends Model
 {
     use HasFactory;
     protected $guarder=[];
+    protected $table='team_users';
 }

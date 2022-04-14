@@ -66,8 +66,8 @@
                                     </td>   
                                     <td>
                                        
-                                        @foreach($user->roles()->get() as $userrole)
-                                        <span class="badge rounded-pill badge-soft-dark">{{ $userrole->name }}</span><br/>
+                                        @foreach($user->Team as $team)
+                                        <span class="badge rounded-pill badge-soft-primary">{{ $team->title }}</span><br/>
                                         @endforeach
                             
                                     </td>                                
