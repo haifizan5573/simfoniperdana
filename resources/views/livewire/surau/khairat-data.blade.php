@@ -86,9 +86,9 @@
                             @foreach($khairats as $khairat)
                                 <tr>
                                     <td>
-                                       {{ $khairat->user->usercode }}
+                                    <a href="{{ route('userprofile',['uid'=>$khairat->user->id])}}"> {{ $khairat->user->usercode }}</a>
                                     </td>
-                                    <td>{!! strtoupper($khairat->user->name) !!}</td>
+                                    <td><img src="{{ isset($khairat->user->avatar) ? Storage::url($khairat->user->avatar) : asset('/assets/images/user.png') }}" alt="Avatar" class="rounded-circle header-profile-user" > {!! strtoupper($khairat->user->name) !!}</td>
                                     <td>
 
                                     @if(isset($khairat->Addresses()->first()->street)){{ $khairat->Addresses()->first()->street }},@endif @if(isset($khairat->Addresses()->first()->location)){{ $khairat->Addresses()->first()->location }} @endif
