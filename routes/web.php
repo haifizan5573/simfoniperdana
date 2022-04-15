@@ -77,6 +77,7 @@ Route::group(['middleware' => ['auth']], function() {
     
 });
 
+    Route::get('/teams/{type?}',[App\Http\Livewire\API\SystemData::class,'teams'])->name('teams');
     Route::get('/label/{type?}',[App\Http\Livewire\API\SystemData::class,'status'])->name('label');
     Route::get('/streetlist',[App\Http\Livewire\API\SystemData::class,'streetlist'])->name('streetlist');
     Route::get('/unitlist/{type?}',[App\Http\Livewire\API\SystemData::class,'unitlist'])->name('unitlist');
