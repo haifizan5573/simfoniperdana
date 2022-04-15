@@ -87,7 +87,11 @@ class SystemData extends Component
 
         if($returntype==1){
             return $data;
-        }else{
+        }
+        else if($returntype==2){
+            return $teams;
+        }
+        else{
             return response()->json($data);
         }
     }
