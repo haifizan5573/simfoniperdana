@@ -153,7 +153,7 @@ class Register extends Component
             if(!isset(Auth::user()->id)){
             $this->message=array("message"=>"Unit Number already exist. Please contact system admin at haifizan@gmail.com","alert-type"=>"error");  
             }else{
-            $this->message=array("message"=>"You already registered for year ".date('Y'),"alert-type"=>"error");      
+            $this->message=array("message"=>"You already register for year ".date('Y'),"alert-type"=>"error");      
             }
         }
         $this->emit('showmessage',[$this->message]);
