@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Http;
 use App\Models\Label;
 use App\Models\Form;
 use App\Helpers\Formatter;
+use App\Http\Livewire\API\SystemData;
 
 class Dashboard extends Component
 {
@@ -27,9 +28,12 @@ class Dashboard extends Component
     public function render()
     {
         $formatter=new Formatter();
+        $systemdata=new SystemData();
+       
         return view('livewire.dashboard',[
             'formatter'=>$formatter,
             'forms'=>Form::where("status",1)->take(10)->get(),
+            'simfoni'=>$systemdata->Teams('group_default',1),
         ]);
     }
 }

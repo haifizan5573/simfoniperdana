@@ -76,7 +76,7 @@ class SystemData extends Component
         
     }
 
-    public function teams($type){
+    public function teams($type,$returntype=0){
 
        $teams=Team::with('Type')->whereHas('Type',function($q) use ($type){ $q->where('type',$type); })->get();
 
@@ -85,9 +85,11 @@ class SystemData extends Component
         $data[]=array("id"=>$team->id,"name"=>$team->title);
         }
 
-        return response()->json($data);
-       
-
+        if($returntype==1){
+            return $data;
+        }else{
+            return response()->json($data);
+        }
     }
 
 }
