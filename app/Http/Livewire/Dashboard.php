@@ -33,7 +33,7 @@ class Dashboard extends Component
         return view('livewire.dashboard',[
             'formatter'=>$formatter,
             'forms'=>Form::where("status",1)->take(10)->get(),
-            'simfoni'=>$systemdata->Teams('group_default',1),
+            'simfoni'=>$systemdata->Teams('group_default',2),
         ]);
     }
 }
