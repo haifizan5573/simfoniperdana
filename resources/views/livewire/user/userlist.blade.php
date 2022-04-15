@@ -74,7 +74,7 @@
                                     <td>
                                        <a href="{{ route('userprofile',['uid'=>$user->id])}}">{{ $user->usercode }}</a>
                                     </td>
-                                    <td>{{ $user->name }}</td>
+                                    <td><img src="{{ isset($user->avatar) ? Storage::url($user->avatar) : asset('/assets/images/user.png') }}" alt="Avatar" class="rounded-circle header-profile-user" > {!! strtoupper($user->name) !!}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
                                    
