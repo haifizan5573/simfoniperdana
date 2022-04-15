@@ -5,6 +5,7 @@ namespace App\Http\Livewire\API;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\Label;
+use App\Models\Team;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 
@@ -46,7 +47,7 @@ class SystemData extends Component
 
     }
 
-    public function streetlist(){
+    public function streetlist($type=0){
 
         $data=array();
         $street=6;
@@ -55,7 +56,11 @@ class SystemData extends Component
             $data[]=array("id"=>"Simfoni $i","name"=>"Simfoni $i");
         }
 
-        return response()->json($data);
+        if($type==1){
+            return $data;
+        }else{
+            return response()->json($data);
+        }
     }
 
     public function numberlist($number){
@@ -66,8 +71,23 @@ class SystemData extends Component
         for($i=1;$i<=$number;$i++){
             $data[]=array("id"=>$i,"name"=>$i);
         }
+       
+            return response()->json($data);
+        
+    }
+
+    public function teams($type){
+
+       $teams=Team::with('Type')->whereHas('Type',function($q) use ($type){ $q->where('type',$type); })->get();
+
+       foreach($teams as $team){
+      
+        $data[]=array("id"=>$team->id,"name"=>$team->title);
+        }
 
         return response()->json($data);
+       
+
     }
 
 }
