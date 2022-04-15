@@ -74,6 +74,13 @@ class UserList extends Component
         ->when(!empty($this->search),function($q){
             $q->where('name','like','%'.$this->search.'%');
         })
+        ->whereHas("Addresses", function($q) {   
+
+            if(!empty($this->street)){
+                $q->where("street",$this->street);
+            }                                                                                                       
+            
+        })
         ->paginate(30);
         
         return view('livewire.user.userlist',[
