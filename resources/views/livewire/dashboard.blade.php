@@ -6,6 +6,11 @@
   width: 100%;
   overflow-y: scroll;
 }
+.scrollClassX {
+
+  width: 50%;
+  overflow-x: scroll;
+}
 </style>
 
 @endsection
@@ -15,7 +20,7 @@
 
 
     
-    @include('livewire.dashboard.slide')   
+    @include('livewire.dashboard.simfoni')   
     <div class="row">
         @include('livewire.dashboard.upcomingevents')
 

@@ -14,7 +14,19 @@ class CreatePositionUsersTable extends Migration
     public function up()
     {
         Schema::create('position_users', function (Blueprint $table) {
-            $table->id();
+            $table->BigInteger('position_id')->unsigned();
+            $table->BigInteger('user_id')->unsigned();
+            $table->foreign('position_id')
+                    ->references('id')
+                    ->on('positions')
+                    ->onDelete('cascade');
+    
+            $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onDelete('cascade');
+    
+            $table->primary(['position_id', 'user_id'], 'user_have_team');
             $table->timestamps();
         });
     }

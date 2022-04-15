@@ -44,6 +44,7 @@
     <!-- /Right-bar -->
 
     <!-- JAVASCRIPT -->
+    
     @include('layouts.vendor-scripts')
 
     @livewireScripts

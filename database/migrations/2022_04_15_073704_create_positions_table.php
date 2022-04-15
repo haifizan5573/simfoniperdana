@@ -15,7 +15,21 @@ class CreatePositionsTable extends Migration
     {
         Schema::create('positions', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('description');
+            $table->bigInteger('type')->unsigned();
+            $table->bigInteger('status')->unsigned();
             $table->timestamps();
+
+            $table->foreign('type')
+            ->references('id')
+            ->on('labels')
+            ->onDelete('cascade');
+
+            $table->foreign('status')
+            ->references('id')
+            ->on('labels')
+            ->onDelete('cascade');
         });
     }
 

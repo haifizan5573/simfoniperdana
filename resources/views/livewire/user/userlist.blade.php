@@ -176,7 +176,7 @@
                         width: '350px',
                         tags: false, selectOnBlur: true,
                         ajax: {
-                            url:  "{{route('teams')}}/group",
+                            url:  "{{route('teams')}}/group_default",
                             dataType: 'json',
                             delay: 250,
                             processResults: function (data) {
