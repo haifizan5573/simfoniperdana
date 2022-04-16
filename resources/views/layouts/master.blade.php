@@ -46,6 +46,7 @@
     <!-- JAVASCRIPT -->
     
     @include('layouts.vendor-scripts')
+    @include('layouts.bottomnav')
 
     @livewireScripts
     @stack('scripts')
