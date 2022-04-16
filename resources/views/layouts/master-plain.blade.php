@@ -20,6 +20,8 @@
     
     @yield('content')
     {{ $slot ?? '' }}
+
+    
   
     @include('layouts.vendor-scripts')
     @livewireScripts

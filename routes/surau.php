@@ -4,6 +4,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 
     Route::get('/khairat',App\Http\Livewire\Surau\KhairatData::class)->name('khairat');
+    Route::get('/activities',App\Http\Livewire\Surau\Activities::class)->name('activities');
     Route::get('/formlist',App\Http\Livewire\Surau\FormList::class)->name('formlist');
     Route::get('/formuser/{formid}', App\Http\Livewire\Surau\FormUsers::class)->name('formuser');
 

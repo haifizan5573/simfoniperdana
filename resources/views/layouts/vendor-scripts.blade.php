@@ -5,6 +5,17 @@
 <script src="{{ URL::asset('assets/libs/simplebar/simplebar.min.js')}}"></script>
 <script src="{{ URL::asset('assets/libs/node-waves/node-waves.min.js')}}"></script>
 <script>
+    
+$(document).ready(function(){ 
+	// bind and scroll header div
+	$(window).bind('resize', function(e){
+		$(".affix").css('width',$(".container-fluid" ).width());
+	});
+	$(window).on("scroll", function() {
+		$(".affix").css('width',$(".container-fluid" ).width());
+	});
+});
+    
     $('#change-password').on('submit',function(event){
         event.preventDefault();
         var Id = $('#data_id').val();
