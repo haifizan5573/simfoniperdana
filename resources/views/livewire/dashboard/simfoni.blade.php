@@ -8,9 +8,9 @@
                     <div class="card">
                         <div class="card-body">
                             <h5>{{ $data->title }}</h5>
-                            <div class="px-4 py-3 border-top">
-                                        <ul class="list-inline mb-0">
-                                            <li class="list-inline-item me-3">
+                            <div class="py-3 border-top">
+                                        <ul class="list-inline mb-0 d-flex">
+                                            <li class="list-inline-item">
                                                 <i class="mdi mdi-account-group"></i> {{$data->User()->count()}} Registered
                                             </li>
                                         </ul>
@@ -24,8 +24,8 @@
             
         </div>
     </div>
-    <div class="col-1">
-        <i class="bx bx-right-arrow-alt bx-fade-right font-size-16 mt-4"></i> 
+    <div class="col-1 align-middle">
+        <i class="bx bx-right-arrow-circle bx-fade-right mt-4" style="font-size: 32px;"></i> 
     </div>
 </div>
 

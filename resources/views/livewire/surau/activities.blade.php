@@ -1,6 +1,9 @@
 @section('css')
 <link href="{{ URL::asset('assets/libs/toastr/build/toastr.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ URL::asset('assets/libs/toastr/build/toastr.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 <div>
 <div class="row">
@@ -9,31 +12,30 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-4">
-                             <h4 class="card-title mt-4">Khairat Kematian (Mutual Benevolent)</h4> 
+                             <h4 class="card-title mt-4">Activities</h4> 
                             
                         </div>
                        
                         <div class="col-lg-8 d-flex justify-content-end">
-                                @can('update-khairat')
-                                    <div class="app-search m-2">
-                                        <div class="position-relative">
-                                        <select class="form-control" wire:model="filter">
-                                        
-                                        @for($dt=2021;$dt<=date('Y');$dt++)                      
-                                            <option value="{{$dt}}">Khairat Kematian for year {{$dt}}</option>
-                                        @endfor
-                                        </select>  
-                                        <span class="bx bx-filter-alt"></span>
-                                        </div>
-                                    </div>
+                                
                                
-                                <div class="app-search m-2">
+                                <div class="app-search">
                                     <div class="position-relative">
                                         <input type="text" class="form-control"  wire:model="search" id="search" type="search">
                                         <span class="bx bx-search-alt"></span>
                                     </div>
                                 </div>
+
+                                @can('add-activities')
+
+                                    <div class="app-search">
+                                        <div class="position-relative">
+                                        <button type="button" onclick="window.location.href='{{ route('addactivitysurau')}}'" class="btn btn-primary waves-effect waves-light pb5">Add Activity</button>
+                                        </div>
+                                    </div>
+
                                 @endcan
+                               
                         </div>
                     </div>
 
@@ -41,81 +43,66 @@
                         <table class="table align-middle table-nowrap mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th style="width: 20px;">
-                                       User ID
-                                    </th>
-                                    <th class="align-middle">Name</th>
-                                    <th class="align-middle">Home Unit</th>
-                                    <th class="align-middle">Membership Type</th>
-                                    <th class="align-middle text-center">Membership Fee</th>
-                                    <th class="align-middle text-center">Payment Receipt</th>
-                                    <th class="align-middle text-center">Payment Status</th>
-                                    @can('update-khairat')
+                                  
+                                    <th class="align-middle">Act. Name</th>
+                                    <th class="align-middle">Description</th>
+                                    <th class="align-middle">Start Date</th>
+                                    <th class="align-middle text-center">End Date</th>
+                                    <th class="align-middle text-center">Category</th>
+                                    <th class="align-middle text-center">Status</th>
+                                    @can('add-activities')
                                     <th class="align-middle text-center">Action</th>
-                                    @else
-                                    <th class="align-middle text-center">Year</th>
                                     @endcan
                                 </tr>
                             </thead>
                             <tbody>
 
-                            @foreach($khairats as $khairat)
+                            @foreach($activities as $activity)
                                 <tr>
-                                    <td>
-                                       {{ $khairat->user->usercode }}
-                                    </td>
-                                    <td>{!! strtoupper($khairat->user->name) !!}</td>
-                                    <td>
-
-                                    @if(isset($khairat->Addresses()->first()->street)){{ $khairat->Addresses()->first()->street }},@endif @if(isset($khairat->Addresses()->first()->location)){{ $khairat->Addresses()->first()->location }} @endif
-
-                                    </td>
-                                    <td>
                                    
-                                    {!! nl2br($khairat->Membership()->first()->name) !!}
-                                 
+                                    <td>
+                                        {{$activity->name}}
+                                    </td>
+                                    <td class="text-truncate">
+                                        {!! nl2br($activity->description) !!}
+                                    </td>
+                                    <td>
+                                
+                                        {{ Carbon\Carbon::parse($activity->start_date)->format('d, M Y') }}                    
                                     </td>                                  
                                     <td class="text-center">
-                                    {{ $khairat->Membership()->first()->other }}
+                                       
+                                        @if(!empty($activity->end_date))
+                                        {{ Carbon\Carbon::parse($activity->end_date)->format('d, M Y') }}
+                                        @endif
                                     </td>
                                     <td class="text-center">
                                       
-                                        @if(!empty($khairat->FileUpload->first()->path))
-                                            @include('components.button',[
-                                                                'type'=>'button',
-                                                                'class'=>'btn btn-dark btn-sm waves-effect waves-light',
-                                                                'onclick'=>"wire:click=\"open('livewire.form.khairatreceipt','Payment Receipt',$khairat->userid)\"",
-                                                                'label'=>'View',
-                                                                'icon'=>'<i class="bx bx-search-alt-2 font-size-16 align-middle me-2"></i>',
-                                                                'loader'=>true,
-                                                                'targetloader'=>"view",
-                                                            ])
-                                        @endif
+                                        {{$activity->Category()->first()->name}}
                                   
                                     </td>
                                     <td class="text-center">
-
-                                    <span class="badge badge-pill {{ ($khairat->status==8)? 'badge-soft-success': 'badge-soft-danger' }}  font-size-11"> {!! nl2br($khairat->Label()->first()->name) !!}</span>
+                                    @if(date('Y-m-d')>Carbon\Carbon::parse($activity->start_date)->format('Y-m-d'))
+                                     <span class="badge badge-pill badge-soft-danger font-size-11">Past</span>
+                                     @else
+                                    <span class="badge badge-pill {{ ($activity->status==1)? 'badge-soft-success': 'badge-soft-danger' }}  font-size-11"> {!! nl2br($activity->Label()->first()->name) !!}</span>
+                                    @endif
 
                                     </td>
-                                    @can('update-khairat')
+                                    @can('add-activities')
                                     <td class="text-center">
 
                                         
                                            @include('components.button',[
                                                                 'type'=>'button',
                                                                 'class'=>'btn btn-info btn-sm waves-effect waves-light',
-                                                                'onclick'=>"wire:click=\"open('livewire.form.updatestatus','Edit - Update Status',$khairat->userid)\"",
+                                                                'onclick'=>"wire:click=\"open('livewire.form.editsurauactivity','Edit Activity',$activity->id)\"",
                                                                 'label'=>'Edit',
                                                                 'icon'=>'<i class="bx bx-pencil font-size-16 align-middle me-2"></i>',
                                                                 'loader'=>true,
                                                                 'targetloader'=>"view",
                                             ])
                                             
-                                    </td>
-                                    @else
-                                    <td class="text-center">
-                                        @if(isset($khairat->khairat()->first()->year)){{$khairat->khairat()->first()->year}}@endif
                                     </td>
                                     @endcan
                                 </tr>
@@ -130,7 +117,7 @@
             </div>
             <div class="row mt-10">
                         <div class="mt-10 ml-110">
-                        {{ $khairats->links() }}
+                        {{ $activities->links() }}
                         </div>
             </div>
         </div>
@@ -140,6 +127,9 @@
   
 @push('scripts')
 <script src="{{ URL::asset('/assets/libs/select2/select2.min.js') }}"></script>
+<script src="{{ URL::asset('assets/libs/tinymce/tinymce.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.js') }}"></script>
 <script>
     @if(!empty($toastrdata['message']))
    
@@ -155,51 +145,153 @@
   
     @endif
 
-        window.livewire.on('closemodal', data => {
+    $(document).ready(function() {
+        $("#appmodal").on("hidden.bs.modal", function() {
+          //  $('#appmodal').empty();
+          tinyMCE.activeEditor.setContent('');
+        });
+    });
+
+            window.livewire.on('closemodal', data => {
                 $('#appmodal').modal('hide'); 
+                
+            });
+
+            window.livewire.on('cleardata', () => {
+                $('#appmodal').empty();
             });
 
         window.livewire.on('modal', data => {
 
-                $('#appmodal').modal('show'); 
+            
+           
+            $('#appmodal').modal('show'); 
 
-                $(window).on('shown.bs.modal', function(e) { 
-                    e.preventDefault();
+          
+
+            tinymce.init({
+                selector: 'textarea#description',  // change this value according to your HTML
+                height : "300",
+                oninit : "setPlainText",
+                plugins : "paste",
+                forced_root_block : false,
+                menubar: '',
+                //init_instance_callback: "insert_contents",
+                content_style: "body {font-size: 10pt;}",
+                setup: function (editor) {
+                            editor.on('init change', function () {
+                                editor.save();
+                            });
+                            editor.on('change', function (e) {
+                            @this.set('description', editor.getContent());
+                            });
+                        }
                 });
 
-                if(data[0]=="livewire.form.updatestatus"){
+                tinyMCE.activeEditor.setContent(data[2]['description']);
 
-                        $('#status').select2({
-                        placeholder: data[3],
-                        dropdownParent:  $("#appmodal"),
-                        width: '350px',
-                        tags: false, selectOnBlur: true,
-                        ajax: {
-                            url:  "{{route('label')}}/status_khairat",
-                            dataType: 'json',
-                            delay: 250,
-                            processResults: function (data) {
-                            return {
-                            
-                                results:  $.map(data, function (item) {
+                // function insert_contents(inst){
+                //     inst.setContent(data[2]['description']);  
+                // }
+        
+    
+                    $('#category').select2({
+                            placeholder: data[2]['category'],
+                            width: '300px',
+                       
+                            tags: false,
+                            selectOnBlur: true,
+                            ajax: {
+                                url:  "{{route('label')}}/category_surau",
+                                dataType: 'json',
+                                delay: 250,
+                                processResults: function (data) {
+                                return {
                                 
-                                    return {
-                                        text: item.name,
-                                        id: item.id
-                                    }
-                                })
-                            };
-                            },
-                            formatSelection: function(item){ return item.name },
-                        }
+                                    results:  $.map(data, function (item) {
+                                    
+                                        return {
+                                            text: item.name,
+                                            id: item.id
+                                        }
+                                    })
+                                };
+                                },
+                                formatSelection: function(item){ return item.name },
+                            }
+                    });
+
+                    $('#category').on('change', function(e) {
+
+                    let dataval= $(this).val();
+                        @this.set('category', dataval);        
+                    });
+
+                    $('#status').select2({
+                            placeholder: data[2]['status'],
+                            width: '300px',
+                       
+                            tags: false,
+                            selectOnBlur: true,
+                            ajax: {
+                                url:  "{{route('label')}}/status",
+                                dataType: 'json',
+                                delay: 250,
+                                processResults: function (data) {
+                                return {
+                                
+                                    results:  $.map(data, function (item) {
+                                    
+                                        return {
+                                            text: item.name,
+                                            id: item.id
+                                        }
+                                    })
+                                };
+                                },
+                                formatSelection: function(item){ return item.name },
+                            }
                     });
 
                     $('#status').on('change', function(e) {
 
-                    let data = $(this).val();
-                        @this.set('status', data);        
+                    let dataval= $(this).val();
+                        @this.set('status', dataval);        
                     });
-                }
+
+                    $('#startdate').datepicker({
+                        todayHighlight: true,
+                        format: 'dd M, yyyy',
+                        }).on('changeDate', function(e){
+                        $(this).datepicker('hide');
+                        @this.set('startdate', $('#startdate').val());
+                    });
+
+                    $('#startdate').datepicker('setDate',data[2]['startdate']);
+
+                    $('#enddate').datepicker({
+                        todayHighlight: true,
+                        format: 'dd M, yyyy',
+                        }).on('changeDate', function(e){
+                        $(this).datepicker('hide');
+                        @this.set('enddate', $('#enddate').val());
+                    });
+
+                    $('#enddate').datepicker('setDate',data[2]['enddate']);
+                   
+                    $('#starttime').on('change', function(e) {
+
+                    let data = $(this).val();
+                        @this.set('starttime', data);        
+                    });
+
+                    $('#endtime').on('change', function(e) {
+
+                    let data = $(this).val();
+                        @this.set('endtime', data);        
+                    });
+
+                   
 
                
         });
