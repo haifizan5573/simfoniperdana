@@ -1,7 +1,7 @@
 
 
 @section('title')
-    Surau Actvity
+    Surau Actvity - {{ $category }}
 @endsection
 
 @section('css')
