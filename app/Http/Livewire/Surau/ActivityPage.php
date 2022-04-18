@@ -36,7 +36,7 @@ class ActivityPage extends Component
 
         $activitiesupcoming=Activity::where('category',$this->actid)
         ->whereDate('start_date','>',date('Y-m-d'))
-        ->orderby('start_date','desc')
+        ->orderby('start_date','asc')
         ->paginate(30);
 
       //  dd($activitiestoday);
