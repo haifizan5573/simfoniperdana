@@ -1,8 +1,6 @@
 @section('css')
-<link href="{{ URL::asset('assets/libs/toastr/build/toastr.min.css') }}" rel="stylesheet" type="text/css" />
+
 <link href="{{ URL::asset('/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ URL::asset('assets/libs/toastr/build/toastr.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 <div>
@@ -28,21 +26,23 @@
 
                                 @can('add-activities')
 
-                                    <div class="app-search">
-                                        <div class="position-relative">
-                                        <button type="button" onclick="window.location.href='{{ route('addcategorysurau')}}'" class="btn btn-primary waves-effect waves-light pb5">Add Category</button>
-
+                                    
+                                        
+                                <div class="app-search">
+                                    <div class="position-relative">
+                           
                                         @include('components.button',[
                                                                 'type'=>'button',
-                                                                'class'=>'btn btn-info waves-effect waves-light',
-                                                                'onclick'=>"wire:click=\"open('livewire.form.addcategory','Edit Category','')\"",
+                                                                'class'=>'btn btn-primary waves-effect waves-light pb5',
+                                                                'onclick'=>"wire:click=\"open('livewire.form.addcategory','Add Category','')\"",
                                                                 'label'=>'Add Category',
                                                                 'icon'=>'',
-                                                                'loader'=>true,
-                                                                'targetloader'=>"view",
+                                                                'loader'=>false,
+                                                                'targetloader'=>"",
                                             ])
                                         </div>
                                     </div>
+                                   
 
                                 @endcan
                                
@@ -94,7 +94,7 @@
                                            @include('components.button',[
                                                                 'type'=>'button',
                                                                 'class'=>'btn btn-info btn-sm waves-effect waves-light',
-                                                                'onclick'=>"wire:click=\"open('livewire.form.editsurauactivity','Edit Category',$category->id)\"",
+                                                                'onclick'=>"wire:click=\"open('livewire.form.editcategory','Edit Category',$category->id)\"",
                                                                 'label'=>'Edit',
                                                                 'icon'=>'<i class="bx bx-pencil font-size-16 align-middle me-2"></i>',
                                                                 'loader'=>true,
@@ -126,8 +126,6 @@
 @push('scripts')
 <script src="{{ URL::asset('/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{ URL::asset('assets/libs/tinymce/tinymce.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.js') }}"></script>
 <script>
     @if(!empty($toastrdata['message']))
    
@@ -143,6 +141,13 @@
   
     @endif
 
+    $(document).ready(function() {
+        $("#appmodal").on("hidden.bs.modal", function() {
+          //  $('#appmodal').empty();
+          tinyMCE.activeEditor.setContent('');
+        });
+    });
+
         window.livewire.on('closemodal', data => {
                 $('#appmodal').modal('hide'); 
             });
@@ -150,6 +155,62 @@
         window.livewire.on('modal', data => {
 
             $('#appmodal').modal('show'); 
+
+
+            tinymce.init({
+                selector: 'textarea#description',  // change this value according to your HTML
+                height : "300",
+                oninit : "setPlainText",
+                plugins : "paste",
+                forced_root_block : false,
+                menubar: '',
+                content_style: "body {font-size: 10pt;}",
+                setup: function (editor) {
+                            editor.on('init change', function () {
+                                editor.save();
+                            });
+                            editor.on('change', function (e) {
+                            @this.set('description', editor.getContent());
+                            });
+                        }
+                });
+
+                tinyMCE.activeEditor.setContent(data[3]);
+
+                 if(data[0]=="livewire.form.editcategory"){
+
+                    $('#status').select2({
+                            placeholder: data[2],
+                            width: '300px',
+                       
+                            tags: false,
+                            selectOnBlur: true,
+                            ajax: {
+                                url:  "{{route('label')}}/status",
+                                dataType: 'json',
+                                delay: 250,
+                                processResults: function (data) {
+                                return {
+                                
+                                    results:  $.map(data, function (item) {
+                                    
+                                        return {
+                                            text: item.name,
+                                            id: item.id
+                                        }
+                                    })
+                                };
+                                },
+                                formatSelection: function(item){ return item.name },
+                            }
+                    });
+
+                    $('#status').on('change', function(e) {
+
+                    let dataval= $(this).val();
+                        @this.set('status', dataval);        
+                    });
+                 }
                 
         });
     </script>

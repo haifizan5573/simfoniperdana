@@ -6,7 +6,7 @@
                     
 
                  
-                    <div class="row mb-2 mt-2">
+                    <div class="row mb-2 mt-2 mb-2">
                           
                           <div class="col-6" >
                               
@@ -22,6 +22,17 @@
                            </div>
                            
                       </div>
+
+                      <div class="row" wire:ignore>
+                           <div class="col-md-12 mb-2">
+                                @include('components.textarea',[
+                                    'element'=>'description',
+                                    'name'=>'description',
+                                    'content'=>'',
+                                    'label'=>'Description',
+                                ])  
+                            </div>
+                        </div>
 
                      
 

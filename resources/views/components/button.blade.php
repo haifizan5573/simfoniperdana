@@ -5,10 +5,13 @@
                 <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
         </span>
         @endif
-        @if(isset($icon))
+        @if(isset($icon)&&!empty($icon))
           {!! $icon !!}
+          <span>{{ $label }}</span>
+        @else
+           {{ $label }}
         @endif
-        <span>{{ $label }}</span>
+        
     
 </button>
 

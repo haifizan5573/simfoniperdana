@@ -15,7 +15,6 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::group(['middleware' => ['can:add-activities']], function () {
         Route::get('/addactivitysurau',App\Http\Livewire\Surau\AddActivity::class)->name('addactivitysurau');
-        Route::get('/addcategorysurau',App\Http\Livewire\Surau\AddCategory::class)->name('addcategorysurau');
    });
 });
 

@@ -145,15 +145,29 @@
   
     @endif
 
-        window.livewire.on('closemodal', data => {
+    $(document).ready(function() {
+        $("#appmodal").on("hidden.bs.modal", function() {
+          //  $('#appmodal').empty();
+          tinyMCE.activeEditor.setContent('');
+        });
+    });
+
+            window.livewire.on('closemodal', data => {
                 $('#appmodal').modal('hide'); 
+                
+            });
+
+            window.livewire.on('cleardata', () => {
+                $('#appmodal').empty();
             });
 
         window.livewire.on('modal', data => {
 
             
-
+           
             $('#appmodal').modal('show'); 
+
+          
 
             tinymce.init({
                 selector: 'textarea#description',  // change this value according to your HTML
@@ -162,6 +176,7 @@
                 plugins : "paste",
                 forced_root_block : false,
                 menubar: '',
+                //init_instance_callback: "insert_contents",
                 content_style: "body {font-size: 10pt;}",
                 setup: function (editor) {
                             editor.on('init change', function () {
@@ -172,6 +187,12 @@
                             });
                         }
                 });
+
+                tinyMCE.activeEditor.setContent(data[2]['description']);
+
+                // function insert_contents(inst){
+                //     inst.setContent(data[2]['description']);  
+                // }
         
     
                     $('#category').select2({

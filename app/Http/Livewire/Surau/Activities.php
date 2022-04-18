@@ -33,6 +33,7 @@ class Activities extends Component
         $message=Session::get('message');
         $alerttype=Session::get('alert-type');
         $toastrdata=array("message"=>$message,"alert-type"=>$alerttype);
+     
 
         $activities=Activity::when(!empty($this->search),function($q){
                 
@@ -53,6 +54,7 @@ class Activities extends Component
         $this->pagemodal = $pagemodal;
         $this->title = $title;
 
+     
         $helper=new Formatter();
 
         $activity=Activity::find($dataid);
@@ -68,16 +70,30 @@ class Activities extends Component
         $this->statusplaceholder=$activity->Status()->first()->name;
         $this->status=$activity->status;
 
-        $data=array('startdate'=>$this->startdate,'enddate'=>$this->enddate,'category'=>$this->categoryplaceholder,'status'=>$this->statusplaceholder);
+        $data=array('startdate'=>$this->startdate,'enddate'=>$this->enddate,'category'=>$this->categoryplaceholder,'status'=>$this->statusplaceholder,'description'=>$this->description);
             
         $this->emit('modal',[$this->pagemodal,$this->title,$data]);
     }
 
     public function editactivitysurau(){
 
+        //dd($this->enddate);
 
+        $dateFromRules = 'required|after_or_equal:today';
 
-        $this->validate();
+        if (!empty($this->enddate)) {
+            $dateFromRules .= 'before_or_equal:enddate';
+        }
+
+        $rules = [
+            'name' => 'required|min:4',
+            'category'=>'required',
+            'startdate' => $dateFromRules,
+            'enddate' => 'nullable|after_or_equal:startdate',
+         
+        ];
+
+        $this->validate($rules);
 
         if(empty($this->starttime)){
             $formatted_startdate=Carbon::createFromFormat('d M, Y',$this->startdate)->format('Y-m-d');

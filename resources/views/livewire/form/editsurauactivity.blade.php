@@ -2,7 +2,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <form wire:submit.prevent="editactivitysurau">
+                    <form wire:submit.prevent="editactivitysurau" id="form">
                     <h5 class="card-title">Edit Surau Activity - {{$name}}</h5>
                 
 
@@ -24,7 +24,7 @@
                                 @include('components.textarea',[
                                     'element'=>'description',
                                     'name'=>'description',
-                                    'content'=>'',
+                                    'content'=>'test',
                                     'label'=>'Description',
                                 ])  
                             </div>
