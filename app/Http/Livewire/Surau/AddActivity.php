@@ -27,7 +27,21 @@ class AddActivity extends Component
 
       //  dd($this->starttime);
 
-        $this->validate();
+      $dateFromRules = 'required|after_or_equal:today';
+
+      if (!empty($this->enddate)) {
+          $dateFromRules .= 'before_or_equal:enddate';
+      }
+
+      $rules = [
+          'name' => 'required|min:4',
+          'category'=>'required',
+          'startdate' => $dateFromRules,
+          'enddate' => 'nullable|after_or_equal:startdate',
+       
+      ];
+
+        $this->validate($rules);
 
         if(empty($this->starttime)){
             $formatted_startdate=Carbon::createFromFormat('d M, Y',$this->startdate)->format('Y-m-d');
