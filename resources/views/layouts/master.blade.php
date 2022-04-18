@@ -9,6 +9,8 @@
     <meta content="Mohd Haifizan" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ URL::asset('assets/images/SimfoniPerdanaTransparentSmall.png')}}">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1721056032422942"
+     crossorigin="anonymous"></script>
     @include('layouts.head-css')
     @livewireStyles
     @yield('css')
