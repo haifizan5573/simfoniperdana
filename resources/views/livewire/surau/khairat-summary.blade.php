@@ -1,8 +1,15 @@
 <div class="row">
-    <div class="col-6">
+    <div class="col-lg-8 col-xs-12 col-sm-12">
         <div class="card">
             <div class="card-body">
-                <div class="float-end">
+                
+                <div class="row">
+                    <div class="col-6">
+                        <h4 class="card-title mb-3">Khairat Fund</h4>
+                    </div>
+                    <div class="col-6">
+
+                                <div class="float-end">
                                     <div class="app-search ">
                                         <div class="position-relative">
                                         <select class="form-control" wire:model="filter">
@@ -14,9 +21,13 @@
                                         <span class="bx bx-filter-alt"></span>
                                         </div>
                                     </div>
-                </div>
-                 <h4 class="card-title mb-3">Khairat Fund</h4>
+                                </div>
 
+                    </div>
+
+                </div>
+               
+               
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="mt-0">

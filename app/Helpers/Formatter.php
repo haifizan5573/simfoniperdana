@@ -30,12 +30,18 @@ class Formatter
 
     public function formatDate($date){
 
-        return Carbon::createFromFormat('d M, Y',$date)->format('Y-m-d');
+
+        return (!empty($date))?Carbon::createFromFormat('d M, Y',$date)->format('Y-m-d'):"";
     }
 
     public function formatDate2($date){
 
-        return Carbon::createFromFormat('Y-m-d H:i:s',$date)->format('d M, Y');
+        return (!empty($date))?Carbon::createFromFormat('Y-m-d H:i:s',$date)->format('d M, Y'):"";
+    }
+
+    public function formatDate3($date){
+
+        return Carbon::createFromFormat('Y-m-d H:i:s',$date)->format('Y-m-d');
     }
 
  

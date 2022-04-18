@@ -51,13 +51,15 @@
                                                             <div class="row">
                                                                
                                                                 <div class="col-6">
+                                                                    {{ $act->name}}
+                                                                    <small class="text-truncate">
                                                                     @if($act->start_date < date('Y-m-d')." 00:00:00")
-                                                                    <strike> {{$act->description}}</strike>
+                                                                    <strike> {!! \Illuminate\Support\Str::limit($act->description,20,' ..')  !!}</strike>
                                                                     @else
-                                                                    {{$act->description}}
+                                                                    {!! \Illuminate\Support\Str::limit($act->description,20,' ..') !!}
                                                                     @endif
                                                                     <br/>
-                                                                    <small>{{ $act->name}}</small>
+                                                                    </small>
                                                                 </div>
                                                                 <div class="col-6">
                                                                 <i class="bx bx-time-five align-middle me-1"></i> {!! $formatter->formatDate2($act->start_date) !!}
