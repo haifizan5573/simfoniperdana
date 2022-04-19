@@ -7,6 +7,9 @@
 @endsection
 <div>
 <div class="row">
+
+        @include('livewire.surau.menu')
+
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">

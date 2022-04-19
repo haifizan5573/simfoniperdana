@@ -16,7 +16,7 @@ class KhairatData extends Component
     use WithPagination;
     use AuthorizesRequests;
 
-    public $filter,$roles,$search,$status,$khairat;
+    public $filter,$roles,$search,$status,$khairat,$curpage;
     protected $paginationTheme = 'bootstrap';
 
 
@@ -33,7 +33,7 @@ class KhairatData extends Component
         $message=Session::get('message');
         $alerttype=Session::get('alert-type');
         $toastrdata=array("message"=>$message,"alert-type"=>$alerttype);
-        
+        $this->curpage="khairat";
      
         
         $break=0;

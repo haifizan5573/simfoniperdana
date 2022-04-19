@@ -4,7 +4,10 @@
 @endsection
 <div>
 <div class="row">
-        <div class="col-lg-12">
+    <div class="col-lg-12 col-xs-12 col-sm-12">
+        @include('livewire.surau.menu')
+        <div class="row">
+         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -156,7 +159,9 @@
                         <div class="mt-10 ml-110">
                         {{ $khairats->links() }}
                         </div>
+                </div>
             </div>
+          </div>
         </div>
     </div>
     @include('components.modal',['size'=>'lg'])  

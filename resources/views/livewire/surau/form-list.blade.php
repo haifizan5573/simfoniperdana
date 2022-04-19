@@ -3,24 +3,22 @@
 <link href="{{ URL::asset('/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 <div>
-    @include('components.breadcrumb',[
-        'title'=>"Forms",
-        'url'=>"#",
-        'subtitle'=>"Form Listing"
-        ])
+ 
 <div class="row">
         <div class="col-lg-12">
+        @include('livewire.surau.menu')
             <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-4">
                            
+                        <h5>Forms</h5>
                             
                         </div>
                        
                         <div class="col-lg-8 d-flex justify-content-end">
                              
-                    
+                               
                                
                                 <div class="app-search m-2">
                                     <div class="position-relative">
