@@ -1,11 +1,18 @@
 <div class="row">
-    <div class="col-lg-8 col-xs-12 col-sm-12">
-        <div class="card">
-            <div class="card-body">
+    <div class="col-lg-12 col-xs-12 col-sm-12">
+
+       
+       @include('livewire.surau.menu')
+
+
+       <div class="row">
+          <div class="col-lg-8 col-xs-12 col-sm-12">
+            <div class="card">
+              <div class="card-body">
                 
                 <div class="row">
                     <div class="col-6">
-                        <h4 class="card-title mb-3">Khairat Fund</h4>
+                        <h4 class="card-title">Khairat Fund</h4>
                     </div>
                     <div class="col-6">
 
@@ -62,11 +69,13 @@
                         </div>
                     </div>
 
-                     <div class="col-lg-6 align-self-center">
+                            <div class="col-lg-6 align-self-center">
                        
-                    </div>
-                </div>                                  
-             </div>
+                            </div>
+                        </div>                                  
+                     </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

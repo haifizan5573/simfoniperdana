@@ -54,7 +54,7 @@
                             <thead class="table-light">
                                 <tr>
                                   
-                                    <th class="align-middle">Category Name Name</th>
+                                    <th class="align-middle">Category Name</th>
                              
                                     <th class="align-middle text-center">Public Link</th>
                                     <th class="align-middle text-center">Status</th>
