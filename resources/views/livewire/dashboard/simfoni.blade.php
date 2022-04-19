@@ -36,7 +36,7 @@
 
 
             @foreach($simfoni as $data)
-                <div class="col-4">
+                <div class="col-6 col-md-4">
                   
                         <div class="card  p-4 mb-2  ">
                             <div class="text-center"><img class="rounded avatar-sm" src="assets/images/community/simfoni/{{$data->icon}}" alt="" height="40"></div>
@@ -44,7 +44,7 @@
                                 <div class="bg-transparent border-top mt-2">
                                         <div class="mt-2">
                                             <div class="text-left">
-                                                <a href=""><small>{{$data->User()->count()}} Registered</small></a>
+                                                <a href=""><i class="bx bx-message-square-dots"></i> <small>{{$data->User()->count()}} Registered</small></a>
                                             </div>
                                             
                                         </div>
