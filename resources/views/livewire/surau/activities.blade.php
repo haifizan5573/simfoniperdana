@@ -8,9 +8,10 @@
 <div>
 <div class="row">
 
-        @include('livewire.surau.menu')
+       
 
         <div class="col-lg-12">
+        @include('livewire.surau.menu')
             <div class="card">
                 <div class="card-body">
                     <div class="row">
