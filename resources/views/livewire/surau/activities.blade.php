@@ -15,12 +15,12 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-4">
-                             <h4 class="card-title mt-4">Activities</h4> 
+                        <div class="col-lg-2">
+                             <h4 class="card-title">Activities</h4> 
                             
                         </div>
                        
-                        <div class="col-lg-8 d-flex justify-content-end">
+                        <div class="col-lg-10 d-flex justify-content-end">
                                 
                                
                                 <div class="app-search">
