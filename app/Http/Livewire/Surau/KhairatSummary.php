@@ -10,18 +10,19 @@ use App\Models\KhairatUser;
 class KhairatSummary extends Component
 {
 
-    public $filter,$total=0,$currentbal=0,$expense=0,$totalreg=0;
+    public $filter,$total=0,$currentbal=0,$expense=0,$totalreg=0,$curpage;
 
     public function mount(){
 
         $this->filter=(empty($this->filter))?date('Y'):$this->filter;
-    
+        
       
     }
 
     public function render()
     {
 
+        $this->curpage="khairat";
         $data=$this->khairatdata();
 
         return view('livewire.surau.khairat-summary',[

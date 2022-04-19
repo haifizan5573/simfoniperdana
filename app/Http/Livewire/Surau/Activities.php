@@ -15,7 +15,7 @@ class Activities extends Component
     use WithPagination;
  
 
-    public $filter,$search,$status;
+    public $filter,$search,$status,$curpage;
     public $appid,$name,$description,$startdate,$enddate,$starttime,$endtime,$category,$categoryplaceholder,$statusplaceholder;
     protected $paginationTheme = 'bootstrap';
 
@@ -30,6 +30,7 @@ class Activities extends Component
     public function render()
     {
 
+        $this->curpage="activities";
         $message=Session::get('message');
         $alerttype=Session::get('alert-type');
         $toastrdata=array("message"=>$message,"alert-type"=>$alerttype);
@@ -53,7 +54,7 @@ class Activities extends Component
     {
         $this->pagemodal = $pagemodal;
         $this->title = $title;
-
+        
      
         $helper=new Formatter();
 

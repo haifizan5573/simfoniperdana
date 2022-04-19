@@ -8,7 +8,7 @@ use App\Helpers\Formatter;
 
 class FormList extends Component
 {
-    public $appstatus,$status,$formid;
+    public $appstatus,$status,$formid,$curpage;
     public function mount(){
 
         $forms=Form::paginate(30);
@@ -17,6 +17,8 @@ class FormList extends Component
 
     public function render()
     {
+        $this->curpage="forms";
+
         return view('livewire.surau.form-list',[
             'forms'=>Form::paginate(30),
             'formatter'=>new Formatter,
