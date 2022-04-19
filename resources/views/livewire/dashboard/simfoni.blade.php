@@ -44,7 +44,7 @@
                                 <div class="bg-transparent border-top mt-2">
                                         <div class="mt-2">
                                             <div class="text-left">
-                                                <a href=""><i class="bx bx-message-square-dots"></i> <small>{{$data->User()->count()}} Registered</small></a>
+                                                <a href=""><small>{{$data->User()->count()}} Registered</small></a>
                                             </div>
                                             
                                         </div>
