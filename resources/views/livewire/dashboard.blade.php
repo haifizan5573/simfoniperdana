@@ -16,7 +16,7 @@
 <div class="row">
 
 
-    
+    @include('livewire.dashboard.mainmenu')   
     @include('livewire.dashboard.simfoni')   
     <div class="row">
         @include('livewire.dashboard.upcomingevents')
