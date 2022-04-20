@@ -50,6 +50,17 @@
                                         <span class="bx bx-search-alt"></span>
                                     </div>
                                 </div>
+                                <div class="app-search">
+                                    <div class="position-relative">
+                                        <select class="form-control" wire:model="street">
+                                            <option value="">All</option>
+                                            @foreach($streetlist as $list)
+                                                <option value="{{$list['name']}}">{{$list['name']}}</option>
+                                            @endforeach
+                                        </select>  
+                                        <span class="bx bx-filter-alt"></span>
+                                    </div>
+                                </div>
                                 @endcan
 
                                 @if(in_array('Owner',$roles))

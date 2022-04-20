@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Surau;
 
+use App\Http\Livewire\API\SystemData;
 use Livewire\Component;
 use App\Models\Khairat;
 use App\Models\FileUpload;
@@ -16,7 +17,7 @@ class KhairatData extends Component
     use WithPagination;
     use AuthorizesRequests;
 
-    public $filter,$roles,$search,$status,$khairat,$curpage;
+    public $filter,$roles,$search,$status,$khairat,$curpage,$street;
     protected $paginationTheme = 'bootstrap';
 
 
@@ -47,6 +48,13 @@ class KhairatData extends Component
                                $u->where('name','like','%'.$this->search.'%');
                             });
                        })
+                       ->whereHas("Addresses", function($q) {   
+
+                        if(!empty($this->street)){
+                            $q->where("street",$this->street);
+                        }                                                                                                       
+                        
+                      })
                        ->paginate(30);
             $break=1;
          }
@@ -60,11 +68,15 @@ class KhairatData extends Component
 
         }
 
+        $systemdata=new SystemData();
+        $streetlist=$systemdata->streetlist(1);
+
         return view('livewire.surau.khairat-data',[
             'khairats'=>$khairatdata,
             'toastrdata'=>$toastrdata,
             'roles'=>$this->roles,
-            'khairat'=>$this->khairat
+            'khairat'=>$this->khairat,
+            'streetlist'=>$streetlist
         ]);
     }
 
