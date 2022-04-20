@@ -11,8 +11,8 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-4">
-                             <h4 class="card-title mt-4">Khairat Kematian (Mutual Benevolent)</h4> 
+                        <div class="col-lg-12">
+                             <h4 class="card-title mt-4">Khairat Kematian (Mutual Benevolent) - {{count($khairats)}} record(s)</h4> 
                             
                         </div>
                     </div>
