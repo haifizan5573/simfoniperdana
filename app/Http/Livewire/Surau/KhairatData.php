@@ -57,7 +57,7 @@ class KhairatData extends Component
                       })
                        ->paginate(30);
                 
-                $khairatcount=$khairatdata->count();
+                $khairatcount=$khairatdata->total();
             $break=1;
          }
   
@@ -67,7 +67,7 @@ class KhairatData extends Component
 
             $khairatdata=KhairatUser::where('userid',Auth::user()->id)
                 ->paginate(30);
-            $khairatcount=$khairatdata->count();
+            $khairatcount=$khairatdata->total();
         }
 
         $systemdata=new SystemData();
