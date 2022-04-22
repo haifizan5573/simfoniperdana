@@ -9,6 +9,7 @@ use App\Helpers\Formatter;
 use Auth;
 use Session;
 use Carbon\Carbon;
+use Toyyibpay;
 
 class Activities extends Component
 {
@@ -30,6 +31,7 @@ class Activities extends Component
     public function render()
     {
 
+       
         $this->curpage="activities";
         $message=Session::get('message');
         $alerttype=Session::get('alert-type');
