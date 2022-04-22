@@ -30,6 +30,7 @@ require __DIR__.'/loan.php';
 require __DIR__.'/user.php';
 require __DIR__.'/product.php';
 require __DIR__.'/surau.php';
+require __DIR__.'/simfoni.php';
 
 Auth::routes();
 
@@ -73,7 +74,8 @@ Route::group(['middleware' => ['auth']], function() {
      Route::get('/user/firsttime', App\Http\Livewire\Miscellaneous\ChangePassword::class)->name('FirstTime');
 
      
-      
+     //payment status
+     Route::get('/paymentstatus',App\Http\Livewire\Dashboard::class)->name('paymentstatus');
     
 });
 
