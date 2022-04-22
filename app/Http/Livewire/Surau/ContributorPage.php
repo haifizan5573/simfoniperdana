@@ -5,6 +5,8 @@ namespace App\Http\Livewire\Surau;
 use Livewire\Component;
 use App\Models\Fund;
 use Auth;
+use App\Models\FundUser;
+
 class ContributorPage extends Component
 {
     public $loader;
@@ -28,8 +30,20 @@ class ContributorPage extends Component
     }
 
     public function createLink(){
+
+        $fund=Fund::find($this->catid);
+
+        //add fund_user
+
+       $refid=date('ymdhis').Auth::user()->usercode;
+
+       FundUser::create([
+           'userid'=>Auth::user()->id,
+           'fundid'=>$fund->id,
+           'formdata'=>$refid,
+       ]);
          
-       $fund=Fund::find($this->catid);
+      
       
         $data = array(
             'userSecretKey'=>env('TOYYIBPAY_USER_SECRET_KEY'),
@@ -39,9 +53,9 @@ class ContributorPage extends Component
             'billPriceSetting'=>0,
             'billPayorInfo'=>1,
             'billAmount'=>100,
-            'billReturnUrl'=>env('APP_URL'),
+            'billReturnUrl'=>env('APP_URL').'/paystatus',
             'billCallbackUrl'=>env('APP_URL').'/paystatus',
-            'billExternalReferenceNo' => date('ymdhis').Auth::user()->usercode,
+            'billExternalReferenceNo' => $refid,
             'billTo'=>Auth::user()->name,
             'billEmail'=>Auth::user()->email,
             'billPhone'=>(isset(Auth::user()->contacts()->first()->phonenumber))?Auth::user()->contacts()->first()->phonenumber:"",

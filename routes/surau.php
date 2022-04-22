@@ -12,6 +12,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/fund', App\Http\Livewire\Surau\FundList::class)->name('fund');
     Route::get('/contribution/{catid}', App\Http\Livewire\Surau\ContributorPage::class)->name('contribution');
     Route::post('/paystatus', App\Http\Livewire\Surau\PayStatus::class)->name('paystatus');
+    Route::get('/paystatus', App\Http\Livewire\Surau\PayStatus::class)->name('paystatus');
 
     Route::group(['middleware' => ['can:update-khairat']], function () {
          Route::get('/summary',App\Http\Livewire\Surau\KhairatSummary::class)->name('summary');
