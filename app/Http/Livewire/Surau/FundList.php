@@ -4,8 +4,12 @@ namespace App\Http\Livewire\Surau;
 
 use Livewire\Component;
 use App\Models\Fund;
+use App\Models\FundUser;
+use App\Models\User;
 use Toyyibpay;
 use Carbon\Carbon;
+use Notification;
+use App\Notifications\FundCreated;
 
 class FundList extends Component
 {
@@ -90,6 +94,14 @@ class FundList extends Component
                 'expiry_date'=>$formatted_enddate,
             ]);
         
+            $alluser=User::where('isactive',1)->get();
+
+            $offerData = [
+                'title' => 'New fundraising event created',
+                'body' => $this->name.' created, you can start your donation today!',
+            ];
+      
+            Notification::send($alluser, new FundCreated($offerData));
 
             $this->message=array("message"=>"Fund added successfully","alert-type"=>"success");
         }else{
