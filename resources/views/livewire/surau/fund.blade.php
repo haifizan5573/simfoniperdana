@@ -78,7 +78,11 @@
                                 <tr>
                                    
                                     <td class="text-truncate">
+                                        @can('add-fund')
                                         <a href="{{ route('settlement',['fundid'=>$fund->id])}}">{{$fund->name}}</a>
+                                        @else
+                                          {{$fund->name}}
+                                        @endcan
                                     </td>
                                     <td class="text-truncate">
                                         {!! nl2br($fund->description) !!}
