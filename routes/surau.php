@@ -10,6 +10,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/formuser/{formid}', App\Http\Livewire\Surau\FormUsers::class)->name('formuser');
 
     Route::get('/fund', App\Http\Livewire\Surau\FundList::class)->name('fund');
+    Route::get('/settlement/{fundid}', App\Http\Livewire\Surau\Settlement::class)->name('settlement');
     Route::get('/contribution/{catid}', App\Http\Livewire\Surau\ContributorPage::class)->name('contribution');
     Route::post('/paystatus', App\Http\Livewire\Surau\PayStatus::class)->name('paystatus');
     Route::get('/paystatus', App\Http\Livewire\Surau\PayStatus::class)->name('paystatus');

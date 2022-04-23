@@ -26,6 +26,7 @@ class FundList extends Component
  
     public function render()
     {
+        $this->curpage="fund";
           $funds=Fund::when(!empty($this->search),function($q){
                  
                 $q->where('name','like','%'.$this->search.'%');

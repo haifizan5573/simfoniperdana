@@ -15,14 +15,12 @@ class PayStatus extends Component
    
     public function render(Request $request)
     {
-        //dd($request->status_id);
-       // status_id=1&billcode=gv3bputv&order_id=220423010621SIM0001&msg=ok&transaction_id=TP115866162230501230422
-
+    
        $data = array(
         'billCode' => $request->billcode,
-        'billpaymentStatus' => '1'
+        //'billpaymentStatus' => '1'
       );  
-    
+  
       $curl = curl_init();
     
       curl_setopt($curl, CURLOPT_POST, 1);
@@ -40,7 +38,8 @@ class PayStatus extends Component
 
         $funduser->update([
             'contribution'=>$obj[0]->billpaymentAmount,
-            'paymentstatus'=>$obj[0]->billpaymentSettlement
+            'paymentstatus'=>$obj[0]->billpaymentSettlement,
+            'paymentkey'=>$request->billcode
         ]);
 
         $userSchema = Auth::User();
@@ -57,7 +56,7 @@ class PayStatus extends Component
 
         $offerData = [
             'title' => 'Contribution Received',
-            'body' => Auth::user()->name.'have contributon for '.$obj[0]->billName.' with '.$obj[0]->billpaymentSettlement.".",
+            'body' => Auth::user()->name.' had contribute for '.$obj[0]->billName.' with '.$obj[0]->billpaymentSettlement.".",
         ];
   
         Notification::send($committee, new PaymentReceived($offerData));
