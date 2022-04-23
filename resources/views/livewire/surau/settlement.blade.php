@@ -6,18 +6,17 @@
 <div class="row">
     <div class="col-lg-12 col-xs-12 col-sm-12">
         @include('livewire.surau.menu')
-
         <div class="row">
                     <div class="col-6" >
                         <div class="card" style="min-height: 340px">
                             <div class="card-body">
-                            <h4 class="card-title">Khairat Fund - Khairat Kematian for Year {{$filter}}</h4>
                                 <table width="100%">
-                                    <tr><td class="fw-bold" style="height: 30px;" width="40%">Total Registratiom</td><td>{{$totalreg}}<td></tr>
-                                    <tr><td class="fw-bold" style="height: 30px;" width="40%">Available Balance</td><td>{{$balance}}<td></tr>
-                                    <tr><td class="fw-bold" style="height: 30px;" width="40%">Total Fund</td><td>{{$total}}<td></tr>
-                                    <tr><td class="fw-bold" style="height: 30px;" width="40%">Total Expense</td><td>{{$expense}}<td></tr>
-                                   
+                                    <tr><td class="fw-bold" style="height: 30px;" width="40%">Fund Name</td><td>{{ $fund->name }}<td></tr>
+                                    <tr><td class="fw-bold" style="height: 30px;" width="40%">Description</td><td>{!! $fund->description !!}<td></tr>
+                                    <tr><td class="fw-bold" style="height: 30px;" width="40%">Contribution Target</td><td>
+                                        @if(!empty($fund->target))RM{!! number_format($fund->target,2) !!}@else - @endif<td></tr>
+                                    <tr><td class="fw-bold" style="height: 30px;" width="40%">Total Contribution</td><td>RM{!! number_format($fund->Contributor()->sum('contribution'),2) !!}<td></tr>
+                                    <tr><td class="fw-bold" style="height: 30px;" width="40%">Expiry Date</td><td>@if(!empty($fund->expiry_date)){{ Carbon\Carbon::parse($fund->expiry_date)->format('d, M Y') }}@else No Expiry Date @endif<td></tr>
                                 </table>
                             </div>
                     </div>
@@ -30,44 +29,19 @@
                     </div>
                 </div>
         </div>
-
         <div class="row">
          <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                             <h4 class="card-title mt-4">Khairat Kematian (Mutual Benevolent) - {{$khairatcount}} record(s)</h4> 
-                            
-                        </div>
-                    </div>
+                    
                     <div class="row">
                      
-                       
-                        <div class="col-lg-12 d-flex justify-content-end">
-                                @can('update-khairat')
-                                    <div class="app-search ">
-                                        <div class="position-relative">
-                                        <select class="form-control" wire:model="filter">
-                                        
-                                        @for($dt=2021;$dt<=date('Y');$dt++)                      
-                                            <option value="{{$dt}}">Khairat Kematian for year {{$dt}}</option>
-                                        @endfor
-                                        </select>  
-                                        <span class="bx bx-filter-alt"></span>
-                                        </div>
-                                    </div>
-
-                                    <!-- <div class="app-search ">
-                                        <div class="position-relative">
-
-                                        <select class="form-control" wire:model="street" id="street">
-                                        
-                                        </select>  
-                                       
-                                        <span class="bx bx-filter-alt"></span>
-                                        </div>
-                                    </div> -->
+                        <div class="col-lg-4">
+                             <h4 class="card-title mt-4">Settlement</h4> 
+                            
+                        </div>
+                        <div class="col-lg-8 d-flex justify-content-end">
+                      
                                
                                 <div class="app-search ">
                                     <div class="position-relative">
@@ -86,13 +60,13 @@
                                         <span class="bx bx-filter-alt"></span>
                                     </div>
                                 </div>
-                                @endcan
+                                
 
                                 @if(in_array('Owner',$roles))
 
                                     <div class="app-search">
                                         <div class="position-relative">
-                                        <button type="button" onclick="window.location.href='{{ route('khairatkematian')}}'" class="btn btn-primary waves-effect waves-light pb5">Register</button>
+                                        <button type="button" onclick="window.location.href='{{ route('khairatkematian')}}'" class="btn btn-primary waves-effect waves-light pb5">Contribute</button>
                                         </div>
                                     </div>
 
@@ -109,78 +83,49 @@
                                     </th>
                                     <th class="align-middle">Name</th>
                                     <th class="align-middle">Home Unit</th>
-                                    <th class="align-middle">Membership Type</th>
-                                    <th class="align-middle text-center">Membership Fee</th>
+                                    <th class="align-middle">Contribution Amount</th>
                                     <th class="align-middle text-center">Payment Receipt</th>
                                     <th class="align-middle text-center">Payment Status</th>
-                                    @can('update-khairat')
-                                    <th class="align-middle text-center">Action</th>
-                                    @else
-                                    <th class="align-middle text-center">Year</th>
-                                    @endcan
+                                  
                                 </tr>
                             </thead>
                             <tbody>
 
-                            @foreach($khairats as $khairat)
+                            @foreach($fundusers as $fund)
                                 <tr>
                                     <td>
-                                    <a href="{{ route('userprofile',['uid'=>$khairat->user->id])}}"> {{ $khairat->user->usercode }}</a>
+                                    <a href="{{ route('userprofile',['uid'=>$fund->user->id])}}"> {{ $fund->user->usercode }}</a>
                                     </td>
-                                    <td><img src="{{ isset($khairat->user->avatar) ? Storage::url($khairat->user->avatar) : asset('/assets/images/user.png') }}" alt="Avatar" class="rounded-circle header-profile-user" > {!! strtoupper($khairat->user->name) !!}</td>
+                                    <td><img src="{{ isset($fund->user->avatar) ? Storage::url($fund->user->avatar) : asset('/assets/images/user.png') }}" alt="Avatar" class="rounded-circle header-profile-user" > {!! strtoupper($fund->user->name) !!}</td>
                                     <td>
 
-                                    @if(isset($khairat->Addresses()->first()->street)){{ $khairat->Addresses()->first()->street }},@endif @if(isset($khairat->Addresses()->first()->location)){{ $khairat->Addresses()->first()->location }} @endif
+                                    @if(isset($fund->Addresses()->first()->street)){{ $fund->Addresses()->first()->street }},@endif @if(isset($fund->Addresses()->first()->location)){{ $fund->Addresses()->first()->location }} @endif
 
                                     </td>
                                     <td>
-                                   
-                                    {!! nl2br($khairat->Membership()->first()->name) !!}
-                                 
+                                     @if(!empty($fund->contribution))RM{!! number_format($fund->contribution,2) !!}@endif
                                     </td>                                  
                                     <td class="text-center">
-                                    {{ $khairat->Membership()->first()->other }}
-                                    </td>
-                                    <td class="text-center">
-                                      
-                                        @if(!empty($khairat->FileUpload->first()->path))
-                                            @include('components.button',[
+
+                                    @include('components.button',[
                                                                 'type'=>'button',
                                                                 'class'=>'btn btn-dark btn-sm waves-effect waves-light',
-                                                                'onclick'=>"wire:click=\"open('livewire.form.khairatreceipt','Payment Receipt',$khairat->userid)\"",
+                                                                'onclick'=>"wire:click=\"open('livewire.form.fundreceipt','Payment Receipt','$fund->paymentkey')\"",
                                                                 'label'=>'View',
                                                                 'icon'=>'<i class="bx bx-search-alt-2 font-size-16 align-middle me-2"></i>',
                                                                 'loader'=>true,
                                                                 'targetloader'=>"view",
-                                                            ])
-                                        @endif
+                                    ])
+                                    
+                                    </td>
+                                    <td class="text-center">
+                                      
+                                      {{$fund->paymentstatus}}
                                   
                                     </td>
-                                    <td class="text-center">
-
-                                    <span class="badge badge-pill {{ ($khairat->status==8)? 'badge-soft-success': 'badge-soft-danger' }}  font-size-11"> {!! nl2br($khairat->Label()->first()->name) !!}</span>
-
-                                    </td>
-                                    @can('update-khairat')
-                                    <td class="text-center">
-
-                                        
-                                           @include('components.button',[
-                                                                'type'=>'button',
-                                                                'class'=>'btn btn-info btn-sm waves-effect waves-light',
-                                                                'onclick'=>"wire:click=\"open('livewire.form.updatestatus','Edit - Update Status',$khairat->userid)\"",
-                                                                'label'=>'Edit',
-                                                                'icon'=>'<i class="bx bx-pencil font-size-16 align-middle me-2"></i>',
-                                                                'loader'=>true,
-                                                                'targetloader'=>"view",
-                                            ])
-                                            
-                                    </td>
-                                    @else
-                                    <td class="text-center">
-                                        @if(isset($khairat->khairat()->first()->year)){{$khairat->khairat()->first()->year}}@endif
-                                    </td>
-                                    @endcan
+                                  
+                                  
+                                    
                                 </tr>
                             @endforeach
         
@@ -193,7 +138,7 @@
             </div>
             <div class="row mt-10">
                         <div class="mt-10 ml-110">
-                        {{ $khairats->links() }}
+                        {{ $fundusers->links() }}
                         </div>
                 </div>
             </div>
@@ -205,6 +150,7 @@
   
 @push('scripts')
 <script src="{{ URL::asset('/assets/libs/select2/select2.min.js') }}"></script>
+<!-- apexcharts -->
 <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 <script>
     @if(!empty($toastrdata['message']))
@@ -306,7 +252,7 @@ window.livewire.on('load', data => {
                
         });
 
-        options = {
+options = {
         chart: {
             type: 'bar',
             height: 300
@@ -342,7 +288,6 @@ window.livewire.on('load', data => {
 }
 var contribution = new ApexCharts(document.querySelector("#contribution"), options);
 contribution.render();
-
     </script>
 @include('components.toastr')
 @endpush

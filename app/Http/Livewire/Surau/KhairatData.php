@@ -35,6 +35,8 @@ class KhairatData extends Component
         $alerttype=Session::get('alert-type');
         $toastrdata=array("message"=>$message,"alert-type"=>$alerttype);
         $this->curpage="khairat";
+
+        $data=$this->khairatdata();
      
         
         $break=0;
@@ -73,14 +75,78 @@ class KhairatData extends Component
         $systemdata=new SystemData();
         $streetlist=$systemdata->streetlist(1);
 
+ 
+
+        $plotdata=array();
+       
+        foreach($streetlist as $street){
+            $totalcontrib=0;
+            $contribs=KhairatUser::whereHas("Addresses", function($q) use ($street) {   
+    
+                    $q->where("street",$street['name']);
+                                                                                                               
+            })
+            ->where("khairat",$this->khairat->id)
+            ->get();
+
+            foreach($contribs as $contrib){
+                $payment=$contrib->Membership()->first()->other;
+                $totalcontrib+=str_replace('RM','',$payment);
+            }
+
+           $plotdata[]=array(
+                        "x"=>$street['name'],
+                        "y"=>$totalcontrib,
+                    );
+        }
+
+        $plotdata=json_encode($plotdata);
+
+      
+
         return view('livewire.surau.khairat-data',[
             'khairats'=>$khairatdata,
             'toastrdata'=>$toastrdata,
             'roles'=>$this->roles,
             'khairat'=>$this->khairat,
             'streetlist'=>$streetlist,
-            'khairatcount'=>$khairatcount
+            'khairatcount'=>$khairatcount,
+            'total'=>$data[0],
+            'expense'=>$data[1],
+            'balance'=>$data[2],
+            'totalreg'=>$data[3],
+            'plotdata'=>$plotdata
         ]);
+    }
+
+    public function updateFilter(){
+
+
+        $this->khairatdata();
+        $this->mount();
+
+    }
+
+    public function khairatdata(){
+
+        $this->total=0;
+        $this->expense=0;
+        $khairatdata=KhairatUser::whereHas('khairat', function($q){
+            $q->where('year', '=',$this->filter);
+            })->get();
+
+        foreach($khairatdata as $khairat){
+
+            $this->total+=str_replace("RM","",$khairat->Membership()->first()->other);
+
+        }
+
+        $this->total=($this->total>0)?'RM'.number_format($this->total,2):'-';
+        $this->expense=($this->expense>0)?'RM'.number_format($this->expense,2):'-';
+        $this->currentbal=($this->expense>0)?$this->total-$this->expense:$this->total;
+        $this->totalreg=count($khairatdata);
+
+        return array($this->total,$this->expense,$this->currentbal,$this->totalreg);
     }
 
     

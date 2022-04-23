@@ -78,7 +78,7 @@
                                 <tr>
                                    
                                     <td class="text-truncate">
-                                        {{$fund->name}}
+                                        <a href="{{ route('settlement',['fundid'=>$fund->id])}}">{{$fund->name}}</a>
                                     </td>
                                     <td class="text-truncate">
                                         {!! nl2br($fund->description) !!}

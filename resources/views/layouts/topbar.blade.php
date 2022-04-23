@@ -83,8 +83,10 @@
         <div class="dropdown d-inline-block">
             <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="bx bx-bell"></i>
-                <span class="badge bg-danger rounded-pill"></span>
+                <i class="bx bx-bell {{(Auth::user()->unreadNotifications->count()>0)?'bx-tada':''}} "></i>
+                @if(Auth::user()->unreadNotifications->count()>0)
+                <span class="badge bg-danger rounded-pill">{{ Auth::user()->unreadNotifications->count() }}</span>
+                @endif
             </button>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                 aria-labelledby="page-header-notifications-dropdown">
@@ -100,20 +102,21 @@
                 </div>
                 <div data-simplebar style="max-height: 230px;">
                  
-
-                    <!-- <a href="" class="text-reset notification-item">
+                   @foreach(Auth::user()->notifications as $notification)
+                    <a href="@if(isset($notification->data['url'])){{$notification->data['url']}}@else # @endif" class="text-reset notification-item">
                         <div class="media">
-                            <img src="{{ URL::asset ('/assets/images/users/avatar-4.jpg') }}"
-                                class="me-3 rounded-circle avatar-xs" alt="user-pic">
+                            <!-- <img src="{{ URL::asset ('/assets/images/users/avatar-4.jpg') }}"
+                                class="me-3 rounded-circle avatar-xs" alt="user-pic"> -->
                             <div class="media-body">
-                                <h6 class="mt-0 mb-1">@lang('translation.Salena_Layfield')</h6>
+                                <h6 class="mt-0 mb-1">{{$notification->data['title']}}</h6>
                                 <div class="font-size-12 text-muted">
-                                    <p class="mb-1" key="t-occidental">@lang('translation.As_a_skeptical_Cambridge_friend_of_mine_occidental')</p>
+                                    <p class="mb-1 truncate" key="t-occidental">{{$notification->data['body']}}</p>
                                     <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span key="t-hours-ago">@lang('translation.1_hours_ago')</span></p>
                                 </div>
                             </div>
                         </div>
-                    </a> -->
+                    </a> 
+                    @endforeach
                 </div>
                 <div class="p-2 border-top d-grid">
                     <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
