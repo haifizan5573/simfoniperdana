@@ -8,7 +8,7 @@
         @include('livewire.surau.menu')
 
         <div class="row">
-                    <div class="col-6" >
+                    <div class="col-12 col-md-6 col-lg-6" >
                         <div class="card" style="min-height: 340px">
                             <div class="card-body">
                             <h4 class="card-title">Khairat Fund - Khairat Kematian for Year {{$filter}}</h4>
@@ -22,7 +22,7 @@
                             </div>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-md-6 col-lg-6">
                     <div class="card">
                         <div class="card-body">
                             <div id="contribution" class="apex-charts" dir="ltr"></div>
@@ -330,6 +330,11 @@ window.livewire.on('load', data => {
           title: {
             text: 'Street No'
           },
+        },
+        stroke: {
+              show: true,
+              width: 2,
+              colors: ['transparent']
         },
         tooltip: {
           y: {
