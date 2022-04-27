@@ -46,8 +46,9 @@
                                     </th>
                                     <th class="align-middle">Name</th>
                                     <th class="align-middle">Email</th>
+                                    <th class="align-middle">Phone</th>
                                     <th class="align-middle">Role</th>
-                                    <th class="align-middle">Group</th>
+                                    <!-- <th class="align-middle">Group</th> -->
                                     <!-- <th class="align-middle text-center">Status</th>
                                     <th class="align-middle text-center">Action</th> -->
                                 </tr>
@@ -88,21 +89,6 @@
                         </table>
                     </div>
                
-                    <div class="row">
-                        <div class="col-3">
-                    
-                            @include('components.button',[
-                                    'type'=>'button',
-                                    'class'=>'btn btn-info btn-sm waves-effect waves-light',
-                                    'onclick'=>"wire:click=\"open('livewire.form.addgroup','Add to Group')\"",
-                                    'label'=>'Add to Group',
-                                    'icon'=>'<i class="bx bx-pencil font-size-16 align-middle me-2"></i>',
-                                    'loader'=>true,
-                                    'targetloader'=>"view",
-                            ])
-                                
-                        </div>
-                    </div>
                     <!-- end table-responsive -->
                 </div>
             </div>
