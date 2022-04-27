@@ -3,12 +3,16 @@
 namespace App\Http\Livewire\Simfoni;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use Session;
 use  App\Http\Livewire\API\SystemData;
 use App\Models\User;
 
 class Resident extends Component
 {
+
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     public function render()
     {
         $message=Session::get('message');
