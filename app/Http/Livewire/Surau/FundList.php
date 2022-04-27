@@ -84,7 +84,7 @@ class FundList extends Component
         
           $obj = json_decode($result);
    //dd(env('TOYYIBPAY_SANDBOX'));
-         // dd($obj);
+          dd($obj);
         if(isset($obj->CategoryCode)){
             Fund::create([
                 'name'=>$this->name,
