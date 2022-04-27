@@ -67,13 +67,13 @@ class FundList extends Component
          $data = array(
             'catname' => $this->name, //CATEGORY NAME
             'catdescription' =>$this->description, //PROVIDE YOUR CATEGORY DESCRIPTION
-            'userSecretKey' => env('TOYYIBPAY_SANDBOX') //PROVIDE USER SECRET KEY HERE
+            'userSecretKey' => env('TOYYIBPAY_USER_SECRET_KEY') //PROVIDE USER SECRET KEY HERE
           );  
         
           $curl = curl_init();
         
           curl_setopt($curl, CURLOPT_POST, 1);
-          curl_setopt($curl, CURLOPT_URL, 'https://dev.toyyibpay.com/index.php/api/createCategory');  //PROVIDE API LINK HERE
+          curl_setopt($curl, CURLOPT_URL, env('TOYYIBPAY_URL').'/api/createCategory');  //PROVIDE API LINK HERE
           curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
           curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         
@@ -84,7 +84,7 @@ class FundList extends Component
         
           $obj = json_decode($result);
    //dd(env('TOYYIBPAY_SANDBOX'));
-          dd($obj);
+         // dd($obj);
         if(isset($obj->CategoryCode)){
             Fund::create([
                 'name'=>$this->name,
