@@ -79,7 +79,7 @@ class ContributorPage extends Component
           curl_close($curl);
           $obj = json_decode($result);
           $this->loader="Redirecting...";
-          dd($obj);
+         // dd($obj);
           if(isset($obj[0]->BillCode)){
             return redirect(env('TOYYIBPAY_URL')."/".$obj[0]->BillCode);
           }else{
