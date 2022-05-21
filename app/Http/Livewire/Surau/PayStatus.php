@@ -35,7 +35,7 @@ class PayStatus extends Component
       //dd($obj);
 
       $funduser=FundUser::where('formdata',$obj[0]->billExternalReferenceNo)->first();
-
+      
         $funduser->update([
             'contribution'=>$obj[0]->billpaymentAmount,
             'paymentstatus'=>$obj[0]->billpaymentSettlement,

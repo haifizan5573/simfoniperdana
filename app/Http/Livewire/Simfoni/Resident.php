@@ -13,6 +13,15 @@ class Resident extends Component
 
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
+
+    public $streetfilter,$street,$filter,$search;
+
+    public function mount($streetfilter=NULL){
+        if(!empty($streetfilter)){
+        $this->street="Simfoni ".$streetfilter;
+        }
+        //dd($this->street);
+    }
     public function render()
     {
         $message=Session::get('message');
@@ -22,7 +31,7 @@ class Resident extends Component
         $systemdata=new SystemData();
         $streetlist=$systemdata->streetlist(1);
 
-      
+        
         $users=User::with("roles")->whereHas("roles", function($q) {   
 
             if(!empty($this->filter)){
@@ -41,10 +50,12 @@ class Resident extends Component
             
         })
         ->paginate(30);
+        $total=$users->total();
 
         return view('livewire.simfoni.resident',[
             'streetlist'=>$streetlist,
-            'users'=>$users
+            'users'=>$users,
+            'total'=>$total
         ]);
     }
 }
