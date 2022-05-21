@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-4">
-                             <h4 class="card-title mt-4">User List</h4> 
+                             <h4 class="card-title mt-4">Residents List - {{$street}} ({{$total}} Registered)</h4> 
      
                         </div>
                        
@@ -48,7 +48,7 @@
                                     <th class="align-middle">Email</th>
                                     <th class="align-middle">Phone</th>
                                     <th class="align-middle">Role</th>
-                                    <!-- <th class="align-middle">Group</th> -->
+                                    <th class="align-middle">Street</th>
                                     <!-- <th class="align-middle text-center">Status</th>
                                     <th class="align-middle text-center">Action</th> -->
                                 </tr>
@@ -65,6 +65,10 @@
                                     </td>
                                     <td><img src="{{ isset($user->avatar) ? Storage::url($user->avatar) : asset('/assets/images/user.png') }}" alt="Avatar" class="rounded-circle header-profile-user" > {!! strtoupper($user->name) !!}</td>
                                     <td>{{ $user->email }}</td>
+                                    <td> @if($user->Contacts()->first()!=NULL)
+                                                            {{ $user->Contacts()->first()->phonenumber}}
+                                        @endif
+                                    </td>
                                     <td>
                                    
                                         @foreach($user->roles()->get() as $userrole)
@@ -72,6 +76,12 @@
                                         @endforeach
                                  
                                     </td>   
+                                    <td>
+                                                            @if($user->Addresses()->first()!=NULL)
+                                                            {{ $user->Addresses()->first()->street}}, {{ $user->Addresses()->first()->location}}
+                                                            @endif
+                                                        
+                                    </td>
                                     <!-- <td>
                                        
                                         @foreach($user->Team as $team)
