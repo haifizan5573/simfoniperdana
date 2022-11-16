@@ -21,6 +21,13 @@
                      
                     @error('nickname') <span class="error">{{ $message }}</span> @enderror
                   </div>
+                  <div class="mb-2">
+                    <label for="floatingnameInput">Phone</label>
+                        <input type="text" class="form-control form-control-md" placeholder="Enter Phone"
+                            value="" wire:model="phone">
+                     
+                    @error('phone') <span class="error">{{ $message }}</span> @enderror
+                  </div>
                 <div class="mb-2">
                     <label for="name">Avatar</label>
                     <input type="file" class="form-control form-control-md" 
