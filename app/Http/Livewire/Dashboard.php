@@ -36,7 +36,7 @@ class Dashboard extends Component
             'formatter'=>$formatter,
             'forms'=>Form::where("status",1)->take(10)->get(),
             'simfoni'=>$systemdata->Teams('group_default',2),
-            'activity'=>Activity::where('category',5)->get()
+          
         ]);
     }
 

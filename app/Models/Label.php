@@ -11,7 +11,7 @@ class Label extends Model
     use HasFactory;
     protected $guarded=[];
  
-    public function Surau(){
+    public function Activity(){
 
         return $this->hasMany(Activity::class,"category","id")->orderBy('start_date');
 

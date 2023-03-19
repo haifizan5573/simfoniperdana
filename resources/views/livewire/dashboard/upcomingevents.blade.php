@@ -36,7 +36,7 @@
                                                  <div class="scrollClass" style="height:200px !important;">
                                                     <ul class="verti-timeline list-unstyled">
 
-                                                    @foreach($cat->Surau()->get() as $act)
+                                                    @foreach($cat->Activity()->wheredate('start_date','>=',date('Y-m-d'))->get() as $act)
 
                                                     <li class="event-list pb-0 mb-0">
                                                     <div class="event-timeline-dot">
