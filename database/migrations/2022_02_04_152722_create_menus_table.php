@@ -21,6 +21,8 @@ class CreateMenusTable extends Migration
             $table->string('order')->default(0);
             $table->string('icon')->nullable();
             $table->string('url')->nullable();
+            $table->string('urlid')->nullable();
+            $table->string('routename')->nullable();
             $table->string('permission')->nullable();
             $table->timestamps();
 

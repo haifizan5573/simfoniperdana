@@ -26,6 +26,15 @@
                                         <span class="bx bx-search-alt"></span>
                                     </div>
                                 </div>
+                                @can('add-activities')
+
+                                <div class="app-search">
+                                    <div class="position-relative" style="margin-top: 10px;">
+                                    <button type="button" onclick="window.location.href='{{ route('addformsurau')}}'" class="btn btn-primary waves-effect waves-light pb5">Add Form</button>
+                                    </div>
+                                </div>
+
+                            @endcan
                              
                         </div>
                     </div>

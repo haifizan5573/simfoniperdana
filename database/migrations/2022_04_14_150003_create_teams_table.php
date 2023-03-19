@@ -20,7 +20,7 @@ class CreateTeamsTable extends Migration
             $table->bigInteger('type')->unsigned();
             $table->bigInteger('status')->unsigned();
             $table->timestamps();
-
+            $table->string('icon');
             $table->foreign('type')
             ->references('id')
             ->on('labels')
