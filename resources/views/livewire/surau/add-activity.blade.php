@@ -191,7 +191,7 @@ window.livewire.on('load', data => {
                             tags: false,
                             selectOnBlur: true,
                             ajax: {
-                                url:  "{{route('label')}}/category_surau",
+                                url:  "{{route('label')}}/activity",
                                 dataType: 'json',
                                 delay: 250,
                                 processResults: function (data) {
