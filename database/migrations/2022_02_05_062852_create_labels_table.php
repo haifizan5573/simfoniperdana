@@ -19,6 +19,10 @@ class CreateLabelsTable extends Migration
             $table->string('type')->nullable();
             $table->string('icon')->nullable();
             $table->string('order')->nullable();
+            $table->string('menuicon')->nullable();
+            $table->string('other')->nullable();
+            $table->string('typeid')->nullable();
+            $table->string('isactive')->nullable();
             $table->timestamps();
         });
     }

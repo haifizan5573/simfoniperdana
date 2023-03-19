@@ -11,7 +11,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/fund', App\Http\Livewire\Surau\FundList::class)->name('fund');
     Route::get('/settlement/{fundid}', App\Http\Livewire\Surau\Settlement::class)->name('settlement');
-    Route::get('/contribution/{catid}', App\Http\Livewire\Surau\ContributorPage::class)->name('contribution');
+   
     Route::post('/paystatus', App\Http\Livewire\Surau\PayStatus::class)->name('paystatus');
     Route::get('/paystatus', App\Http\Livewire\Surau\PayStatus::class)->name('paystatus');
 
@@ -21,7 +21,9 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::group(['middleware' => ['can:add-activities']], function () {
         Route::get('/addactivitysurau',App\Http\Livewire\Surau\AddActivity::class)->name('addactivitysurau');
+        Route::get('/addformsurau',App\Http\Livewire\Surau\AddForm::class)->name('addformsurau');
    });
 });
 
 Route::get('/surauactivity/{actid}',App\Http\Livewire\Surau\ActivityPage::class)->name('surauactivity');
+Route::get('/contribution/{catid}', App\Http\Livewire\Surau\ContributorPage::class)->name('contribution');

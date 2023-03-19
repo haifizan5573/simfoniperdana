@@ -33,11 +33,11 @@
                 </div>
                 
                 <div class="col-4 col-md-2 text-center">
-                    <a href="#}">
+                    <a href="https://tularpedia.com" target="_blank">
                         <div class="card pt-4 mb-2  ">
                             <div><img class="rounded avatar-sm" src="assets/images/community/simfoni/marketplace.svg" alt="" height="40"></div>
-                            <small>Marketplace</small><small class="text-danger text-mutated">Coming Soon</small>
-                    
+                            <small>Marketplace</small>
+                            <small>&nbsp;</small>
                         </div>
                     </a>
                 </div>
