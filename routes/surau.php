@@ -19,6 +19,8 @@ Route::group(['middleware' => ['auth']], function() {
          Route::get('/summary',App\Http\Livewire\Surau\KhairatSummary::class)->name('summary');
     });
 
+    Route::get('/contribution/{catid}', App\Http\Livewire\Surau\ContributorPage::class)->name('contribution');
+
     Route::group(['middleware' => ['can:add-activities']], function () {
         Route::get('/addactivitysurau',App\Http\Livewire\Surau\AddActivity::class)->name('addactivitysurau');
         Route::get('/addformsurau',App\Http\Livewire\Surau\AddForm::class)->name('addformsurau');
@@ -26,4 +28,3 @@ Route::group(['middleware' => ['auth']], function() {
 });
 
 Route::get('/surauactivity/{actid}',App\Http\Livewire\Surau\ActivityPage::class)->name('surauactivity');
-Route::get('/contribution/{catid}', App\Http\Livewire\Surau\ContributorPage::class)->name('contribution');
