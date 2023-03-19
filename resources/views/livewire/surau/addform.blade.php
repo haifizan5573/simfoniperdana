@@ -15,7 +15,7 @@
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-body">
-                    <form wire:submit.prevent="addactivitysurau">
+                    <form wire:submit.prevent="addform">
                     <h5 class="card-title">Add Form</h5>
                 
 
@@ -32,15 +32,20 @@
                             @error('name') <span class="error">{{ $message }}</span> @enderror
                             </div>
                         </div>
-                        <div class="row" wire:ignore>
-                           <div class="col-md-12 mb-2">
+                        <div class="row" >
+                           <div class="col-md-12 mb-2" wire:ignore>
                                 @include('components.textarea',[
                                     'element'=>'description',
                                     'name'=>'description',
                                     'content'=>'',
                                     'label'=>'Description',
                                 ])  
+                                
+            
+            
+            
                             </div>
+                            @error('description') <span class="error">{{ $message }}</span> @enderror
                         </div>
                     
                         <div class="row">

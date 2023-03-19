@@ -15,12 +15,13 @@
    
 <div class="row">
 
+    @include('livewire.dashboard.upcomingevents')
     @include('livewire.dashboard.banner')   
     @include('livewire.dashboard.mainmenu')   
     @include('livewire.dashboard.simfoni')   
   
     <div class="row">
-        @include('livewire.dashboard.upcomingevents')
+       
 
         @include('livewire.dashboard.notifications')
 

@@ -19,8 +19,9 @@ class Dashboard extends Component
     public function mount(){
         
 
-      $this->suraucat=Label::where('type','category_surau')
+      $this->activity=Label::where('type','activity')
                     ->where('isactive',1)
+                    ->where("typeid",1)
                     ->orderby('order','asc')->get();
 
       

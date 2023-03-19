@@ -9,7 +9,7 @@
                                                 $a=0;
                                                 @endphp
 
-                                            @foreach($activity as $cat)
+                                            @foreach($suraucat as $cat)
                                             
                                             <li class="nav-item">
                                                 <a class="nav-link  @if($a==0) active @endif" data-bs-toggle="tab" href="#ab{{$cat->id}}" role="tab">
@@ -30,7 +30,7 @@
                                                 @endphp
 
                                         <div class="tab-content mt-4" >
-                                            @foreach($activity as $cat)
+                                            @foreach($suraucat as $cat)
 
                                             <div class="tab-pane @if($b==0) active @endif" id="ab{{$cat->id}}" role="tabpanel">
                                                  <div class="scrollClass" style="height:200px !important;">

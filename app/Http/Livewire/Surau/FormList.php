@@ -11,7 +11,7 @@ class FormList extends Component
     public $appstatus,$status,$formid,$curpage;
     public function mount(){
 
-        $forms=Form::paginate(30);
+        $forms=Form::orderby("created_at","desc")->paginate(30);
 
     }
 
@@ -20,7 +20,7 @@ class FormList extends Component
         $this->curpage="forms";
 
         return view('livewire.surau.form-list',[
-            'forms'=>Form::paginate(30),
+            'forms'=>Form::orderby("created_at","desc")->paginate(30),
             'formatter'=>new Formatter,
         ]);
     }

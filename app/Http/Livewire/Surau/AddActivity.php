@@ -70,10 +70,10 @@ class AddActivity extends Component
         ]);
 
 
-        $result = array("alert-type" => "success", "message" => "New User Created");
+        $result = array("alert-type" => "success", "message" => "New Activity Created");
        
         return redirect()->route('activities')->with($result);
-
+ 
 
     }
 }
