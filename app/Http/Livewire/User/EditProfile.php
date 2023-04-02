@@ -12,7 +12,7 @@ class EditProfile extends Component
 {
     use WithFileUploads;
 
-    public $name,$avatar,$nickname,$uid;
+    public $name,$avatar,$nickname,$uid,$phone;
 
 
     public function mount(){
@@ -39,6 +39,7 @@ class EditProfile extends Component
 
         $user = User::find($this->uid);
         $user->name =$this->name;
+        $user->phone =$this->phone;
         $user->nickname = $this->nickname;
        // $user->avatar=$this->avatar;
         

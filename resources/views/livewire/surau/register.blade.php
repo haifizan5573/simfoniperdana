@@ -72,7 +72,7 @@
                                                                 Assalamualaikum wrt wbt<p>
 
                                                                 <p class="mb-2">
-                                                                Untuk Makluman pihak Musolla Simfoni Perdana membuka pendaftaran Khairat dan Kebajikan bagi tahun 2022, Sehubungan itu mohon para jamaah yang ingin mendaftar bolehlah mengisi google form di bawah. 
+                                                                Untuk Makluman pihak Musolla Simfoni Perdana membuka pendaftaran Khairat dan Kebajikan bagi tahun {{date('Y')}}, Sehubungan itu mohon para jamaah yang ingin mendaftar bolehlah mengisi google form di bawah. 
                                                                 </p>
 
                                                                 <p class="mb-0">
@@ -164,10 +164,10 @@
                                                         <div class="col-12 " >
                                                         <p >
                                                         Sebarang Pertanyaan Sila Hubungi :<br/><br/>
-                                                        Ustaz Ameer +60 12-620 0312 (Pengerusi)<br/>
+                                                        {{-- Ustaz Ameer +60 12-620 0312 (Pengerusi)<br/>
                                                         Hj Razali +60 18-988 4497 (Timb Pengerusi)<br/>
                                                         Imam Azizi +60 11-2073 2121 (Imam)<br/>
-                                                        Ustaz Naim +012-4785715 (Bendahari)<br/>
+                                                        Ustaz Naim +012-4785715 (Bendahari)<br/> --}}
                                                         </p>
                                                         </div>
                                                     </div>
