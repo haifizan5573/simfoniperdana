@@ -162,7 +162,7 @@ class KhairatData extends Component
             $this->khairatuser=KhairatUser::where('userid',$dataid)->first();
             $this->appstatus=$this->khairatuser->label()->first()->name;
             $this->status=$this->khairatuser->status;
-            $this->userid=$dataid;
+            $this->kid=$dataid;
         }
         
         $this->emit('modal',[$pagemodal,$title,$dataid,$this->appstatus]);

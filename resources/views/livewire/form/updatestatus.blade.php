@@ -8,7 +8,7 @@
                           <div class="col-6" wire:ignore>
                              
                           @include('components.input',[
-                                            'name'=>'id',
+                                            'name'=>'kid',
                                             'id'=>'',
                                             'label'=>'',
                                             'placeholder'=>'',
