@@ -17,7 +17,7 @@ class KhairatData extends Component
     use WithPagination;
     use AuthorizesRequests;
 
-    public $filter,$roles,$search,$status,$khairat,$curpage,$street,$id;
+    public $filter,$roles,$search,$status,$khairat,$curpage,$street,$kid;
     protected $paginationTheme = 'bootstrap';
 
 
