@@ -170,11 +170,12 @@ class KhairatData extends Component
 
     public function editstatus(){
 
-        dd($this->userid);
+       
 
         if(!empty($this->status)){
             $khairatuser=KhairatUser::find('userid',$this->userid);
 
+            dd($khairatuser->name);
             $khairatuser->update(['status'=>$this->status]);
     
             $this->message=array("message"=>"Payment status updated","alert-type"=>"success");
