@@ -173,7 +173,7 @@ class KhairatData extends Component
         dd($this->userid);
 
         if(!empty($this->status)){
-            $khairatuser=KhairatUser::where('userid',$this->userid)->first();
+            $khairatuser=KhairatUser::find('userid',$this->userid);
 
             $khairatuser->update(['status'=>$this->status]);
     
