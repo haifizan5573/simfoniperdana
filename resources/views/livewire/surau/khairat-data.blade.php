@@ -168,7 +168,7 @@
                                            @include('components.button',[
                                                                 'type'=>'button',
                                                                 'class'=>'btn btn-info btn-sm waves-effect waves-light',
-                                                                'onclick'=>"wire:click=\"open('livewire.form.updatestatus','Edit - Update Status',$khairat->userid)\"",
+                                                                'onclick'=>"wire:click=\"open('livewire.form.updatestatus','Edit - Update Status',$khairat->id)\"",
                                                                 'label'=>'Edit',
                                                                 'icon'=>'<i class="bx bx-pencil font-size-16 align-middle me-2"></i>',
                                                                 'loader'=>true,
