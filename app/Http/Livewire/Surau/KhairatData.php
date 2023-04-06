@@ -170,7 +170,7 @@ class KhairatData extends Component
 
     public function editstatus(){
 
-       // dd($this->status);
+        dd($this->status);
 
         if(!empty($this->status)){
             $khairatuser=KhairatUser::where('userid',$this->userid)->first();
