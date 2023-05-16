@@ -133,7 +133,7 @@ class Register extends Component
                 $user->FileUploads()->create([
                     'name'=>'Payment Receipt',
                     'path'=>$path,
-                    'form'=>$khairatid,
+                    'formid'=>$khairatid,
                     'type'=>'paymentreceipt'
                 ]);
 
