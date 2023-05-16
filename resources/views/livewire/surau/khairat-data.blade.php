@@ -142,7 +142,7 @@
                                     {{ $khairat->Membership()->first()->other }}
                                     </td>
                                     <td class="text-center">
-                                      {{ $khairat->userid}}{{$khairat->khaira}}
+                                      {{ $khairat->userid}},{{$khairat->khairat}}
                                         @if(!empty($khairat->FileUpload->first()->path))
                                             @include('components.button',[
                                                                 'type'=>'button',
