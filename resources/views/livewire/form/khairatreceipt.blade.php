@@ -14,7 +14,7 @@
         @else
 
               
-            <iframe id="iframe" onload="$('.iframe-loading').css('background-image', 'none');" src="{{ route('viewattachment',['id'=>$data->file_uploadsable_id ]) }}" frameborder="0" style="width:100%;min-height:640px;"></iframe>
+            <iframe id="iframe" onload="$('.iframe-loading').css('background-image', 'none');" src="{{ route('viewattachment',['id'=>$data->file_uploadsable_id,'formid'=>$data->formid ]) }}" frameborder="0" style="width:100%;min-height:640px;"></iframe>
                                                         
         @endif
    </div>

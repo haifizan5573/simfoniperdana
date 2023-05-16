@@ -57,9 +57,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/listagent',[App\Http\Livewire\API\UserData::class,'listagent'])->name('listagent');
     Route::get('/rolelist/{type?}',[App\Http\Livewire\API\UserData::class,'rolelist'])->name('rolelist');
 
-    Route::get('/viewattachment/{id}', function ($id) {
+    Route::get('/viewattachment/{id}/{formid}', function ($id,$formid) {
  
-           $filedata=FileUpload::where('file_uploadsable_id',$id)->first();
+           $filedata=FileUpload::where('file_uploadsable_id',$id)->where('formid',$formid)->first();
            $data = [
           'img' => (!empty($filedata->path))?Storage::url($filedata->path):""
         
