@@ -147,7 +147,7 @@
                                             @include('components.button',[
                                                                 'type'=>'button',
                                                                 'class'=>'btn btn-dark btn-sm waves-effect waves-light',
-                                                                'onclick'=>"wire:click=\"open('livewire.form.khairatreceipt','Payment Receipt',$khairat->userid)\"",
+                                                                'onclick'=>"wire:click=\"open('livewire.form.khairatreceipt','Payment Receipt',$khairat->id)\"",
                                                                 'label'=>'View',
                                                                 'icon'=>'<i class="bx bx-search-alt-2 font-size-16 align-middle me-2"></i>',
                                                                 'loader'=>true,
