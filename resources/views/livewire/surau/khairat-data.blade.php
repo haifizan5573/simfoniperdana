@@ -147,7 +147,7 @@
                                             @include('components.button',[
                                                                 'type'=>'button',
                                                                 'class'=>'btn btn-dark btn-sm waves-effect waves-light',
-                                                                'onclick'=>"wire:click=\"open('livewire.form.khairatreceipt','Payment Receipt',$khairat->id)\"",
+                                                                'onclick'=>"wire:click=\"open('livewire.form.khairatreceipt','Payment Receipt',$khairat->userid,$khairat->khairat)\"",
                                                                 'label'=>'View',
                                                                 'icon'=>'<i class="bx bx-search-alt-2 font-size-16 align-middle me-2"></i>',
                                                                 'loader'=>true,
@@ -168,7 +168,7 @@
                                            @include('components.button',[
                                                                 'type'=>'button',
                                                                 'class'=>'btn btn-info btn-sm waves-effect waves-light',
-                                                                'onclick'=>"wire:click=\"open('livewire.form.updatestatus','Edit - Update Status',$khairat->id)\"",
+                                                                'onclick'=>"wire:click=\"open('livewire.form.updatestatus','Edit - Update Status',$khairat->id,'')\"",
                                                                 'label'=>'Edit',
                                                                 'icon'=>'<i class="bx bx-pencil font-size-16 align-middle me-2"></i>',
                                                                 'loader'=>true,
