@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\User;
 use App\Models\Label;
 use App\Models\Team;
+use App\Models\ResidentPosition;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 
@@ -13,6 +14,23 @@ class SystemData extends Component
 {
 
 
+    public function residentposition(Request $request){
+
+        $type=$request->type;
+        $position=array();
+
+        $datas=ResidentPosition::where('type',$type)
+                    ->where('isactive',1)
+            		->get();
+
+        foreach($datas as $data){
+            $position[]=array("id"=>$data->id,"name"=>$data->name);
+        }
+            
+        return response()->json($position);
+            
+        
+    }
     public function status(Request $request){
 
         
