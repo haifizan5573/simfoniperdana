@@ -157,6 +157,7 @@ class KhairatData extends Component
         $this->title = $title;
         $this->dataid = $dataid;
         $this->data=FileUpload::where('file_uploadsable_id',$dataid)->where('formid',$dataid2)->first();
+        dd($this->data->path);
         $this->appstatus="";
         if($pagemodal=="livewire.form.updatestatus"){
             $this->khairatuser=KhairatUser::where('userid',$dataid)->first();
