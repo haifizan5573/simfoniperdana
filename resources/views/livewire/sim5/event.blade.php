@@ -27,7 +27,8 @@
     <div class="col-xl-10">
         <div class="card">
             <div class="card-body">
-                <h4>Cabutan Bertuah</h4>
+                <h4>Aktiviti</h4>
+                <div align="center"><img class="img-fluid" src="{{ Storage::url('attachment/aktiviti.png') }}" alt="" /></div>
             </div>
         </div>
     </div>
