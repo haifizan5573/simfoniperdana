@@ -90,4 +90,4 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/tahlil',App\Http\Livewire\Surau\Tahlil::class)->name('tahlil');
     Route::get('/form/{id}',App\Http\Livewire\Miscellaneous\Forms::class)->name('form');
     Route::get('/register',App\Http\Livewire\Miscellaneous\Register::class)->name('register');
-    Route::get('/sim5',App\Http\Livewire\sim5\Event::class)->name('sim5');
+    Route::get('/sim5',App\Http\Livewire\Sim5\Event::class)->name('sim5');
