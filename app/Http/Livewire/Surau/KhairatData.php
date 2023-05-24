@@ -160,7 +160,7 @@ class KhairatData extends Component
        // dd($this->data->path);
         $this->appstatus="";
         if($pagemodal=="livewire.form.updatestatus"){
-            $this->khairatuser=KhairatUser::where('userid',$dataid)->first();
+            $this->khairatuser=KhairatUser::where('id',$dataid)->first();
             $this->appstatus=$this->khairatuser->label()->first()->name;
             $this->status=$this->khairatuser->status;
             $this->kid=$dataid;
