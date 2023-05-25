@@ -207,6 +207,12 @@
 <script src="{{ URL::asset('/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 <script>
+
+$('#appmodal').on('hidden.bs.modal', function () {
+    $(this).find('form').trigger('reset');
+    $(this).find('select').val('').trigger('change');
+});
+
     @if(!empty($toastrdata['message']))
    
         $( document ).ready(function() {
